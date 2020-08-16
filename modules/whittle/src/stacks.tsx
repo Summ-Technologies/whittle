@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {Route, Switch} from 'react-router-dom'
+import HomePage from './pages/HomePage'
 
 export type SummnRoute = {
   name: string
@@ -24,7 +25,9 @@ export class AppRoutes {
     return path
   }
 
-  static routes: SummnRoute[] = []
+  static routes: SummnRoute[] = [
+    {name: 'Home', path: '/home', component: HomePage, showNav: false},
+  ]
 
   static loggedOutRoutes: SummnRoute[] = []
 }
@@ -36,7 +39,7 @@ const loggedInSwitch = AppRoutes.routes.map((route) => (
 ))
 
 function LoggedInStack() {
-  const loggedInNav = AppRoutes.routes.filter((route) => route.showNav)
+  // const loggedInNav = AppRoutes.routes.filter((route) => route.showNav)
   return (
     <>
       <Switch>{loggedInSwitch}</Switch>
