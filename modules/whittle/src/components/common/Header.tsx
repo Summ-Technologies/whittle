@@ -1,7 +1,7 @@
 import React from 'react'
 import {Col, Row} from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
-import HeaderTab from '../HeaderTab'
+import HeaderTab from './HeaderTab'
 
 export default function Header(props: React.PropsWithChildren<{}>) {
   return (

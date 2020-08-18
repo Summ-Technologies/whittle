@@ -4,8 +4,10 @@ import Container from 'react-bootstrap/Container'
 
 export default function Body(props: React.PropsWithChildren<{}>) {
   return (
-    <Container>
-      <Col className="mx-auto">{props.children}</Col>
+    <Container style={{height: '100vh'}}>
+      <Col style={{height: '100%'}} className="mx-auto">
+        {props.children}
+      </Col>
     </Container>
   )
 }

@@ -4,7 +4,10 @@ import Table from 'react-bootstrap/Table'
 
 type StoriesListProps = {
   storiesList: String[]
+  onMouseOver: () => void
 }
+
+//let topics = ['iOS', 'Apple', 'Strategy']
 
 export default function StoriesList(props: StoriesListProps) {
   const tableRows = props.storiesList.map((story) => {
@@ -31,7 +34,7 @@ export default function StoriesList(props: StoriesListProps) {
   })
 
   return (
-    <Table responsive bordered size="sm">
+    <Table responsive bordered hover size="md" onMouseOver={props.onMouseOver}>
       <tbody>{tableRows}</tbody>
     </Table>
   )
