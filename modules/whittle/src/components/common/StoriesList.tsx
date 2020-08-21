@@ -1,13 +1,12 @@
 import React from 'react'
 import {Col, Row} from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
+import {WhittleArticle} from '../../models/whittle'
 
 type StoriesListProps = {
-  storiesList: String[]
+  storiesList: WhittleArticle[]
   onMouseOver: () => void
 }
-
-//let topics = ['iOS', 'Apple', 'Strategy']
 
 export default function StoriesList(props: StoriesListProps) {
   const tableRows = props.storiesList.map((story) => {
@@ -15,17 +14,11 @@ export default function StoriesList(props: StoriesListProps) {
       <tr>
         <td>
           <Row>
-            <h5>{story}</h5>
+            <h5>{story.title}</h5>
           </Row>
           <Row>
             <Col>
-              <p>{'6 mins'}</p>
-            </Col>
-            <Col>
-              <p>{'Nathan Baschez'}</p>
-            </Col>
-            <Col>
-              <p>{'Divinations'}</p>
+              <p>{story.source}</p>
             </Col>
           </Row>
         </td>

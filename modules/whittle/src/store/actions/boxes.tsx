@@ -9,7 +9,7 @@ export const GET_BOX_ARTICLES_SUCCESS = 'GET_BOX_ARTICLES_SUCCESS'
 export const GET_BOX_ARTICLES_FAILURE = 'GET_BOX_ARTICLES_FAILURE'
 
 export function getUserBoxes() {
-  let endpoint = '/user/boxes'
+  let endpoint = '/v1.0/user/boxes'
   return createApiAction({
     endpoint,
     method: 'GET',
@@ -22,7 +22,7 @@ export function getUserBoxes() {
 }
 
 export function getBoxArticles(boxId: number) {
-  let endpoint = `/user/boxes/${boxId}/articles`
+  let endpoint = `/v1.0/user/boxes/${boxId}/articles`
   return createApiAction({
     endpoint,
     method: 'GET',

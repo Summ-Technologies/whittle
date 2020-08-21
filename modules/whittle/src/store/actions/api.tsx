@@ -64,6 +64,7 @@ export function createApiAction(args: RSAACall<RootState, unknown, unknown>) {
 export class ApiUtils {
   static listToDict(apiResponse: Array<{id: number; [key: string]: any}>) {
     var d: {[key: number]: any} = {}
+    console.log(apiResponse)
     apiResponse.forEach((resource) => {
       d[resource.id] = resource
     })

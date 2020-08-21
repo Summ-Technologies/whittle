@@ -1,4 +1,4 @@
-import {ArticleListResource, ArticleResource, BoxResource} from './api'
+import {ArticleResource, BoxResource} from './api'
 
-export type WhittleBox = BoxResource & {articles?: ArticleListResource}
+export type WhittleBox = BoxResource & {articles?: number[]}
 export type WhittleArticle = ArticleResource

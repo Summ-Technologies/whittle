@@ -25,15 +25,7 @@ function LibraryPage() {
               <option>Done</option>
             </Form.Control>
           </Form>
-          <StoriesList
-            onMouseOver={() => {}}
-            storiesList={[
-              'Disrupting Disruption: Alex Danco',
-              'Disrupting Disrupation: Ben Thompson',
-              'Another newsletter title',
-              'Another one',
-            ]}
-          />
+          <StoriesList onMouseOver={() => {}} storiesList={[]} />
         </Col>
         <Col style={{width: '20%', height: '100%'}}>
           <HelperPanel
