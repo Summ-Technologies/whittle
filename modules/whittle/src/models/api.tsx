@@ -15,3 +15,5 @@ export type BoxResource = {
   user_id: number
   name: string
 }
+
+export type BoxesListResource = BoxResource[]
