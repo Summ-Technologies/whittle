@@ -2,7 +2,6 @@ import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {Route, Switch} from 'react-router-dom'
 import HomePage from './pages/HomePage'
-import LibraryPage from './pages/LibraryPage'
 import ReadingPage from './pages/ReadingPage'
 
 export type SummnRoute = {
@@ -28,9 +27,8 @@ export class AppRoutes {
   }
 
   static routes: SummnRoute[] = [
-    {name: 'Home', path: '/home', component: HomePage, showNav: false},
+    {name: 'Home', path: '/', component: HomePage, showNav: false},
     {name: 'Read', path: '/read', component: ReadingPage, showNav: false},
-    {name: 'Library', path: '/library', component: LibraryPage, showNav: false},
   ]
 
   static loggedOutRoutes: SummnRoute[] = []

@@ -23,16 +23,19 @@ export default function Header(props: HeaderProps) {
         title={props.inbox ? props.inbox.name : 'Inbox'}
         count={props.inbox ? getArticleCount(props.inbox) : 0}
         active={props.activeTab === 'inbox'}
+        onClick={() => props.onSelectTab('inbox')}
       />
       <HeaderTab
         title={props.queue ? props.queue.name : 'Queue'}
         count={props.queue ? getArticleCount(props.queue) : 0}
         active={props.activeTab === 'queue'}
+        onClick={() => props.onSelectTab('queue')}
       />
       <HeaderTab
         title={props.library ? props.library.name : 'Library'}
         count={props.library ? getArticleCount(props.library) : 0}
         active={props.activeTab === 'library'}
+        onClick={() => props.onSelectTab('library')}
       />
     </Row>
   )
@@ -50,7 +53,13 @@ type HeaderTabProps = {
   title: string
   count: number
   active: boolean
+  onClick: () => void
 }
 function HeaderTab(props: HeaderTabProps) {
-  return <div>{`${props.title} ${props.count}`}</div>
+  return (
+    <div
+      onClick={(event) =>
+        props.onClick()
+      }>{`${props.title} ${props.count}`}</div>
+  )
 }
