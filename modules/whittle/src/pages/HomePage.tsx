@@ -1,17 +1,30 @@
-import React, {useEffect} from 'react'
-import {Col, Row} from 'react-bootstrap'
+import React, {CSSProperties, useEffect, useState} from 'react'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import {useDispatch, useSelector} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import Header from '../components/common/Header'
+import Header, {HeaderTabs} from '../components/common/Header'
 import HelperPanel from '../components/common/HelperPanel'
 import StoriesList from '../components/common/StoriesList'
 import {getBoxArticles, getUserBoxes} from '../store/actions/boxes'
-import {getBoxes} from '../store/getters/boxes'
+import {getArticles} from '../store/getters/articles'
+import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
+
+const styles: {[key: string]: CSSProperties} = {
+  rightPanelContainer: {height: '100%'},
+  leftPanelContainer: {height: '100%', overflowX: 'scroll'},
+}
 
 function HomePage() {
   let dispatch = useDispatch()
   let boxes = useSelector(getBoxes)
+  let articles = useSelector(getArticles)
+  let inbox = useSelector(getInbox)
+  let queue = useSelector(getQueue)
+  let library = useSelector(getLibrary)
+
+  let [activeTab, setActiveTab] = useState<HeaderTabs>('inbox')
 
   useEffect(() => {
     // Get all inboxes for user if not already loaded
@@ -31,13 +44,27 @@ function HomePage() {
     <Body>
       <Row>
         <Col>
-          <Header />
-          <StoriesList
-            onMouseOver={() => console.log('mouseOver')}
-            storiesList={[]}
+          <Header
+            inbox={inbox}
+            queue={queue}
+            library={library}
+            activeTab={activeTab}
+            onSelectTab={(tab: HeaderTabs) => setActiveTab(tab)}
           />
         </Col>
-        <Col style={{width: '20%', height: '100%'}}>
+      </Row>
+      <Row style={{flexGrow: 1}}>
+        <Col xs={6} style={styles.rightPanelContainer}>
+          <StoriesList
+            onMouseOver={() => console.log('mouseOver')}
+            storiesList={
+              inbox && inbox.articles
+                ? inbox.articles.map((id) => articles[id]).filter((val) => val)
+                : []
+            }
+          />
+        </Col>
+        <Col xs={6} style={styles.rightPanelContainer}>
           <HelperPanel
             title={'Disrupting Disruption: Alex Danco'}
             readingMins={6}

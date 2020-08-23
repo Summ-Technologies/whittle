@@ -1,6 +1,5 @@
 import React from 'react'
 import {Col, Row} from 'react-bootstrap'
-import Container from 'react-bootstrap/Container'
 
 type HelperPanelProps = {
   title: String
@@ -13,7 +12,11 @@ type HelperPanelProps = {
 
 export default function HelperPanel(props: HelperPanelProps) {
   return (
-    <Container style={{backgroundColor: '#EAEDFF', height: '100%'}}>
+    <Col
+      style={{
+        backgroundColor: '#EAEDFF',
+        height: '100%',
+      }}>
       <Row>
         <h5>{props.title}</h5>
       </Row>
@@ -32,6 +35,6 @@ export default function HelperPanel(props: HelperPanelProps) {
         <h5>{'Outline'}</h5>
       </Row>
       <Row>{/* props.outline.forEach()  */}</Row>
-    </Container>
+    </Col>
   )
 }

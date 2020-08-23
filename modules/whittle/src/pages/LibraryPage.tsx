@@ -2,7 +2,6 @@ import React from 'react'
 import {Button, Col, Form, FormControl, Row} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import Header from '../components/common/Header'
 import HelperPanel from '../components/common/HelperPanel'
 import StoriesList from '../components/common/StoriesList'
 
@@ -11,7 +10,7 @@ function LibraryPage() {
     <Body>
       <Row style={{width: '100%', height: '100%'}}>
         <Col style={{width: '90%'}}>
-          <Header />
+          {/* <Header /> */}
           <Form inline>
             <FormControl
               type="text"

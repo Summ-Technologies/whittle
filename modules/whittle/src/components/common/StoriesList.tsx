@@ -9,6 +9,7 @@ type StoriesListProps = {
 }
 
 export default function StoriesList(props: StoriesListProps) {
+  console.log(props.storiesList)
   const tableRows = props.storiesList.map((story) => {
     return (
       <tr>

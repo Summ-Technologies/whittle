@@ -1,25 +1,56 @@
 import React from 'react'
-import {Col, Row} from 'react-bootstrap'
-import Container from 'react-bootstrap/Container'
-import HeaderTab from './HeaderTab'
+import {Row} from 'react-bootstrap'
+import {WhittleBox} from '../../models/whittle'
 
-export default function Header(props: React.PropsWithChildren<{}>) {
+type HeaderProps = {
+  inbox: WhittleBox | undefined
+  queue: WhittleBox | undefined
+  library: WhittleBox | undefined
+  activeTab: HeaderTabs
+  onSelectTab: (tab: HeaderTabs) => void
+}
+
+export type HeaderTabs = 'inbox' | 'queue' | 'library'
+
+export default function Header(props: HeaderProps) {
+  function getArticleCount(box: WhittleBox): number {
+    return box && box.articles ? box.articles.length : 0
+  }
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h2>Whittle</h2>
-        </Col>
-        <Col>
-          <HeaderTab title={'Inbox'} count={3} active={true} />
-        </Col>
-        <Col>
-          <HeaderTab title={'Queue'} count={3} active={true} />
-        </Col>
-        <Col>
-          <HeaderTab title={'Library'} count={3} active={true} />
-        </Col>
-      </Row>
-    </Container>
+    <Row>
+      <HeaderTitle name="Whittle" />
+      <HeaderTab
+        title={props.inbox ? props.inbox.name : 'Inbox'}
+        count={props.inbox ? getArticleCount(props.inbox) : 0}
+        active={props.activeTab === 'inbox'}
+      />
+      <HeaderTab
+        title={props.queue ? props.queue.name : 'Queue'}
+        count={props.queue ? getArticleCount(props.queue) : 0}
+        active={props.activeTab === 'queue'}
+      />
+      <HeaderTab
+        title={props.library ? props.library.name : 'Library'}
+        count={props.library ? getArticleCount(props.library) : 0}
+        active={props.activeTab === 'library'}
+      />
+    </Row>
   )
+}
+
+type HeaderTitleProps = {
+  name: string
+}
+
+function HeaderTitle(props: HeaderTitleProps) {
+  return <div style={{fontSize: '2em'}}>Whittle</div>
+}
+
+type HeaderTabProps = {
+  title: string
+  count: number
+  active: boolean
+}
+function HeaderTab(props: HeaderTabProps) {
+  return <div>{`${props.title} ${props.count}`}</div>
 }
