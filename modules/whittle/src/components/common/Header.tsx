@@ -6,7 +6,7 @@ type HeaderProps = {
   inbox: WhittleBox | undefined
   queue: WhittleBox | undefined
   library: WhittleBox | undefined
-  activeTab: HeaderTabs
+  activeTab?: HeaderTabs
   onSelectTab: (tab: HeaderTabs) => void
 }
 

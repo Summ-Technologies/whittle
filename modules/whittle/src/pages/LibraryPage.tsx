@@ -2,8 +2,6 @@ import React from 'react'
 import {Button, Col, Form, FormControl, Row} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import HelperPanel from '../components/common/HelperPanel'
-import StoriesList from '../components/common/StoriesList'
 
 function LibraryPage() {
   return (
@@ -24,15 +22,15 @@ function LibraryPage() {
               <option>Done</option>
             </Form.Control>
           </Form>
-          <StoriesList onMouseOver={() => {}} storiesList={[]} />
+          {/* <StoriesList onMouseOver={() => {}} storiesList={[]} /> */}
         </Col>
         <Col style={{width: '20%', height: '100%'}}>
-          <HelperPanel
+          {/* <HelperPanel
             title={'Disrupting Disruption: Alex Danco'}
             readingMins={6}
             publication={'Divinations'}
             author={'Nathan Baschez'}
-          />
+          /> */}
         </Col>
       </Row>
     </Body>

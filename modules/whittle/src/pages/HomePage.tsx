@@ -7,7 +7,12 @@ import Body from '../components/common/Body'
 import Header, {HeaderTabs} from '../components/common/Header'
 import HelperPanel from '../components/common/HelperPanel'
 import StoriesList from '../components/common/StoriesList'
-import {getBoxArticles, getUserBoxes} from '../store/actions/boxes'
+import {WhittleArticle, WhittleBox} from '../models/whittle'
+import {
+  getBoxArticles,
+  getUserBoxes,
+  triageArticle,
+} from '../store/actions/boxes'
 import {getArticles} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 
@@ -25,6 +30,10 @@ function HomePage() {
   let library = useSelector(getLibrary)
 
   let [activeTab, setActiveTab] = useState<HeaderTabs>('inbox')
+  let [activeBox, setActiveBox] = useState<WhittleBox | undefined>(undefined)
+  let [previewedArticle, setPreviewedArticle] = useState<
+    WhittleArticle | undefined
+  >(undefined)
 
   useEffect(() => {
     // Get all inboxes for user if not already loaded
@@ -39,6 +48,47 @@ function HomePage() {
       })
     }
   }, [dispatch, boxes])
+
+  useEffect(() => {
+    if (
+      previewedArticle === undefined &&
+      activeBox &&
+      activeBox.articles &&
+      activeBox.articles.length
+    ) {
+      let activeArticleId = activeBox.articles[0]
+      let activeArticle = articles[activeArticleId]
+      setPreviewedArticle(activeArticle)
+    }
+  }, [previewedArticle, setPreviewedArticle, activeBox, articles])
+
+  useEffect(() => {
+    switch (activeTab) {
+      case 'inbox':
+        setActiveBox(inbox)
+        break
+      case 'queue':
+        setActiveBox(queue)
+        break
+      case 'library':
+        setActiveBox(library)
+        break
+    }
+  }, [activeTab, activeBox, setActiveBox, inbox, queue, library])
+
+  /** Dispatch article to library box */
+  function archiveArticle(article: WhittleArticle) {
+    if (library && article) {
+      dispatch(triageArticle(article.id, library.id))
+    }
+  }
+
+  /** Dispatch article to library box */
+  function queueArticle(article: WhittleArticle) {
+    if (queue && article) {
+      dispatch(triageArticle(article.id, queue.id))
+    }
+  }
 
   return (
     <Body>
@@ -56,21 +106,23 @@ function HomePage() {
       <Row style={{flexGrow: 1}}>
         <Col xs={6} style={styles.rightPanelContainer}>
           <StoriesList
-            onMouseOver={() => console.log('mouseOver')}
+            onHoverArticle={(article: WhittleArticle) =>
+              setPreviewedArticle(article)
+            }
+            onBookmarkArticle={archiveArticle}
+            onQueueArticle={queueArticle}
+            onArchiveArticle={archiveArticle}
             storiesList={
-              inbox && inbox.articles
-                ? inbox.articles.map((id) => articles[id]).filter((val) => val)
+              activeBox && activeBox.articles
+                ? activeBox.articles
+                    .map((id) => articles[id])
+                    .filter((val) => val)
                 : []
             }
           />
         </Col>
         <Col xs={6} style={styles.rightPanelContainer}>
-          <HelperPanel
-            title={'Disrupting Disruption: Alex Danco'}
-            readingMins={6}
-            publication={'Divinations'}
-            author={'Nathan Baschez'}
-          />
+          <HelperPanel article={previewedArticle} />
         </Col>
       </Row>
     </Body>

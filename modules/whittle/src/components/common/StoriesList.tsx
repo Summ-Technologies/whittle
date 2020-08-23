@@ -5,21 +5,38 @@ import {WhittleArticle} from '../../models/whittle'
 
 type StoriesListProps = {
   storiesList: WhittleArticle[]
-  onMouseOver: () => void
+  onHoverArticle: (article: WhittleArticle) => void
+  onBookmarkArticle: (article: WhittleArticle) => void
+  onQueueArticle: (article: WhittleArticle) => void
+  onArchiveArticle: (article: WhittleArticle) => void
 }
 
 export default function StoriesList(props: StoriesListProps) {
-  console.log(props.storiesList)
-  const tableRows = props.storiesList.map((story) => {
+  const tableRows = props.storiesList.map((story, index) => {
     return (
-      <tr>
+      <tr
+        onMouseOver={(
+          event: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+        ) => props.onHoverArticle(story)}
+        key={index}>
         <td>
-          <Row>
-            <h5>{story.title}</h5>
-          </Row>
-          <Row>
-            <Col>
-              <p>{story.source}</p>
+          <Row style={{padding: '0 2%', alignItems: 'center'}}>
+            <Col xs={6}>
+              <Row>
+                <h5>{story.title}</h5>
+              </Row>
+              <Row>
+                <p>{story.source}</p>
+              </Row>
+            </Col>
+            <Col xs={6}>
+              <Row>
+                <div onClick={() => props.onArchiveArticle(story)}>Done</div>
+                <div onClick={() => props.onBookmarkArticle(story)}>
+                  Bookmark
+                </div>
+                <div onClick={() => props.onQueueArticle(story)}>Queue</div>
+              </Row>
             </Col>
           </Row>
         </td>
@@ -28,7 +45,7 @@ export default function StoriesList(props: StoriesListProps) {
   })
 
   return (
-    <Table responsive bordered hover size="md" onMouseOver={props.onMouseOver}>
+    <Table responsive bordered hover size="md">
       <tbody>{tableRows}</tbody>
     </Table>
   )

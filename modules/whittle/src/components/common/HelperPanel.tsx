@@ -1,16 +1,25 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Col, Row} from 'react-bootstrap'
+import {WhittleArticle} from '../../models/whittle'
 
 type HelperPanelProps = {
-  title: String
-  readingMins: number
-  topics?: number[]
-  author: String
-  publication: String
-  outline?: string[]
+  article: WhittleArticle | undefined
 }
 
 export default function HelperPanel(props: HelperPanelProps) {
+  let [readingTime, setReadingTime] = useState(0)
+  useEffect(() => {
+    function calculateReadingTime(content: string): number {
+      let words = content.split(' ')
+      return Math.round(words.length / 130)
+    }
+    const calculatedReadingTime =
+      props.article && props.article.content
+        ? calculateReadingTime(props.article.content)
+        : 0
+    setReadingTime(calculatedReadingTime)
+  }, [setReadingTime, props.article])
+
   return (
     <Col
       style={{
@@ -18,23 +27,26 @@ export default function HelperPanel(props: HelperPanelProps) {
         height: '100%',
       }}>
       <Row>
-        <h5>{props.title}</h5>
+        <div>
+          {props.article && props.article.title ? props.article.title : ''}
+        </div>
       </Row>
       <Row>
         <Col>
-          <p>{props.readingMins + ' mins'}</p>
+          <div>{readingTime + ' mins'}</div>
         </Col>
         <Col>
-          <p>{props.author}</p>
-        </Col>
-        <Col>
-          <p>{props.publication}</p>
+          <div>
+            {props.article && props.article.source ? props.article.source : ''}
+          </div>
         </Col>
       </Row>
       <Row>
-        <h5>{'Outline'}</h5>
+        <div>Outline</div>
       </Row>
-      <Row>{/* props.outline.forEach()  */}</Row>
+      <Row>
+        {props.article && props.article.content ? props.article.content : ''}
+      </Row>
     </Col>
   )
 }
