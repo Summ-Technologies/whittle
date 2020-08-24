@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Col, Row} from 'react-bootstrap'
 import {WhittleArticle} from '../../models/whittle'
+import StoryHighLevel from './Stories/StoryHighLevel'
 
 type HelperPanelProps = {
   article: WhittleArticle | undefined
@@ -26,25 +27,26 @@ export default function HelperPanel(props: HelperPanelProps) {
         backgroundColor: '#EAEDFF',
         height: '100%',
       }}>
-      <Row>
-        <div>
-          {props.article && props.article.title ? props.article.title : ''}
+      <Row style={{paddingLeft: 16, paddingTop: 10}}>
+        <StoryHighLevel
+          source={
+            props.article && props.article.source ? props.article.source : ''
+          }
+          title={
+            props.article && props.article.title ? props.article.title : ''
+          }
+          topics={['Startups', 'test topic']}
+        />
+      </Row>
+      <Row style={{paddingLeft: 16, paddingRight: 16}}>
+        <div
+          style={{
+            paddingTop: 16,
+            textDecoration: 'underline',
+            fontWeight: 'bold',
+          }}>
+          Outline
         </div>
-      </Row>
-      <Row>
-        <Col>
-          <div>{readingTime + ' mins'}</div>
-        </Col>
-        <Col>
-          <div>
-            {props.article && props.article.source ? props.article.source : ''}
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <div>Outline</div>
-      </Row>
-      <Row>
         {props.article && props.article.content ? props.article.content : ''}
       </Row>
     </Col>

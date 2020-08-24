@@ -45,7 +45,7 @@ export default function StoriesList(props: StoriesListProps) {
           setActiveStory(story)
         }}
         key={index}>
-        <td>
+        <td style={{borderBottom: '1px solid #dee2e6', borderTop: '0px solid'}}>
           <Row noGutters style={{padding: '0 2%', alignItems: 'center'}}>
             <StoryHighLevel
               title={story.title}

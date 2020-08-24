@@ -34,7 +34,12 @@ export default function Header(props: HeaderProps) {
     return box && box.articles ? box.articles.length : 0
   }
   return (
-    <Row style={{alignItems: 'flex-end', margin: 0}}>
+    <Row
+      style={{
+        alignItems: 'flex-end',
+        margin: 0,
+        borderBottom: '1px solid #dee2e6',
+      }}>
       <HeaderTitle name="Whittle" />
       <div style={styles.boxesContainer}>
         <HeaderTab
