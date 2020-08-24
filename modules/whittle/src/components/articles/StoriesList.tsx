@@ -41,6 +41,7 @@ export default function StoriesList(props: StoriesListProps) {
           <StoryRowPreview
             title={story.title}
             source={story.source}
+            tags={story.tags ? story.tags : []}
             readingTime={
               activeStory && activeStory.content
                 ? ArticleUtils.calculateReadingTime(activeStory.content)

@@ -6,6 +6,7 @@ import StoryHighLevel from './StoryHighLevel'
 type StoryRowPreviewProps = {
   title: string
   source: string
+  tags: string[]
   readingTime: number
   showTriage: boolean
   onSelect?: () => void
@@ -24,7 +25,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
       <StoryHighLevel
         title={props.title}
         source={props.source}
-        topics={['Startups', 'test topic']}
+        topics={props.tags}
         readingTime={props.readingTime}
       />
       <Col xs={4} style={styles.triageSection}>

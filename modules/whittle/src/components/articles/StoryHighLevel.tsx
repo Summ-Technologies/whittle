@@ -4,7 +4,7 @@ import TopicTag from './TopicTag'
 
 type StoryHighLevelProps = {
   title: String
-  topics: String[]
+  topics: string[]
   source: String
   readingTime: number
 }

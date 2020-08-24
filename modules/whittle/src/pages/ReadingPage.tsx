@@ -59,6 +59,7 @@ function ReadingPage(props: ReadingPageProps) {
               <StoryRowPreview
                 title={article.title}
                 source={article.source}
+                tags={article.tags}
                 readingTime={
                   article && article.content
                     ? ArticleUtils.calculateReadingTime(article.content)

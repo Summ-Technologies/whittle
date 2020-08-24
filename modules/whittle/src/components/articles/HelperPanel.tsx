@@ -23,7 +23,7 @@ export default function HelperPanel(props: HelperPanelProps) {
           title={
             props.article && props.article.title ? props.article.title : ''
           }
-          topics={['Startups', 'test topic']}
+          topics={props.article && props.article.tags ? props.article.tags : []}
           readingTime={
             props.article && props.article.content
               ? ArticleUtils.calculateReadingTime(props.article.content)

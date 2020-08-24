@@ -37,7 +37,7 @@ function AdminPage() {
           let val = form[key]
           return (
             <Form.Group id={key}>
-              {['content', 'outline'].includes(val) ? (
+              {['content', 'outline'].includes(key) ? (
                 <Form.Control
                   value={val}
                   onChange={(event) =>
