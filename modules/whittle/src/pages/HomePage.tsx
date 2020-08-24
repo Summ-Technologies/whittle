@@ -8,13 +8,10 @@ import Header, {HeaderTabs} from '../components/common/Header'
 import HelperPanel from '../components/common/HelperPanel'
 import StoriesList from '../components/common/Stories/StoriesList'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
-import {
-  getBoxArticles,
-  getUserBoxes,
-  triageArticle,
-} from '../store/actions/boxes'
+import {triageArticle} from '../store/actions/boxes'
 import {getArticles} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
+import {useArticles} from '../util/hooks'
 
 const styles: {[key: string]: CSSProperties} = {
   rightPanelContainer: {height: '100%'},
@@ -35,19 +32,7 @@ function HomePage() {
     WhittleArticle | undefined
   >(undefined)
 
-  useEffect(() => {
-    // Get all inboxes for user if not already loaded
-    if (Object.keys(boxes).length === 0) {
-      dispatch(getUserBoxes())
-    } else {
-      Object.keys(boxes).forEach((key) => {
-        let box = boxes[parseInt(key)]
-        if (!box.articles) {
-          dispatch(getBoxArticles(box.id))
-        }
-      })
-    }
-  }, [dispatch, boxes])
+  useArticles(dispatch, boxes)
 
   useEffect(() => {
     if (

@@ -1,12 +1,17 @@
 import React from 'react'
 import {Button, Col, Row} from 'react-bootstrap'
+import {useDispatch, useSelector} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
 import ReadingHeader from '../components/common/ReadingHeader'
-
-//var email = require('../util/testemail.html')
+import {getBoxes} from '../store/getters/boxes'
+import {useArticles} from '../util/hooks'
 
 function ReadingPage() {
+  let dispatch = useDispatch()
+  let boxes = useSelector(getBoxes)
+  useArticles(dispatch, boxes)
+
   return (
     <Body>
       <Row>
