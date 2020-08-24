@@ -12,7 +12,7 @@ export type SummnRoute = {
 }
 
 export class AppRoutes {
-  static getPath(name: string, pathParams: {[key: string]: string}) {
+  static getPath(name: string, pathParams: {[key: string]: string} = {}) {
     let route = AppRoutes.routes.filter((route) => route.name === name)
     if (route.length !== 1) {
       throw Error("Can't get path for route named: " + name)
@@ -27,8 +27,8 @@ export class AppRoutes {
   }
 
   static routes: SummnRoute[] = [
+    {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
     {name: 'Home', path: '/', component: HomePage, showNav: false},
-    {name: 'Read', path: '/read', component: ReadingPage, showNav: false},
   ]
 
   static loggedOutRoutes: SummnRoute[] = []

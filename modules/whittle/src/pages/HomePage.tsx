@@ -2,12 +2,13 @@ import React, {CSSProperties, useEffect, useState} from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {useDispatch, useSelector} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import {useHistory, withRouter} from 'react-router-dom'
+import HelperPanel from '../components/articles/HelperPanel'
+import StoriesList from '../components/articles/StoriesList'
 import Body from '../components/common/Body'
 import Header, {HeaderTabs} from '../components/common/Header'
-import HelperPanel from '../components/common/HelperPanel'
-import StoriesList from '../components/common/Stories/StoriesList'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
+import {AppRoutes} from '../stacks'
 import {triageArticle} from '../store/actions/boxes'
 import {getArticles} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
@@ -20,6 +21,7 @@ const styles: {[key: string]: CSSProperties} = {
 
 function HomePage() {
   let dispatch = useDispatch()
+  let history = useHistory()
   let boxes = useSelector(getBoxes)
   let articles = useSelector(getArticles)
   let inbox = useSelector(getInbox)
@@ -77,22 +79,23 @@ function HomePage() {
 
   return (
     <Body>
-      <Row noGutters>
-        <Col>
-          <Header
-            inbox={inbox}
-            queue={queue}
-            library={library}
-            activeTab={activeTab}
-            onSelectTab={(tab: HeaderTabs) => setActiveTab(tab)}
-          />
-        </Col>
-      </Row>
+      <Header
+        inbox={inbox}
+        queue={queue}
+        library={library}
+        activeTab={activeTab}
+        onSelectTab={(tab: HeaderTabs) => setActiveTab(tab)}
+      />
       <Row noGutters style={{flexGrow: 1}}>
         <Col xs={8} style={styles.rightPanelContainer}>
           <StoriesList
             onHoverArticle={(article: WhittleArticle) =>
               setPreviewedArticle(article)
+            }
+            onSelectArticle={(article: WhittleArticle) =>
+              history.push(
+                AppRoutes.getPath('Read', {id: article.id.toString()})
+              )
             }
             onBookmarkArticle={archiveArticle}
             onQueueArticle={queueArticle}

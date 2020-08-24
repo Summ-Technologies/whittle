@@ -1,25 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {Col, Row} from 'react-bootstrap'
 import {WhittleArticle} from '../../models/whittle'
-import StoryHighLevel from './Stories/StoryHighLevel'
+import StoryHighLevel from './StoryHighLevel'
 
 type HelperPanelProps = {
   article: WhittleArticle | undefined
 }
 
 export default function HelperPanel(props: HelperPanelProps) {
-  let [readingTime, setReadingTime] = useState(0)
-  useEffect(() => {
-    function calculateReadingTime(content: string): number {
-      let words = content.split(' ')
-      return Math.round(words.length / 300)
-    }
-    const calculatedReadingTime =
-      props.article && props.article.content
-        ? calculateReadingTime(props.article.content)
-        : 0
-    setReadingTime(calculatedReadingTime)
-  }, [setReadingTime, props.article])
+  // let [readingTime, setReadingTime] = useState(0)
+  // useEffect(() => {
+  //   function calculateReadingTime(content: string): number {
+  //     let words = content.split(' ')
+  //     return Math.round(words.length / 300)
+  //   }
+  //   const calculatedReadingTime =
+  //     props.article && props.article.content
+  //       ? calculateReadingTime(props.article.content)
+  //       : 0
+  //   setReadingTime(calculatedReadingTime)
+  // }, [setReadingTime, props.article])
 
   return (
     <Col

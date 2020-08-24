@@ -1,11 +1,12 @@
 import React, {CSSProperties, useState} from 'react'
 import {Col, Row} from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
-import {WhittleArticle} from '../../../models/whittle'
-import StoryHighLevel from '../Stories/StoryHighLevel'
+import {WhittleArticle} from '../../models/whittle'
+import StoryHighLevel from './StoryHighLevel'
 
 type StoriesListProps = {
   storiesList: WhittleArticle[]
+  onSelectArticle: (article: WhittleArticle) => void
   onHoverArticle: (article: WhittleArticle) => void
   onBookmarkArticle: (article: WhittleArticle) => void
   onQueueArticle: (article: WhittleArticle) => void
@@ -29,6 +30,9 @@ export default function StoriesList(props: StoriesListProps) {
       borderStyle: 'solid',
       borderColor: '#000000',
     },
+    storyRow: {
+      cursor: 'pointer',
+    },
   }
 
   let [activeStory, setActiveStory] = useState<WhittleArticle | undefined>(
@@ -38,12 +42,14 @@ export default function StoriesList(props: StoriesListProps) {
   const tableRows = props.storiesList.map((story, index) => {
     return (
       <tr
+        style={styles.storyRow}
         onMouseOver={(
           event: React.MouseEvent<HTMLTableRowElement, MouseEvent>
         ) => {
           props.onHoverArticle(story)
           setActiveStory(story)
         }}
+        onClick={() => props.onSelectArticle(story)}
         key={index}>
         <td style={{borderBottom: '1px solid #dee2e6', borderTop: '0px solid'}}>
           <Row noGutters style={{padding: '0 2%', alignItems: 'center'}}>
@@ -57,17 +63,26 @@ export default function StoriesList(props: StoriesListProps) {
                 <Row style={styles.buttonContainer}>
                   <div
                     style={styles.triageButton}
-                    onClick={() => props.onArchiveArticle(story)}>
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      props.onArchiveArticle(story)
+                    }}>
                     Done
                   </div>
                   <div
                     style={styles.triageButton}
-                    onClick={() => props.onBookmarkArticle(story)}>
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      props.onBookmarkArticle(story)
+                    }}>
                     Bookmark
                   </div>
                   <div
                     style={styles.triageButton}
-                    onClick={() => props.onQueueArticle(story)}>
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      props.onQueueArticle(story)
+                    }}>
                     Queue
                   </div>
                 </Row>

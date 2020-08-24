@@ -6,6 +6,8 @@ export type ArticleResource = {
   content: string
   html_content: string
   source: string
+  tags: string // TODO remove this attribute (should be relation aka list of tag id's)
+  bookmarked: boolean // TODO remove this attribute ?? maybe
 }
 
 export type ArticleListResource = ArticleResource[]
