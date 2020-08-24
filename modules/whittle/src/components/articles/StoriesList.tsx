@@ -1,8 +1,8 @@
 import React, {CSSProperties, useState} from 'react'
-import {Col, Row} from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
 import {WhittleArticle} from '../../models/whittle'
-import StoryHighLevel from './StoryHighLevel'
+import ArticleUtils from '../../util/article'
+import StoryRowPreview from './StoryRowPreview'
 
 type StoriesListProps = {
   storiesList: WhittleArticle[]
@@ -15,23 +15,10 @@ type StoriesListProps = {
 
 export default function StoriesList(props: StoriesListProps) {
   const styles: {[key: string]: CSSProperties} = {
-    buttonContainer: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      paddingRight: 15,
-    },
-    triageButton: {
-      cursor: 'pointer',
-      margin: 5,
-      paddingLeft: 5,
-      paddingRight: 5,
-      borderWidth: 1,
-      borderRadius: 3,
-      borderStyle: 'solid',
-      borderColor: '#000000',
-    },
     storyRow: {
       cursor: 'pointer',
+      borderBottom: '1px solid #dee2e6',
+      borderTop: '0px solid',
     },
   }
 
@@ -49,46 +36,22 @@ export default function StoriesList(props: StoriesListProps) {
           props.onHoverArticle(story)
           setActiveStory(story)
         }}
-        onClick={() => props.onSelectArticle(story)}
         key={index}>
-        <td style={{borderBottom: '1px solid #dee2e6', borderTop: '0px solid'}}>
-          <Row noGutters style={{padding: '0 2%', alignItems: 'center'}}>
-            <StoryHighLevel
-              title={story.title}
-              source={story.source}
-              topics={['Startups', 'test topic']}
-            />
-            <Col xs={4}>
-              {activeStory === story ? (
-                <Row style={styles.buttonContainer}>
-                  <div
-                    style={styles.triageButton}
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      props.onArchiveArticle(story)
-                    }}>
-                    Done
-                  </div>
-                  <div
-                    style={styles.triageButton}
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      props.onBookmarkArticle(story)
-                    }}>
-                    Bookmark
-                  </div>
-                  <div
-                    style={styles.triageButton}
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      props.onQueueArticle(story)
-                    }}>
-                    Queue
-                  </div>
-                </Row>
-              ) : undefined}
-            </Col>
-          </Row>
+        <td>
+          <StoryRowPreview
+            title={story.title}
+            source={story.source}
+            readingTime={
+              activeStory && activeStory.content
+                ? ArticleUtils.calculateReadingTime(activeStory.content)
+                : 0
+            }
+            showTriage={activeStory === story}
+            onSelect={() => props.onSelectArticle(story)}
+            onBookmark={() => props.onBookmarkArticle(story)}
+            onQueue={() => props.onQueueArticle(story)}
+            onArchive={() => props.onArchiveArticle(story)}
+          />
         </td>
       </tr>
     )

@@ -6,6 +6,7 @@ type StoryHighLevelProps = {
   title: String
   topics: String[]
   source: String
+  readingTime: number
 }
 
 const styles: {[key: string]: CSSProperties} = {
@@ -21,15 +22,15 @@ const styles: {[key: string]: CSSProperties} = {
 export default function StoryHighLevel(props: StoryHighLevelProps) {
   return (
     <Col>
-      <Row>
+      <Row noGutters>
         <div style={styles.title}>{props.title}</div>
       </Row>
-      <Row style={{paddingTop: 5}}>
-        <div style={styles.readingTime}>{'0 mins'}</div>
+      <Row noGutters style={{paddingTop: 5}}>
+        <div style={styles.readingTime}>{`${props.readingTime} mins`}</div>
         <div style={styles.readingTime}>{props.source}</div>
         <div style={styles.readingTime}>{'AUTHOR'}</div>
       </Row>
-      <Row style={{paddingTop: 10}}>
+      <Row noGutters style={{paddingTop: 10}}>
         {props.topics.map((topic) => {
           return <TopicTag name={topic} />
         })}

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Col, Row} from 'react-bootstrap'
 import {WhittleArticle} from '../../models/whittle'
+import ArticleUtils from '../../util/article'
 import StoryHighLevel from './StoryHighLevel'
 
 type HelperPanelProps = {
@@ -8,19 +9,6 @@ type HelperPanelProps = {
 }
 
 export default function HelperPanel(props: HelperPanelProps) {
-  // let [readingTime, setReadingTime] = useState(0)
-  // useEffect(() => {
-  //   function calculateReadingTime(content: string): number {
-  //     let words = content.split(' ')
-  //     return Math.round(words.length / 300)
-  //   }
-  //   const calculatedReadingTime =
-  //     props.article && props.article.content
-  //       ? calculateReadingTime(props.article.content)
-  //       : 0
-  //   setReadingTime(calculatedReadingTime)
-  // }, [setReadingTime, props.article])
-
   return (
     <Col
       style={{
@@ -36,6 +24,11 @@ export default function HelperPanel(props: HelperPanelProps) {
             props.article && props.article.title ? props.article.title : ''
           }
           topics={['Startups', 'test topic']}
+          readingTime={
+            props.article && props.article.content
+              ? ArticleUtils.calculateReadingTime(props.article.content)
+              : 0
+          }
         />
       </Row>
       <Row style={{paddingLeft: 16, paddingRight: 16}}>
