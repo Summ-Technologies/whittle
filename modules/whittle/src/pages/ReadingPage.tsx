@@ -2,6 +2,7 @@ import React from 'react'
 import {Col, Row} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
+import StoryBody from '../components/articles/StoryBody'
 import StoryRowPreview from '../components/articles/StoryRowPreview'
 import Body from '../components/common/Body'
 import Header, {HeaderTabs} from '../components/common/Header'
@@ -68,11 +69,7 @@ function ReadingPage(props: ReadingPageProps) {
                 onBookmark={() => archiveArticle(article)}
                 onArchive={() => archiveArticle(article)}
               />
-
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: article.html_content,
-                }}></div>
+              <StoryBody markdown={article.html_content} />
             </>
           ) : undefined}
         </Col>
