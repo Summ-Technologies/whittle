@@ -25,3 +25,34 @@ export function postTriage(articleId: number, boxId: number) {
     ],
   })
 }
+
+/**
+ * TODO REMOVE THIS METHOD THIS IS A HACK ONLY FOR USER INTERVIEWS
+ */
+export function postArticle(
+  title: string,
+  subjectline: string,
+  source: string,
+  outline: string,
+  content: string,
+  tags: string
+) {
+  let endpoint = '/v1.0/user/admin/articles'
+  return createApiAction({
+    endpoint,
+    method: 'POST',
+    body: JSON.stringify({
+      title,
+      subjectline,
+      source,
+      content: outline,
+      htmlContent: content,
+      tags,
+    }),
+    types: [
+      'POST_NEW_ARTICLE_REQUEST',
+      'POST_NEW_ARTICLE_SUCCESS',
+      'POST_NEW_ARTICLE_FAILURE',
+    ],
+  })
+}
