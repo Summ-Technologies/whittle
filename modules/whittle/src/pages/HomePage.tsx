@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
 import Header, {HeaderTabs} from '../components/common/Header'
 import HelperPanel from '../components/common/HelperPanel'
-import StoriesList from '../components/common/StoriesList'
+import StoriesList from '../components/common/Stories/StoriesList'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {
   getBoxArticles,
@@ -92,7 +92,7 @@ function HomePage() {
 
   return (
     <Body>
-      <Row>
+      <Row noGutters>
         <Col>
           <Header
             inbox={inbox}
@@ -103,8 +103,8 @@ function HomePage() {
           />
         </Col>
       </Row>
-      <Row style={{flexGrow: 1}}>
-        <Col xs={6} style={styles.rightPanelContainer}>
+      <Row noGutters style={{flexGrow: 1}}>
+        <Col xs={8} style={styles.rightPanelContainer}>
           <StoriesList
             onHoverArticle={(article: WhittleArticle) =>
               setPreviewedArticle(article)
@@ -121,7 +121,7 @@ function HomePage() {
             }
           />
         </Col>
-        <Col xs={6} style={styles.rightPanelContainer}>
+        <Col xs={4} style={styles.rightPanelContainer}>
           <HelperPanel article={previewedArticle} />
         </Col>
       </Row>

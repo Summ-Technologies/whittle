@@ -11,7 +11,7 @@ export default function HelperPanel(props: HelperPanelProps) {
   useEffect(() => {
     function calculateReadingTime(content: string): number {
       let words = content.split(' ')
-      return Math.round(words.length / 130)
+      return Math.round(words.length / 300)
     }
     const calculatedReadingTime =
       props.article && props.article.content
