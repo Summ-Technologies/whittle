@@ -50,12 +50,15 @@ export default function boxesReducer(
         .articleId
       boxId = (action as {meta: {boxId: number; articleId: number}}).meta.boxId
       // add article to new box
-      let updatedArticlesList = [articleId]
       let articlesList =
         state.boxes[boxId] && state.boxes[boxId].articles
           ? state.boxes[boxId].articles
           : []
+      let updatedArticlesList = []
       if (articlesList) {
+        if (!articlesList.includes(articleId)) {
+          updatedArticlesList.push(articleId)
+        }
         articlesList.forEach((articleId) => updatedArticlesList.push(articleId))
       }
       updatedBox = {
@@ -84,8 +87,8 @@ export default function boxesReducer(
           ...state,
           boxes: {
             ...state.boxes,
-            [boxId]: updatedBox,
             [(updatedBox2 as WhittleBox).id]: updatedBox2,
+            [boxId]: updatedBox,
           },
         }
       } else {
