@@ -1,7 +1,7 @@
-# Last released = 0.2.12
+# Last released = n/a
 version=latest
 docker-user=jaredhanson11
-name=${docker-user}/summn-admin-web
+name=${docker-user}/whittle
 
 build:
 	docker build . -t ${name}:${version}
