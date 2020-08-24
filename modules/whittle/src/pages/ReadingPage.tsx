@@ -52,7 +52,7 @@ function ReadingPage(props: ReadingPageProps) {
           history.push(AppRoutes.getPath('Home'))
         }
       />
-      <Row>
+      <Row style={{paddingTop: 16}}>
         <Col md={{span: '10', offset: '1'}}>
           {article ? (
             <>
@@ -70,7 +70,9 @@ function ReadingPage(props: ReadingPageProps) {
                 onBookmark={() => archiveArticle(article)}
                 onArchive={() => archiveArticle(article)}
               />
-              <StoryBody markdown={article.html_content} />
+              <Row noGutters style={{paddingTop: 24}}>
+                <StoryBody markdown={article.html_content} />
+              </Row>
             </>
           ) : undefined}
         </Col>

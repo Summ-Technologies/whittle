@@ -13,6 +13,8 @@ export default function TopicTag(props: TopicTagProps) {
         fontWeight: 'bold',
         borderRadius: 6,
         marginRight: 6,
+        marginTop: 5,
+        marginBottom: 5,
         paddingLeft: 7,
         paddingRight: 7,
       }}>

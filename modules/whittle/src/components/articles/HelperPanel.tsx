@@ -15,7 +15,7 @@ export default function HelperPanel(props: HelperPanelProps) {
         backgroundColor: '#EAEDFF',
         height: '100%',
       }}>
-      <Row style={{paddingLeft: 16, paddingTop: 10}}>
+      <Row style={{paddingTop: 10}}>
         <StoryHighLevel
           source={
             props.article && props.article.source ? props.article.source : ''
@@ -31,7 +31,7 @@ export default function HelperPanel(props: HelperPanelProps) {
           }
         />
       </Row>
-      <Row style={{paddingLeft: 16, paddingRight: 16}}>
+      <Row noGutters>
         <div
           style={{
             paddingTop: 16,
