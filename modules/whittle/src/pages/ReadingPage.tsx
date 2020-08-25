@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Col, Row} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
+import ReadingNavigationButtons from '../components/articles/ReaderNavigationButtons'
 import StoryBody from '../components/articles/StoryBody'
 import StoryRowPreview from '../components/articles/StoryRowPreview'
 import Body from '../components/common/Body'
@@ -24,8 +25,43 @@ function ReadingPage(props: ReadingPageProps) {
   let library = useSelector(getLibrary)
   let article = useSelector(getArticle(parseInt(props.match.params.id)))
   let history = useHistory()
+  let [nextArticle, setNextArticle] = useState<number | undefined>(undefined)
+  let [previousArticle, setPreviousArticle] = useState<number | undefined>(
+    undefined
+  )
 
   useArticles(dispatch, boxes)
+
+  useEffect(() => {
+    if (article && article.id !== undefined) {
+      Object.keys(boxes).forEach((key) => {
+        let box = boxes[parseInt(key)]
+        if (box.articles && box.articles.includes(article.id)) {
+          let articleIndex = box.articles.indexOf(article.id)
+          let lenBox = box.articles.length
+          if (articleIndex > 0) {
+            let prevArticle = box.articles[articleIndex - 1]
+            setPreviousArticle(prevArticle)
+          } else {
+            setPreviousArticle(undefined)
+          }
+          if (articleIndex < lenBox - 1) {
+            let nextArticle = box.articles[articleIndex + 1]
+            setNextArticle(nextArticle)
+          } else {
+            setNextArticle(undefined)
+          }
+        }
+      })
+    }
+  }, [
+    article,
+    nextArticle,
+    setNextArticle,
+    previousArticle,
+    setPreviousArticle,
+    boxes,
+  ])
 
   /** Dispatch article to archive box */
   function archiveArticle(article: WhittleArticle) {
@@ -41,6 +77,11 @@ function ReadingPage(props: ReadingPageProps) {
     }
   }
 
+  /** Redirects to page for article with given id */
+  function navigateToArticle(id: number) {
+    history.push(AppRoutes.getPath('Read', {id: id.toString()}))
+  }
+
   return (
     <Body>
       <Header
@@ -53,29 +94,47 @@ function ReadingPage(props: ReadingPageProps) {
         }
       />
       <Row style={{paddingTop: 16}}>
-        <Col md={{span: '10', offset: '1'}}>
-          {article ? (
-            <>
-              <StoryRowPreview
-                title={article.title}
-                source={article.source}
-                tags={article.tags}
-                readingTime={
-                  article && article.html_content
-                    ? ArticleUtils.calculateReadingTime(article.html_content)
-                    : 0
-                }
-                showTriage={true}
-                onQueue={() => queueArticle(article)}
-                onBookmark={() => archiveArticle(article)}
-                onArchive={() => archiveArticle(article)}
-              />
-              <Row noGutters style={{justifyContent: 'center', paddingTop: 24}}>
-                <StoryBody html={article.html_content} />
-              </Row>
-            </>
-          ) : undefined}
+        <Col md={{span: '1'}}>
+          <ReadingNavigationButtons
+            onPressDown={
+              nextArticle !== undefined
+                ? () => navigateToArticle(nextArticle as number)
+                : undefined
+            }
+            onPressUp={
+              previousArticle !== undefined
+                ? () => navigateToArticle(previousArticle as number)
+                : undefined
+            }
+          />
         </Col>
+        {article ? (
+          <Col md={{span: '10'}}>
+            <StoryRowPreview
+              title={article.title}
+              source={article.source}
+              tags={article.tags}
+              readingTime={
+                article && article.html_content
+                  ? ArticleUtils.calculateReadingTime(article.html_content)
+                  : 0
+              }
+              showTriage={true}
+              onQueue={() => queueArticle(article)}
+              onBookmark={() => archiveArticle(article)}
+              onArchive={() => archiveArticle(article)}
+            />
+          </Col>
+        ) : undefined}
+      </Row>
+      <Row>
+        {article ? (
+          <Col md={{span: '10', offset: '1'}}>
+            <Row noGutters style={{justifyContent: 'center', paddingTop: 24}}>
+              <StoryBody html={article.html_content} />
+            </Row>
+          </Col>
+        ) : undefined}
       </Row>
     </Body>
   )
