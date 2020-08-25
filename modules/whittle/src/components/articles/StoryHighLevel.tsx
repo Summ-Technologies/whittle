@@ -1,5 +1,6 @@
 import React, {CSSProperties} from 'react'
 import {Col, Row} from 'react-bootstrap'
+import {FaCircle} from 'react-icons/fa'
 import TopicTag from './TopicTag'
 
 type StoryHighLevelProps = {
@@ -13,9 +14,10 @@ type StoryHighLevelProps = {
 const styles: {[key: string]: CSSProperties} = {
   readingTime: {
     paddingRight: 6,
-    // whiteSpace: 'nowrap',
-    // overflow: 'hidden',
-    // textOverflow: 'ellipsis',
+  },
+  source: {
+    paddingRight: 6,
+    paddingLeft: 6,
   },
   title: {fontSize: 18, fontWeight: 'bold'},
 }
@@ -26,9 +28,10 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
       <Row noGutters>
         <div style={styles.title}>{props.title}</div>
       </Row>
-      <Row noGutters style={{paddingTop: 5}}>
+      <Row noGutters style={{paddingTop: 5, alignItems: 'center'}}>
         <div style={styles.readingTime}>{`${props.readingTime} mins`}</div>
-        <div style={styles.readingTime}>{props.source}</div>
+        <FaCircle color={'black'} size={5} />
+        <div style={styles.source}>{props.source}</div>
         {props.author ? (
           <div style={styles.readingTime}>{props.author}</div>
         ) : undefined}

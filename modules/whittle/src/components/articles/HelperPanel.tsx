@@ -13,7 +13,7 @@ export default function HelperPanel(props: HelperPanelProps) {
   return (
     <Col
       style={{
-        backgroundColor: '#EAEDFF',
+        backgroundColor: '#EFF0F5',
         height: '100%',
       }}>
       <Row style={{paddingTop: 10}}>

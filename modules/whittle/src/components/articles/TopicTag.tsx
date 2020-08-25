@@ -8,15 +8,16 @@ export default function TopicTag(props: TopicTagProps) {
   return (
     <div
       style={{
-        backgroundColor: '#C0C1CB',
-        color: '#ffffff',
+        backgroundColor: '#E4E9EE',
+        color: '#7F8791',
+        fontSize: 13,
         fontWeight: 'bold',
-        borderRadius: 6,
+        borderRadius: 10,
         marginRight: 6,
         marginTop: 5,
         marginBottom: 5,
-        paddingLeft: 7,
-        paddingRight: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
       }}>
       {props.name}
     </div>

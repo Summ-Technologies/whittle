@@ -77,7 +77,8 @@ const styles: {[key: string]: CSSProperties} = {
     borderWidth: 1,
     borderRadius: 3,
     borderStyle: 'solid',
-    borderColor: '#000000',
+    borderColor: '#7F8791',
+    color: '#7F8791',
   },
   triageSection: {
     display: 'flex',

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Col, Row} from 'react-bootstrap'
+import ReactMarkdown from 'react-markdown'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import ReadingNavigationButtons from '../components/articles/ReaderNavigationButtons'
@@ -124,6 +125,25 @@ function ReadingPage(props: ReadingPageProps) {
               onBookmark={() => archiveArticle(article)}
               onArchive={() => archiveArticle(article)}
             />
+            <Row noGutters>
+              <Col>
+                <div
+                  style={{
+                    paddingTop: 16,
+                    textDecoration: 'underline',
+                    fontWeight: 'bold',
+                  }}>
+                  Outline
+                </div>
+                <div>
+                  {article && article.content ? (
+                    <ReactMarkdown source={article.content} />
+                  ) : (
+                    ''
+                  )}
+                </div>
+              </Col>
+            </Row>
           </Col>
         ) : undefined}
       </Row>
