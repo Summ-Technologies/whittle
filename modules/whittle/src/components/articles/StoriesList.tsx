@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from 'react'
+import React, {CSSProperties} from 'react'
 import Table from 'react-bootstrap/Table'
 import {WhittleArticle} from '../../models/whittle'
 import ArticleUtils from '../../util/article'
@@ -6,6 +6,7 @@ import StoryRowPreview from './StoryRowPreview'
 
 type StoriesListProps = {
   storiesList: WhittleArticle[]
+  activeStory?: WhittleArticle
   onSelectArticle: (article: WhittleArticle) => void
   onHoverArticle: (article: WhittleArticle) => void
   onBookmarkArticle: (article: WhittleArticle) => void
@@ -14,22 +15,17 @@ type StoriesListProps = {
 }
 
 export default function StoriesList(props: StoriesListProps) {
-  let [activeStory, setActiveStory] = useState<WhittleArticle | undefined>(
-    undefined
-  )
-
   const tableRows = props.storiesList.map((story, index) => {
     return (
       <tr
         style={{
           ...styles.storyRow,
-          ...(story === activeStory ? styles.storyRowActive : {}),
+          ...(story === props.activeStory ? styles.storyRowActive : {}),
         }}
         onMouseOver={(
           event: React.MouseEvent<HTMLTableRowElement, MouseEvent>
         ) => {
           props.onHoverArticle(story)
-          setActiveStory(story)
         }}
         key={index}>
         <td>
@@ -42,7 +38,7 @@ export default function StoriesList(props: StoriesListProps) {
                 ? ArticleUtils.calculateReadingTime(story.html_content)
                 : 0
             }
-            showTriage={activeStory === story}
+            showTriage={props.activeStory === story}
             onSelect={() => props.onSelectArticle(story)}
             onBookmark={() => props.onBookmarkArticle(story)}
             onQueue={() => props.onQueueArticle(story)}

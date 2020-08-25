@@ -54,6 +54,12 @@ function HomePage(props: HomePageProps) {
       let activeArticleId = activeBox.articles[0]
       let activeArticle = articles[activeArticleId]
       setPreviewedArticle(activeArticle)
+    } else if (
+      !activeBox ||
+      !activeBox.articles ||
+      !activeBox.articles.length
+    ) {
+      setPreviewedArticle(undefined)
     }
   }, [previewedArticle, setPreviewedArticle, activeBox, articles])
 
@@ -117,6 +123,7 @@ function HomePage(props: HomePageProps) {
                     .filter((val) => val)
                 : []
             }
+            activeStory={previewedArticle}
           />
         </Col>
         <Col xs={4} style={styles.rightPanelContainer}>
