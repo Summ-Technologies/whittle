@@ -6,6 +6,7 @@ type StoryHighLevelProps = {
   title: String
   topics: string[]
   source: String
+  author?: string
   readingTime: number
 }
 
@@ -28,7 +29,9 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
       <Row noGutters style={{paddingTop: 5}}>
         <div style={styles.readingTime}>{`${props.readingTime} mins`}</div>
         <div style={styles.readingTime}>{props.source}</div>
-        <div style={styles.readingTime}>{'AUTHOR'}</div>
+        {props.author ? (
+          <div style={styles.readingTime}>{props.author}</div>
+        ) : undefined}
       </Row>
       <Row noGutters style={{paddingTop: 10}}>
         {props.topics.map((topic) => {
