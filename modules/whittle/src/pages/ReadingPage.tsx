@@ -61,8 +61,8 @@ function ReadingPage(props: ReadingPageProps) {
                 source={article.source}
                 tags={article.tags}
                 readingTime={
-                  article && article.content
-                    ? ArticleUtils.calculateReadingTime(article.content)
+                  article && article.html_content
+                    ? ArticleUtils.calculateReadingTime(article.html_content)
                     : 0
                 }
                 showTriage={true}
@@ -70,8 +70,8 @@ function ReadingPage(props: ReadingPageProps) {
                 onBookmark={() => archiveArticle(article)}
                 onArchive={() => archiveArticle(article)}
               />
-              <Row noGutters style={{paddingTop: 24}}>
-                <StoryBody markdown={article.html_content} />
+              <Row noGutters style={{justifyContent: 'center', paddingTop: 24}}>
+                <StoryBody html={article.html_content} />
               </Row>
             </>
           ) : undefined}

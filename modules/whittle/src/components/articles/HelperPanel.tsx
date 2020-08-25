@@ -25,8 +25,8 @@ export default function HelperPanel(props: HelperPanelProps) {
           }
           topics={props.article && props.article.tags ? props.article.tags : []}
           readingTime={
-            props.article && props.article.content
-              ? ArticleUtils.calculateReadingTime(props.article.content)
+            props.article && props.article.html_content
+              ? ArticleUtils.calculateReadingTime(props.article.html_content)
               : 0
           }
         />

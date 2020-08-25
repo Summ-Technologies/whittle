@@ -1,10 +1,8 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
-import './StoryBody.css'
 
 type StoryBodyProps = {
-  markdown: string
+  html: string
 }
 export default function StoryBody(props: StoryBodyProps) {
-  return <ReactMarkdown className="story-content" source={props.markdown} />
+  return <div dangerouslySetInnerHTML={{__html: props.html}}></div>
 }
