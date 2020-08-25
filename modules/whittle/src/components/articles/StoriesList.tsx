@@ -20,7 +20,9 @@ export default function StoriesList(props: StoriesListProps) {
       <tr
         style={{
           ...styles.storyRow,
-          ...(story === props.activeStory ? styles.storyRowActive : {}),
+          ...(props.activeStory && story.id === props.activeStory.id
+            ? styles.storyRowActive
+            : {}),
         }}
         onMouseOver={(
           event: React.MouseEvent<HTMLTableRowElement, MouseEvent>
