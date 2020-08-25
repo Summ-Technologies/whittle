@@ -1,5 +1,6 @@
 import React from 'react'
 import {Col, Row} from 'react-bootstrap'
+import ReactMarkdown from 'react-markdown'
 import {WhittleArticle} from '../../models/whittle'
 import ArticleUtils from '../../util/article'
 import StoryHighLevel from './StoryHighLevel'
@@ -32,15 +33,23 @@ export default function HelperPanel(props: HelperPanelProps) {
         />
       </Row>
       <Row noGutters>
-        <div
-          style={{
-            paddingTop: 16,
-            textDecoration: 'underline',
-            fontWeight: 'bold',
-          }}>
-          Outline
-        </div>
-        {props.article && props.article.content ? props.article.content : ''}
+        <Col>
+          <div
+            style={{
+              paddingTop: 16,
+              textDecoration: 'underline',
+              fontWeight: 'bold',
+            }}>
+            Outline
+          </div>
+          <div>
+            {props.article && props.article.content ? (
+              <ReactMarkdown source={props.article.content} />
+            ) : (
+              ''
+            )}
+          </div>
+        </Col>
       </Row>
     </Col>
   )

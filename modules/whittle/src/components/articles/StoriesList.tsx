@@ -43,8 +43,8 @@ export default function StoriesList(props: StoriesListProps) {
             source={story.source}
             tags={story.tags ? story.tags : []}
             readingTime={
-              activeStory && activeStory.html_content
-                ? ArticleUtils.calculateReadingTime(activeStory.html_content)
+              story && story.html_content
+                ? ArticleUtils.calculateReadingTime(story.html_content)
                 : 0
             }
             showTriage={activeStory === story}
