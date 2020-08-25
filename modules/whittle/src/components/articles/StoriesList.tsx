@@ -14,14 +14,6 @@ type StoriesListProps = {
 }
 
 export default function StoriesList(props: StoriesListProps) {
-  const styles: {[key: string]: CSSProperties} = {
-    storyRow: {
-      cursor: 'pointer',
-      borderBottom: '1px solid #dee2e6',
-      borderTop: '0px solid',
-    },
-  }
-
   let [activeStory, setActiveStory] = useState<WhittleArticle | undefined>(
     undefined
   )
@@ -29,7 +21,10 @@ export default function StoriesList(props: StoriesListProps) {
   const tableRows = props.storiesList.map((story, index) => {
     return (
       <tr
-        style={styles.storyRow}
+        style={{
+          ...styles.storyRow,
+          ...(story === activeStory ? styles.storyRowActive : {}),
+        }}
         onMouseOver={(
           event: React.MouseEvent<HTMLTableRowElement, MouseEvent>
         ) => {
@@ -63,4 +58,14 @@ export default function StoriesList(props: StoriesListProps) {
       <tbody>{tableRows}</tbody>
     </Table>
   )
+}
+const styles: {[key: string]: CSSProperties} = {
+  storyRow: {
+    cursor: 'pointer',
+    borderBottom: '1px solid #dee2e6',
+    borderTop: '0px solid',
+  },
+  storyRowActive: {
+    backgroundColor: 'rgba(0,0,0,0.075)',
+  },
 }

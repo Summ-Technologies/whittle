@@ -45,10 +45,11 @@ function HomePage(props: HomePageProps) {
 
   useEffect(() => {
     if (
-      previewedArticle === undefined &&
       activeBox &&
       activeBox.articles &&
-      activeBox.articles.length
+      activeBox.articles.length &&
+      (previewedArticle === undefined ||
+        !activeBox.articles.includes(previewedArticle.id))
     ) {
       let activeArticleId = activeBox.articles[0]
       let activeArticle = articles[activeArticleId]
