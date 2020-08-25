@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
+import {Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import AdminPage from './pages/AdminPage'
 import HomePage from './pages/HomePage'
@@ -30,7 +31,13 @@ export class AppRoutes {
   static routes: SummnRoute[] = [
     {name: 'Admin', path: '/admin', component: AdminPage, showNav: false},
     {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
-    {name: 'Home', path: '/', component: HomePage, showNav: false},
+    {name: 'Home', path: '/b/:box', component: HomePage, showNav: false},
+    {
+      name: 'RedirectInbox',
+      path: '/*',
+      component: <Redirect to="/b/inbox" />,
+      showNav: false,
+    },
   ]
 
   static loggedOutRoutes: SummnRoute[] = []

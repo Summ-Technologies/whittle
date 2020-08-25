@@ -2,7 +2,7 @@ import React, {CSSProperties, useEffect, useState} from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {useDispatch, useSelector} from 'react-redux'
-import {useHistory, withRouter} from 'react-router-dom'
+import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import HelperPanel from '../components/articles/HelperPanel'
 import StoriesList from '../components/articles/StoriesList'
 import Body from '../components/common/Body'
@@ -19,7 +19,9 @@ const styles: {[key: string]: CSSProperties} = {
   leftPanelContainer: {height: '100%', overflowX: 'scroll'},
 }
 
-function HomePage() {
+type HomePageProps = RouteComponentProps<{box: string}>
+
+function HomePage(props: HomePageProps) {
   let dispatch = useDispatch()
   let history = useHistory()
   let boxes = useSelector(getBoxes)
@@ -28,7 +30,12 @@ function HomePage() {
   let queue = useSelector(getQueue)
   let library = useSelector(getLibrary)
 
-  let [activeTab, setActiveTab] = useState<HeaderTabs>('inbox')
+  let activeTab = (HeaderTabs as ReadonlyArray<string>).includes(
+    props.match.params.box
+  )
+    ? (props.match.params.box as HeaderTabs)
+    : 'inbox'
+
   let [activeBox, setActiveBox] = useState<WhittleBox | undefined>(undefined)
   let [previewedArticle, setPreviewedArticle] = useState<
     WhittleArticle | undefined
@@ -84,7 +91,9 @@ function HomePage() {
         queue={queue}
         library={library}
         activeTab={activeTab}
-        onSelectTab={(tab: HeaderTabs) => setActiveTab(tab)}
+        onSelectTab={(tab: HeaderTabs) =>
+          history.push(AppRoutes.getPath('Home', {box: tab}))
+        }
       />
       <Row noGutters style={{flexGrow: 1}}>
         <Col xs={8} style={styles.rightPanelContainer}>

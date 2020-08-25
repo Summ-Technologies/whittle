@@ -91,7 +91,7 @@ function ReadingPage(props: ReadingPageProps) {
         library={library}
         activeTab={undefined}
         onSelectTab={(tab: HeaderTabs) =>
-          history.push(AppRoutes.getPath('Home'))
+          history.push(AppRoutes.getPath('Home', {box: tab}))
         }
       />
       <Row style={{paddingTop: 16}}>

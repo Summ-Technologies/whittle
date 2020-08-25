@@ -10,7 +10,8 @@ type HeaderProps = {
   onSelectTab: (tab: HeaderTabs) => void
 }
 
-export type HeaderTabs = 'inbox' | 'queue' | 'library'
+export const HeaderTabs = ['inbox', 'queue', 'library'] as const
+export type HeaderTabs = typeof HeaderTabs[number]
 
 const styles: {[key: string]: CSSProperties} = {
   headerTab: {
