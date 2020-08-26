@@ -31,7 +31,7 @@ export class AppRoutes {
   static routes: SummnRoute[] = [
     {name: 'Admin', path: '/admin', component: AdminPage, showNav: false},
     {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
-    {name: 'Home', path: '/b/:box', component: HomePage, showNav: false},
+    {name: 'Box', path: '/b/:box', component: HomePage, showNav: false},
     {
       name: 'RedirectInbox',
       path: '/*',

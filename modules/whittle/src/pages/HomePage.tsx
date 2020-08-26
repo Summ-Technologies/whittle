@@ -31,7 +31,7 @@ function HomePage(props: HomePageProps) {
   let library = useSelector(getLibrary)
 
   let activeTab = (HeaderTabs as ReadonlyArray<string>).includes(
-    props.match.params.box
+    props.match.params.box.toLowerCase()
   )
     ? (props.match.params.box as HeaderTabs)
     : 'inbox'
@@ -99,7 +99,7 @@ function HomePage(props: HomePageProps) {
         library={library}
         activeTab={activeTab}
         onSelectTab={(tab: HeaderTabs) =>
-          history.push(AppRoutes.getPath('Home', {box: tab}))
+          history.push(AppRoutes.getPath('Box', {box: tab}))
         }
       />
       <Row noGutters style={{flexGrow: 1}}>

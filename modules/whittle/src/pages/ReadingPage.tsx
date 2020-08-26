@@ -8,7 +8,7 @@ import StoryBody from '../components/articles/StoryBody'
 import StoryRowPreview from '../components/articles/StoryRowPreview'
 import Body from '../components/common/Body'
 import Header, {HeaderTabs} from '../components/common/Header'
-import {WhittleArticle} from '../models/whittle'
+import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {triageArticle} from '../store/actions/boxes'
 import {getArticle} from '../store/getters/articles'
@@ -30,6 +30,7 @@ function ReadingPage(props: ReadingPageProps) {
   let [previousArticle, setPreviousArticle] = useState<number | undefined>(
     undefined
   )
+  let [currentBox, setCurrentBox] = useState<WhittleBox | undefined>(undefined)
 
   useArticles(dispatch, boxes)
 
@@ -38,6 +39,7 @@ function ReadingPage(props: ReadingPageProps) {
       Object.keys(boxes).forEach((key) => {
         let box = boxes[parseInt(key)]
         if (box.articles && box.articles.includes(article.id)) {
+          setCurrentBox(box)
           let articleIndex = box.articles.indexOf(article.id)
           let lenBox = box.articles.length
           if (articleIndex > 0) {
@@ -64,17 +66,32 @@ function ReadingPage(props: ReadingPageProps) {
     boxes,
   ])
 
+  function triage(articleId: number, boxId: number) {
+    dispatch(triageArticle(articleId, boxId))
+    if (nextArticle !== undefined) {
+      history.push(AppRoutes.getPath('Read', {id: nextArticle.toString()}))
+    } else {
+      if (currentBox) {
+        history.push(
+          AppRoutes.getPath('Box', {box: currentBox.name.toLowerCase()})
+        )
+      } else {
+        history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
+      }
+    }
+  }
+
   /** Dispatch article to archive box */
   function archiveArticle(article: WhittleArticle) {
     if (library && article) {
-      dispatch(triageArticle(article.id, library.id))
+      triage(article.id, library.id)
     }
   }
 
   /** Dispatch article to library box */
   function queueArticle(article: WhittleArticle) {
     if (queue && article) {
-      dispatch(triageArticle(article.id, queue.id))
+      triage(article.id, queue.id)
     }
   }
 
@@ -91,7 +108,7 @@ function ReadingPage(props: ReadingPageProps) {
         library={library}
         activeTab={undefined}
         onSelectTab={(tab: HeaderTabs) =>
-          history.push(AppRoutes.getPath('Home', {box: tab}))
+          history.push(AppRoutes.getPath('Box', {box: tab}))
         }
       />
       <Row style={{paddingTop: 16}}>
