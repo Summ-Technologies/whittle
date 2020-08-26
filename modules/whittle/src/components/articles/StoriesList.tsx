@@ -40,7 +40,10 @@ export default function StoriesList(props: StoriesListProps) {
                 ? ArticleUtils.calculateReadingTime(story.html_content)
                 : 0
             }
-            showTriage={props.activeStory === story}
+            showTriage={
+              props.activeStory !== undefined &&
+              props.activeStory.id === story.id
+            }
             onSelect={() => props.onSelectArticle(story)}
             onBookmark={() => props.onBookmarkArticle(story)}
             onQueue={() => props.onQueueArticle(story)}

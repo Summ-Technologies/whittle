@@ -1,6 +1,10 @@
-import React, {CSSProperties} from 'react'
+import React, {CSSProperties, ReactElement, useState} from 'react'
 import Col from 'react-bootstrap/Col'
+import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Row from 'react-bootstrap/Row'
+import Tooltip from 'react-bootstrap/Tooltip'
+import {FaBookmark, FaCheckCircle, FaList} from 'react-icons/fa'
 import StoryHighLevel from './StoryHighLevel'
 
 type StoryRowPreviewProps = {
@@ -16,6 +20,24 @@ type StoryRowPreviewProps = {
 }
 
 export default function StoryRowPreview(props: StoryRowPreviewProps) {
+  let [done, setDone] = useState(false)
+  let [queued, setQueued] = useState(false)
+  let [bookmarked, setBookmarked] = useState(false)
+
+  function simpleTooltip(val: string): OverlayChildren {
+    return <Tooltip id="button-tooltip">{val}</Tooltip>
+  }
+
+  function simpleOverlay(val: string) {
+    return (children: ReactElement) => (
+      <OverlayTrigger
+        placement="top"
+        delay={{show: 200, hide: 200}}
+        overlay={simpleTooltip(val)}>
+        {children}
+      </OverlayTrigger>
+    )
+  }
   return (
     <Row
       style={props.onSelect ? {cursor: 'pointer'} : undefined}
@@ -32,28 +54,43 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
         {props.showTriage ? (
           <Row style={styles.buttonContainer}>
             <div
-              style={styles.triageButton}
+              style={{
+                ...styles.triageButton,
+                ...(done ? styles.triageButtonSelected : {}),
+              }}
               onClick={(event) => {
                 event.stopPropagation()
                 props.onArchive()
-              }}>
-              Done
+              }}
+              onMouseOver={() => setDone(true)}
+              onMouseOut={() => setDone(false)}>
+              {simpleOverlay('Mark as Done')(<FaCheckCircle />)}
             </div>
             <div
-              style={styles.triageButton}
+              style={{
+                ...styles.triageButton,
+                ...(bookmarked ? styles.triageButtonSelected : {}),
+              }}
               onClick={(event) => {
                 event.stopPropagation()
                 props.onBookmark()
-              }}>
-              Bookmark
+              }}
+              onMouseOver={() => setBookmarked(true)}
+              onMouseOut={() => setBookmarked(false)}>
+              {simpleOverlay('Bookmark')(<FaBookmark />)}
             </div>
             <div
-              style={styles.triageButton}
+              style={{
+                ...styles.triageButton,
+                ...(queued ? styles.triageButtonSelected : {}),
+              }}
               onClick={(event) => {
                 event.stopPropagation()
                 props.onQueue()
-              }}>
-              Queue
+              }}
+              onMouseOver={() => setQueued(true)}
+              onMouseOut={() => setQueued(false)}>
+              {simpleOverlay('Move to Queue')(<FaList />)}
             </div>
           </Row>
         ) : undefined}
@@ -74,14 +111,15 @@ const styles: {[key: string]: CSSProperties} = {
     margin: 5,
     paddingLeft: 5,
     paddingRight: 5,
-    borderWidth: 1,
-    borderRadius: 3,
-    borderStyle: 'solid',
-    borderColor: '#7F8791',
     color: '#7F8791',
+    fontSize: 25,
+  },
+  triageButtonSelected: {
+    color: 'blue',
   },
   triageSection: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 }
