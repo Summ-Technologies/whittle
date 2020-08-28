@@ -40,6 +40,7 @@ export default function Header(props: HeaderProps) {
         alignItems: 'flex-end',
         margin: 0,
         borderBottom: '1px solid #dee2e6',
+        paddingLeft: '15px',
       }}>
       <HeaderTitle name="Whittle" />
       <div style={styles.boxesContainer}>

@@ -8,7 +8,6 @@ export default function Body(props: React.PropsWithChildren<{}>) {
         display: 'flex',
         flexDirection: 'column',
         height: '100vh',
-        padding: '0 0 0 5%',
       }}
       className="mx-auto">
       {props.children}
