@@ -103,6 +103,9 @@ function HomePage(props: HomePageProps) {
         }
       />
       <Row noGutters style={{flexGrow: 1}}>
+        <Col xs={4} style={styles.rightPanelContainer}>
+          <HelperPanel article={previewedArticle} />
+        </Col>
         <Col xs={8} style={styles.rightPanelContainer}>
           <StoriesList
             onHoverArticle={(article: WhittleArticle) =>
@@ -125,9 +128,6 @@ function HomePage(props: HomePageProps) {
             }
             activeStory={previewedArticle}
           />
-        </Col>
-        <Col xs={4} style={styles.rightPanelContainer}>
-          <HelperPanel article={previewedArticle} />
         </Col>
       </Row>
     </Body>

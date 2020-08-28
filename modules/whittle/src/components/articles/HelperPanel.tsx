@@ -13,11 +13,12 @@ export default function HelperPanel(props: HelperPanelProps) {
   return (
     <Col
       style={{
-        backgroundColor: '#EFF0F5',
+        backgroundColor: '#F2F5F7',
         height: '100%',
       }}>
       <Row style={{paddingTop: 10}}>
         <StoryHighLevel
+          showTags={true}
           source={
             props.article && props.article.source ? props.article.source : ''
           }
@@ -36,9 +37,16 @@ export default function HelperPanel(props: HelperPanelProps) {
         <Col>
           <div
             style={{
+              height: 1,
+              width: '100%',
+              backgroundColor: '#c4c4c4',
+              marginTop: 24,
+            }}></div>
+          <div
+            style={{
               paddingTop: 16,
-              textDecoration: 'underline',
               fontWeight: 'bold',
+              color: '#BFC2C3',
             }}>
             Outline
           </div>
@@ -48,6 +56,21 @@ export default function HelperPanel(props: HelperPanelProps) {
             ) : (
               ''
             )}
+          </div>
+          <div
+            style={{
+              height: 1,
+              width: '100%',
+              backgroundColor: '#c4c4c4',
+              marginTop: 24,
+            }}></div>
+          <div
+            style={{
+              paddingTop: 16,
+              fontWeight: 'bold',
+              color: '#BFC2C3',
+            }}>
+            Your highlights
           </div>
         </Col>
       </Row>

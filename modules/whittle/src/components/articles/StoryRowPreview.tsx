@@ -45,6 +45,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
         if (props.onSelect) props.onSelect()
       }}>
       <StoryHighLevel
+        showTags={false}
         title={props.title}
         source={props.source}
         topics={props.tags}
@@ -64,7 +65,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onMouseOver={() => setDone(true)}
               onMouseOut={() => setDone(false)}>
-              {simpleOverlay('Mark as Done')(<FaCheckCircle />)}
+              {simpleOverlay('Mark as Done')(<FaCheckCircle size={20} />)}
             </div>
             <div
               style={{
@@ -77,7 +78,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onMouseOver={() => setBookmarked(true)}
               onMouseOut={() => setBookmarked(false)}>
-              {simpleOverlay('Bookmark')(<FaBookmark />)}
+              {simpleOverlay('Bookmark')(<FaBookmark size={20} />)}
             </div>
             <div
               style={{
@@ -90,7 +91,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onMouseOver={() => setQueued(true)}
               onMouseOut={() => setQueued(false)}>
-              {simpleOverlay('Move to Queue')(<FaList />)}
+              {simpleOverlay('Move to Queue')(<FaList size={20} />)}
             </div>
           </Row>
         ) : undefined}
