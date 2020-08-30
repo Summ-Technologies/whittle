@@ -128,6 +128,31 @@ function HomePage(props: HomePageProps) {
             }
             activeStory={previewedArticle}
           />
+          {activeTab == 'inbox' ? (
+            <Row noGutters>
+              <div
+                className="clickable"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  color: '#9f9f9f',
+                  marginLeft: 15,
+                }}>
+                <div style={{fontWeight: 'bold'}}>{'175'}</div>
+                <div style={{paddingLeft: 7, color: '#9f9f9f'}}>
+                  {'older (7+ days)'}
+                </div>
+              </div>
+              <div
+                className="clickable"
+                style={{
+                  color: '#9f9f9f',
+                  marginLeft: 24,
+                }}>
+                Move all to library?
+              </div>
+            </Row>
+          ) : undefined}
         </Col>
       </Row>
     </Body>

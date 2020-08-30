@@ -44,8 +44,8 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
           })}
           <div style={{width: 6}}></div>
           <Row noGutters className="clickable" style={{alignItems: 'center'}}>
-            <FaPlus size={10} color="#c4c4c4" />
-            <div style={{color: '#c4c4c4', paddingLeft: 6, cursor: 'pointer'}}>
+            <FaPlus size={10} color="#9f9f9f" />
+            <div style={{color: '#9f9f9f', paddingLeft: 6, cursor: 'pointer'}}>
               Add tags
             </div>
           </Row>

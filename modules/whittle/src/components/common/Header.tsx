@@ -1,5 +1,9 @@
-import React, {CSSProperties} from 'react'
+import React, {CSSProperties, ReactElement} from 'react'
 import {Row} from 'react-bootstrap'
+import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
+import {FaPlus} from 'react-icons/fa'
 import {WhittleBox} from '../../models/whittle'
 
 type HeaderProps = {
@@ -27,12 +31,26 @@ const styles: {[key: string]: CSSProperties} = {
     paddingBottom: 7,
     flexDirection: 'row',
     display: 'flex',
+    alignItems: 'center',
   },
 }
 
 export default function Header(props: HeaderProps) {
   function getArticleCount(box: WhittleBox): number {
     return box && box.articles ? box.articles.length : 0
+  }
+  function simpleTooltip(val: string): OverlayChildren {
+    return <Tooltip id="button-tooltip">{val}</Tooltip>
+  }
+  function simpleOverlay(val: string) {
+    return (children: ReactElement) => (
+      <OverlayTrigger
+        placement="bottom"
+        delay={{show: 150, hide: 150}}
+        overlay={simpleTooltip(val)}>
+        {children}
+      </OverlayTrigger>
+    )
   }
   return (
     <Row
@@ -62,6 +80,8 @@ export default function Header(props: HeaderProps) {
           active={props.activeTab === 'library'}
           onClick={() => props.onSelectTab('library')}
         />
+        <div style={{width: 10}}></div>
+        {simpleOverlay('New box')(<FaPlus size={16} color="#c4c4c4" />)}
       </div>
     </Row>
   )

@@ -4,7 +4,7 @@ import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Row from 'react-bootstrap/Row'
 import Tooltip from 'react-bootstrap/Tooltip'
-import {FaBookmark, FaCheckCircle, FaList} from 'react-icons/fa'
+import {FaList, FaRegBookmark, FaRegCheckCircle} from 'react-icons/fa'
 import StoryHighLevel from './StoryHighLevel'
 
 type StoryRowPreviewProps = {
@@ -32,7 +32,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
     return (children: ReactElement) => (
       <OverlayTrigger
         placement="top"
-        delay={{show: 200, hide: 200}}
+        delay={{show: 150, hide: 150}}
         overlay={simpleTooltip(val)}>
         {children}
       </OverlayTrigger>
@@ -65,7 +65,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onMouseOver={() => setDone(true)}
               onMouseOut={() => setDone(false)}>
-              {simpleOverlay('Mark as Done')(<FaCheckCircle size={20} />)}
+              {simpleOverlay('Mark as Done')(<FaRegCheckCircle size={20} />)}
             </div>
             <div
               style={{
@@ -78,7 +78,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onMouseOver={() => setBookmarked(true)}
               onMouseOut={() => setBookmarked(false)}>
-              {simpleOverlay('Bookmark')(<FaBookmark size={20} />)}
+              {simpleOverlay('Bookmark')(<FaRegBookmark size={20} />)}
             </div>
             <div
               style={{
@@ -112,11 +112,11 @@ const styles: {[key: string]: CSSProperties} = {
     margin: 5,
     paddingLeft: 5,
     paddingRight: 5,
-    color: '#7F8791',
+    color: '#c4c4c4',
     fontSize: 25,
   },
   triageButtonSelected: {
-    color: 'blue',
+    color: '#9f9f9f',
   },
   triageSection: {
     display: 'flex',
