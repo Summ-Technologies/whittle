@@ -56,10 +56,14 @@ export default function boxesReducer(
           : []
       let updatedArticlesList = []
       if (articlesList) {
+        let add = false
         if (!articlesList.includes(articleId)) {
-          updatedArticlesList.push(articleId)
+          add = true
         }
         articlesList.forEach((articleId) => updatedArticlesList.push(articleId))
+        if (add) {
+          updatedArticlesList.push(articleId)
+        }
       }
       updatedBox = {
         ...state.boxes[boxId],
