@@ -30,7 +30,7 @@ export default function OutlineHeaderBody(
         onSelectTab={props.onSelectTab}
         onClickHome={props.onClickHome}
       />
-      <Row style={{minHeight: '0', flex: '1 1 auto'}}>
+      <Row style={{height: '0', flex: '1 1 auto'}}>
         <Col xs={8} style={{height: '100%', overflow: 'scroll'}}>
           {props.children}
         </Col>
