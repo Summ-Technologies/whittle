@@ -31,6 +31,9 @@ function ReadingPage(props: ReadingPageProps) {
     undefined
   )
   let [currentBox, setCurrentBox] = useState<WhittleBox | undefined>(undefined)
+  let [currentBoxTab, setCurrentBoxTab] = useState<HeaderTabs | undefined>(
+    undefined
+  )
 
   useArticles(dispatch, boxes)
 
@@ -39,6 +42,17 @@ function ReadingPage(props: ReadingPageProps) {
       Object.keys(boxes).forEach((key) => {
         let box = boxes[parseInt(key)]
         if (box.articles && box.articles.includes(article.id)) {
+          switch (box.name.toLowerCase()) {
+            case 'inbox':
+              setCurrentBoxTab('inbox')
+              break
+            case 'queue':
+              setCurrentBoxTab('queue')
+              break
+            case 'library':
+              setCurrentBoxTab('library')
+              break
+          }
           setCurrentBox(box)
           let articleIndex = box.articles.indexOf(article.id)
           let lenBox = box.articles.length
@@ -64,6 +78,7 @@ function ReadingPage(props: ReadingPageProps) {
     previousArticle,
     setPreviousArticle,
     boxes,
+    setCurrentBoxTab,
   ])
 
   function triage(articleId: number, boxId: number) {
@@ -106,7 +121,7 @@ function ReadingPage(props: ReadingPageProps) {
       inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
       queueCount={queue && queue.articles ? queue.articles.length : 0}
       libraryCount={library && library.articles ? library.articles.length : 0}
-      activeTab={undefined}
+      activeTab={currentBoxTab}
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
       }
