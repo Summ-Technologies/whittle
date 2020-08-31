@@ -113,7 +113,7 @@ function ReadingPage(props: ReadingPageProps) {
       onClickHome={() =>
         history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
       }>
-      <Col xs={8} style={{overflowY: 'scroll'}}>
+      <Col style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <Row style={{paddingTop: 16}}>
           <Col md={{span: '1'}}>
             <ReadingNavigationButtons
@@ -130,7 +130,7 @@ function ReadingPage(props: ReadingPageProps) {
             />
           </Col>
           {article ? (
-            <Col xs={{span: '10'}}>
+            <Col xs={{span: '11'}}>
               <StoryRowPreview
                 title={article.title}
                 source={article.source}
@@ -148,9 +148,9 @@ function ReadingPage(props: ReadingPageProps) {
             </Col>
           ) : undefined}
         </Row>
-        <Row>
+        <Row style={{minHeight: 0, flex: 1, overflowY: 'scroll'}}>
           {article ? (
-            <Col xs={{span: 10, offset: 1}}>
+            <Col xs={{span: 11, offset: 1}}>
               <StoryBody html={article.html_content} />
             </Col>
           ) : undefined}
