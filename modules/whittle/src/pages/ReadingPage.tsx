@@ -136,8 +136,17 @@ function ReadingPage(props: ReadingPageProps) {
       onClickHome={() =>
         history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
       }>
-      <Col style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-        <Row style={{paddingTop: 16}}>
+      <Col
+        style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+        <Row
+          style={{
+            paddingTop: 16,
+            paddingBottom: 16,
+          }}>
           <Col md={{span: '1'}}>
             <ReadingNavigationButtons
               onPressDown={
