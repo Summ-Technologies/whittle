@@ -7,6 +7,7 @@ import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
+import {toggleBookmark} from '../store/actions/articles'
 import {triageArticle} from '../store/actions/boxes'
 import {getArticles} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
@@ -77,6 +78,13 @@ function HomePage(props: HomePageProps) {
     }
   }
 
+  /** Dispatch action bookmarking article */
+  function doToggleBookmark(article: WhittleArticle, doBookmark: boolean) {
+    if (library && article) {
+      dispatch(toggleBookmark(article.id, doBookmark))
+    }
+  }
+
   /** Dispatch article to library box */
   function queueArticle(article: WhittleArticle) {
     if (queue && article) {
@@ -104,7 +112,7 @@ function HomePage(props: HomePageProps) {
         onSelectArticle={(article: WhittleArticle) =>
           history.push(AppRoutes.getPath('Read', {id: article.id.toString()}))
         }
-        onBookmarkArticle={archiveArticle}
+        onBookmarkArticle={doToggleBookmark}
         onQueueArticle={queueArticle}
         onArchiveArticle={archiveArticle}
         storiesList={

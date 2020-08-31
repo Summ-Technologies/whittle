@@ -10,6 +10,7 @@ import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import Row from '../components/common/Row'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
+import {toggleBookmark} from '../store/actions/articles'
 import {triageArticle} from '../store/actions/boxes'
 import {getArticle} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
@@ -103,6 +104,13 @@ function ReadingPage(props: ReadingPageProps) {
     }
   }
 
+  /** Dispatch action bookmarking article */
+  function doToggleBookmark(article: WhittleArticle, doBookmark: boolean) {
+    if (article) {
+      dispatch(toggleBookmark(article.id, doBookmark))
+    }
+  }
+
   /** Dispatch article to library box */
   function queueArticle(article: WhittleArticle) {
     if (queue && article) {
@@ -155,9 +163,12 @@ function ReadingPage(props: ReadingPageProps) {
                     ? ArticleUtils.calculateReadingTime(article.html_content)
                     : 0
                 }
+                bookmarked={article.bookmarked}
                 showTriage={true}
                 onQueue={() => queueArticle(article)}
-                onBookmark={() => archiveArticle(article)}
+                onToggleBookmark={(doBookmark: boolean) =>
+                  doToggleBookmark(article, doBookmark)
+                }
                 onArchive={() => archiveArticle(article)}
               />
             </Col>

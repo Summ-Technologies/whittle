@@ -1,7 +1,8 @@
-import {ArticleListResource} from '../../models/api'
+import {ArticleListResource, ArticleResource} from '../../models/api'
 import {WhittleArticle} from '../../models/whittle'
 import {WhittleAction} from '../actions'
 import {ApiUtils} from '../actions/api'
+import {TOGGLE_BOOKMARK_SUCCESS} from '../actions/articles'
 import {GET_BOX_ARTICLES_SUCCESS} from '../actions/boxes'
 
 export type ArticlesState = {
@@ -23,6 +24,15 @@ export default function articlesReducer(
       return {
         ...state,
         articles: {...state.articles, ...ApiUtils.listToDict(payload)},
+      }
+    case TOGGLE_BOOKMARK_SUCCESS:
+      payload = action.payload as ArticleResource
+      return {
+        ...state,
+        articles: {
+          ...state.articles,
+          [payload.id]: payload,
+        },
       }
     default:
       return state

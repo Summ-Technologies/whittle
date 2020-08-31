@@ -3,7 +3,12 @@ import Col from 'react-bootstrap/Col'
 import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import {FaList, FaRegBookmark, FaRegCheckCircle} from 'react-icons/fa'
+import {
+  FaBookmark,
+  FaList,
+  FaRegBookmark,
+  FaRegCheckCircle,
+} from 'react-icons/fa'
 import Row from '../common/Row'
 import StoryHighLevel from './StoryHighLevel'
 
@@ -13,8 +18,9 @@ type StoryRowPreviewProps = {
   tags: string[]
   readingTime: number
   showTriage: boolean
+  bookmarked: boolean
   onSelect?: () => void
-  onBookmark: () => void
+  onToggleBookmark: (doBookmark: boolean) => void
   onQueue: () => void
   onArchive: () => void
 }
@@ -22,7 +28,7 @@ type StoryRowPreviewProps = {
 export default function StoryRowPreview(props: StoryRowPreviewProps) {
   let [done, setDone] = useState(false)
   let [queued, setQueued] = useState(false)
-  let [bookmarked, setBookmarked] = useState(false)
+  let [bookmarked, setBookmarked] = useState(props.bookmarked)
 
   function simpleTooltip(val: string): OverlayChildren {
     return <Tooltip id="button-tooltip">{val}</Tooltip>
@@ -38,6 +44,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
       </OverlayTrigger>
     )
   }
+
   return (
     <Row
       style={props.onSelect ? {cursor: 'pointer'} : undefined}
@@ -74,11 +81,13 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onClick={(event) => {
                 event.stopPropagation()
-                props.onBookmark()
+                props.onToggleBookmark(!props.bookmarked)
               }}
-              onMouseOver={() => setBookmarked(true)}
-              onMouseOut={() => setBookmarked(false)}>
-              {simpleOverlay('Bookmark')(<FaRegBookmark size={20} />)}
+              onMouseOver={() => setBookmarked(!props.bookmarked)}
+              onMouseOut={() => setBookmarked(props.bookmarked)}>
+              {props.bookmarked
+                ? simpleOverlay('Remove Bookmark')(<FaBookmark size={20} />)
+                : simpleOverlay('Bookmark')(<FaRegBookmark size={20} />)}
             </div>
             <div
               style={{

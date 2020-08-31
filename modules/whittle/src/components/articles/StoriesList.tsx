@@ -9,7 +9,7 @@ type StoriesListProps = {
   activeStory?: WhittleArticle
   onSelectArticle: (article: WhittleArticle) => void
   onHoverArticle: (article: WhittleArticle) => void
-  onBookmarkArticle: (article: WhittleArticle) => void
+  onBookmarkArticle: (article: WhittleArticle, doBookmark: boolean) => void
   onQueueArticle: (article: WhittleArticle) => void
   onArchiveArticle: (article: WhittleArticle) => void
 }
@@ -44,8 +44,11 @@ export default function StoriesList(props: StoriesListProps) {
               props.activeStory !== undefined &&
               props.activeStory.id === story.id
             }
+            bookmarked={story.bookmarked}
             onSelect={() => props.onSelectArticle(story)}
-            onBookmark={() => props.onBookmarkArticle(story)}
+            onToggleBookmark={(doBookmark: boolean) =>
+              props.onBookmarkArticle(story, doBookmark)
+            }
             onQueue={() => props.onQueueArticle(story)}
             onArchive={() => props.onArchiveArticle(story)}
           />
