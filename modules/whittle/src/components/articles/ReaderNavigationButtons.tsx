@@ -12,23 +12,25 @@ export default function ReaderNavigationButtons(
   let [buttonHovered, setButtonHovered] = useState<'up' | 'down' | undefined>(
     undefined
   )
-  let [upColor, setUpColor] = useState<'grey' | 'blue' | undefined>(undefined)
-  let [downColor, setDownColor] = useState<'grey' | 'blue' | undefined>(
+  let [upColor, setUpColor] = useState<'#c4c4c4' | '#9f9f9f' | undefined>(
+    undefined
+  )
+  let [downColor, setDownColor] = useState<'#c4c4c4' | '#9f9f9f' | undefined>(
     undefined
   )
 
   useEffect(() => {
     if (props.onPressUp === undefined) {
-      setUpColor('grey')
+      setUpColor('#c4c4c4')
     } else if (buttonHovered === 'up') {
-      setUpColor('blue')
+      setUpColor('#9f9f9f')
     } else {
       setUpColor(undefined)
     }
     if (props.onPressDown === undefined) {
-      setDownColor('grey')
+      setDownColor('#c4c4c4')
     } else if (buttonHovered === 'down') {
-      setDownColor('blue')
+      setDownColor('#9f9f9f')
     } else {
       setDownColor(undefined)
     }
@@ -50,8 +52,9 @@ export default function ReaderNavigationButtons(
         onMouseOver={() => setButtonHovered('up')}
         onMouseOut={() => setButtonHovered(undefined)}
         onClick={props.onPressUp}>
-        <FaArrowUp color={upColor} size={30} />
+        <FaArrowUp color={upColor} size={27} />
       </div>
+      <div style={{height: 6}} />
       <div
         style={{
           ...styles.button,
@@ -60,7 +63,7 @@ export default function ReaderNavigationButtons(
         onMouseOver={() => setButtonHovered('down')}
         onMouseOut={() => setButtonHovered(undefined)}
         onClick={props.onPressDown}>
-        <FaArrowDown color={downColor} size={30} />
+        <FaArrowDown color={downColor} size={27} />
       </div>
     </div>
   )
@@ -74,6 +77,7 @@ const styles: {[key: string]: CSSProperties} = {
   },
   button: {
     cursor: 'pointer',
+    color: '#c4c4c4',
   },
   buttonDisabled: {
     cursor: 'not-allowed',

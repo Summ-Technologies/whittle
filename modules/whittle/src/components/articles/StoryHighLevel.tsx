@@ -16,12 +16,14 @@ type StoryHighLevelProps = {
 const styles: {[key: string]: CSSProperties} = {
   readingTime: {
     paddingRight: 6,
+    color: '#AAABB7',
   },
   source: {
     paddingRight: 6,
     paddingLeft: 6,
+    color: '#AAABB7',
   },
-  title: {fontSize: 18, fontWeight: 'bold'},
+  title: {fontSize: 18, fontWeight: 500, fontFamily: 'Inter'},
 }
 
 export default function StoryHighLevel(props: StoryHighLevelProps) {
@@ -32,7 +34,7 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
       </Row>
       <Row style={{paddingTop: 5, alignItems: 'center'}}>
         <div style={styles.readingTime}>{`${props.readingTime} mins`}</div>
-        <FaCircle color={'black'} size={5} />
+        <FaCircle color={'#AAABB7'} size={5} />
         <div style={styles.source}>{props.source}</div>
         {props.author ? (
           <div style={styles.readingTime}>{props.author}</div>
@@ -45,8 +47,8 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
           })}
           <div style={{width: 6}}></div>
           <Row className="clickable" style={{alignItems: 'center'}}>
-            <FaPlus size={10} color="#9f9f9f" />
-            <div style={{color: '#9f9f9f', paddingLeft: 6, cursor: 'pointer'}}>
+            <FaPlus size={10} color="#BFC2C3" />
+            <div style={{color: '#BFC2C3', paddingLeft: 6, cursor: 'pointer'}}>
               Add tags
             </div>
           </Row>

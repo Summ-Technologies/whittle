@@ -10,16 +10,22 @@ type HelperPanelProps = {
   article?: WhittleArticle
 }
 
+const MyRoot = (props: any) => {
+  return <div className={'markdownContainer'}>{props.children}</div>
+}
+
 export default function HelperPanel(props: HelperPanelProps) {
   return (
     <Col
       style={{
         backgroundColor: '#F2F5F7',
+        paddingLeft: 24,
+        paddingRight: 24,
         minHeight: '100%',
       }}>
       {props.article ? (
         <>
-          <Row>
+          <Row style={{paddingTop: 16}}>
             <StoryHighLevel
               showTags={true}
               source={
@@ -54,14 +60,18 @@ export default function HelperPanel(props: HelperPanelProps) {
               <div
                 style={{
                   paddingTop: 16,
-                  fontWeight: 'bold',
+                  fontWeight: 600,
                   color: '#BFC2C3',
+                  paddingBottom: 8,
                 }}>
                 Outline
               </div>
               <div>
                 {props.article && props.article.content ? (
-                  <ReactMarkdown source={props.article.content} />
+                  <ReactMarkdown
+                    source={props.article.content}
+                    renderers={{root: MyRoot}}
+                  />
                 ) : (
                   ''
                 )}
@@ -76,7 +86,7 @@ export default function HelperPanel(props: HelperPanelProps) {
               <div
                 style={{
                   paddingTop: 16,
-                  fontWeight: 'bold',
+                  fontWeight: 600,
                   color: '#BFC2C3',
                 }}>
                 Your highlights

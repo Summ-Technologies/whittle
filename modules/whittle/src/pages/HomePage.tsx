@@ -132,7 +132,7 @@ function HomePage(props: HomePageProps) {
               color: '#9f9f9f',
               marginLeft: 15,
             }}>
-            <div style={{fontWeight: 'bold'}}>{'175'}</div>
+            <div style={{fontWeight: 600}}>{'175'}</div>
             <div style={{paddingLeft: 7, color: '#9f9f9f'}}>
               {'older (7+ days)'}
             </div>

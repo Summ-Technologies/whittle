@@ -19,7 +19,7 @@ export type HeaderTabs = typeof HeaderTabs[number]
 
 const styles: {[key: string]: CSSProperties} = {
   headerTab: {
-    fontWeight: 'bold',
+    fontWeight: 600,
     color: '#979797',
     paddingLeft: 12,
     paddingRight: 12,
@@ -92,7 +92,7 @@ type HeaderTitleProps = {
 function HeaderTitle(props: HeaderTitleProps) {
   return (
     <div
-      style={{fontSize: '2em', fontWeight: 'bold', cursor: 'pointer'}}
+      style={{fontSize: '2em', fontWeight: 600, cursor: 'pointer'}}
       onClick={props.onClick}>
       Whittle
     </div>
