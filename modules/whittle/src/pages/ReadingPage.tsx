@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {Col, Row} from 'react-bootstrap'
-import ReactMarkdown from 'react-markdown'
+import {Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import ReadingNavigationButtons from '../components/articles/ReaderNavigationButtons'
 import StoryBody from '../components/articles/StoryBody'
 import StoryRowPreview from '../components/articles/StoryRowPreview'
-import Body from '../components/common/Body'
-import Header, {HeaderTabs} from '../components/common/Header'
+import {HeaderTabs} from '../components/common/Header'
+import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
+import Row from '../components/common/Row'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {triageArticle} from '../store/actions/boxes'
@@ -101,79 +101,62 @@ function ReadingPage(props: ReadingPageProps) {
   }
 
   return (
-    <Body>
-      <Header
-        inbox={inbox}
-        queue={queue}
-        library={library}
-        activeTab={undefined}
-        onSelectTab={(tab: HeaderTabs) =>
-          history.push(AppRoutes.getPath('Box', {box: tab}))
-        }
-      />
-      <Row style={{paddingTop: 16}}>
-        <Col md={{span: '1'}}>
-          <ReadingNavigationButtons
-            onPressDown={
-              nextArticle !== undefined
-                ? () => navigateToArticle(nextArticle as number)
-                : undefined
-            }
-            onPressUp={
-              previousArticle !== undefined
-                ? () => navigateToArticle(previousArticle as number)
-                : undefined
-            }
-          />
-        </Col>
-        {article ? (
-          <Col md={{span: '10'}}>
-            <StoryRowPreview
-              title={article.title}
-              source={article.source}
-              tags={article.tags}
-              readingTime={
-                article && article.html_content
-                  ? ArticleUtils.calculateReadingTime(article.html_content)
-                  : 0
+    <OutlineHeaderBody
+      article={article}
+      inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
+      queueCount={queue && queue.articles ? queue.articles.length : 0}
+      libraryCount={library && library.articles ? library.articles.length : 0}
+      activeTab={undefined}
+      onSelectTab={(tab: HeaderTabs) =>
+        history.push(AppRoutes.getPath('Box', {box: tab}))
+      }
+      onClickHome={() =>
+        history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
+      }>
+      <Col xs={8} style={{overflowY: 'scroll'}}>
+        <Row style={{paddingTop: 16}}>
+          <Col md={{span: '1'}}>
+            <ReadingNavigationButtons
+              onPressDown={
+                nextArticle !== undefined
+                  ? () => navigateToArticle(nextArticle as number)
+                  : undefined
               }
-              showTriage={true}
-              onQueue={() => queueArticle(article)}
-              onBookmark={() => archiveArticle(article)}
-              onArchive={() => archiveArticle(article)}
+              onPressUp={
+                previousArticle !== undefined
+                  ? () => navigateToArticle(previousArticle as number)
+                  : undefined
+              }
             />
-            <Row noGutters>
-              <Col>
-                <div
-                  style={{
-                    paddingTop: 16,
-                    textDecoration: 'underline',
-                    fontWeight: 'bold',
-                  }}>
-                  Outline
-                </div>
-                <div>
-                  {article && article.content ? (
-                    <ReactMarkdown source={article.content} />
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </Col>
-            </Row>
           </Col>
-        ) : undefined}
-      </Row>
-      <Row>
-        {article ? (
-          <Col md={{span: '10', offset: '1'}}>
-            <Row noGutters style={{justifyContent: 'center', paddingTop: 24}}>
+          {article ? (
+            <Col xs={{span: '10'}}>
+              <StoryRowPreview
+                title={article.title}
+                source={article.source}
+                tags={article.tags}
+                readingTime={
+                  article && article.html_content
+                    ? ArticleUtils.calculateReadingTime(article.html_content)
+                    : 0
+                }
+                showTriage={true}
+                onQueue={() => queueArticle(article)}
+                onBookmark={() => archiveArticle(article)}
+                onArchive={() => archiveArticle(article)}
+              />
+            </Col>
+          ) : undefined}
+        </Row>
+        <Row>
+          {article ? (
+            <Col xs={{span: 10, offset: 1}}>
               <StoryBody html={article.html_content} />
-            </Row>
-          </Col>
-        ) : undefined}
-      </Row>
-    </Body>
+            </Col>
+          ) : undefined}
+        </Row>
+      </Col>
+    </OutlineHeaderBody>
   )
 }
 

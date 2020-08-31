@@ -2,9 +2,9 @@ import React, {CSSProperties, ReactElement, useState} from 'react'
 import Col from 'react-bootstrap/Col'
 import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Row from 'react-bootstrap/Row'
 import Tooltip from 'react-bootstrap/Tooltip'
 import {FaList, FaRegBookmark, FaRegCheckCircle} from 'react-icons/fa'
+import Row from '../common/Row'
 import StoryHighLevel from './StoryHighLevel'
 
 type StoryRowPreviewProps = {

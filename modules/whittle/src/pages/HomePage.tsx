@@ -1,23 +1,16 @@
-import React, {CSSProperties, useEffect, useState} from 'react'
-import Col from 'react-bootstrap/Col'
+import React, {useEffect, useState} from 'react'
 import Row from 'react-bootstrap/Row'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
-import HelperPanel from '../components/articles/HelperPanel'
 import StoriesList from '../components/articles/StoriesList'
-import Body from '../components/common/Body'
-import Header, {HeaderTabs} from '../components/common/Header'
+import {HeaderTabs} from '../components/common/Header'
+import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {triageArticle} from '../store/actions/boxes'
 import {getArticles} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {useArticles} from '../util/hooks'
-
-const styles: {[key: string]: CSSProperties} = {
-  rightPanelContainer: {height: '100%'},
-  leftPanelContainer: {height: '100%', overflowX: 'scroll'},
-}
 
 type HomePageProps = RouteComponentProps<{box: string}>
 
@@ -92,70 +85,61 @@ function HomePage(props: HomePageProps) {
   }
 
   return (
-    <Body>
-      <Header
-        inbox={inbox}
-        queue={queue}
-        library={library}
-        activeTab={activeTab}
-        onSelectTab={(tab: HeaderTabs) =>
-          history.push(AppRoutes.getPath('Box', {box: tab}))
+    <OutlineHeaderBody
+      inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
+      queueCount={queue && queue.articles ? queue.articles.length : 0}
+      libraryCount={library && library.articles ? library.articles.length : 0}
+      article={previewedArticle}
+      activeTab={activeTab}
+      onSelectTab={(tab: HeaderTabs) =>
+        history.push(AppRoutes.getPath('Box', {box: tab}))
+      }
+      onClickHome={() =>
+        history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
+      }>
+      <StoriesList
+        onHoverArticle={(article: WhittleArticle) =>
+          setPreviewedArticle(article)
         }
+        onSelectArticle={(article: WhittleArticle) =>
+          history.push(AppRoutes.getPath('Read', {id: article.id.toString()}))
+        }
+        onBookmarkArticle={archiveArticle}
+        onQueueArticle={queueArticle}
+        onArchiveArticle={archiveArticle}
+        storiesList={
+          activeBox && activeBox.articles
+            ? activeBox.articles.map((id) => articles[id]).filter((val) => val)
+            : []
+        }
+        activeStory={previewedArticle}
       />
-      <Row noGutters style={{flexGrow: 1}}>
-        <Col xs={4} style={styles.rightPanelContainer}>
-          <HelperPanel article={previewedArticle} />
-        </Col>
-        <Col xs={8} style={styles.rightPanelContainer}>
-          <StoriesList
-            onHoverArticle={(article: WhittleArticle) =>
-              setPreviewedArticle(article)
-            }
-            onSelectArticle={(article: WhittleArticle) =>
-              history.push(
-                AppRoutes.getPath('Read', {id: article.id.toString()})
-              )
-            }
-            onBookmarkArticle={archiveArticle}
-            onQueueArticle={queueArticle}
-            onArchiveArticle={archiveArticle}
-            storiesList={
-              activeBox && activeBox.articles
-                ? activeBox.articles
-                    .map((id) => articles[id])
-                    .filter((val) => val)
-                : []
-            }
-            activeStory={previewedArticle}
-          />
-          {activeTab == 'inbox' ? (
-            <Row noGutters>
-              <div
-                className="clickable"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  color: '#9f9f9f',
-                  marginLeft: 15,
-                }}>
-                <div style={{fontWeight: 'bold'}}>{'175'}</div>
-                <div style={{paddingLeft: 7, color: '#9f9f9f'}}>
-                  {'older (7+ days)'}
-                </div>
-              </div>
-              <div
-                className="clickable"
-                style={{
-                  color: '#9f9f9f',
-                  marginLeft: 24,
-                }}>
-                Move all to library?
-              </div>
-            </Row>
-          ) : undefined}
-        </Col>
-      </Row>
-    </Body>
+      {activeTab === 'inbox' ? (
+        <Row>
+          <div
+            className="clickable"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              color: '#9f9f9f',
+              marginLeft: 15,
+            }}>
+            <div style={{fontWeight: 'bold'}}>{'175'}</div>
+            <div style={{paddingLeft: 7, color: '#9f9f9f'}}>
+              {'older (7+ days)'}
+            </div>
+          </div>
+          <div
+            className="clickable"
+            style={{
+              color: '#9f9f9f',
+              marginLeft: 24,
+            }}>
+            Move all to library?
+          </div>
+        </Row>
+      ) : undefined}
+    </OutlineHeaderBody>
   )
 }
 

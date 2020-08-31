@@ -1,6 +1,7 @@
 import React, {CSSProperties} from 'react'
-import {Col, Row} from 'react-bootstrap'
+import {Col} from 'react-bootstrap'
 import {FaCircle, FaPlus} from 'react-icons/fa'
+import Row from '../common/Row'
 import TopicTag from './TopicTag'
 
 type StoryHighLevelProps = {
@@ -26,10 +27,10 @@ const styles: {[key: string]: CSSProperties} = {
 export default function StoryHighLevel(props: StoryHighLevelProps) {
   return (
     <Col>
-      <Row noGutters>
+      <Row>
         <div style={styles.title}>{props.title}</div>
       </Row>
-      <Row noGutters style={{paddingTop: 5, alignItems: 'center'}}>
+      <Row style={{paddingTop: 5, alignItems: 'center'}}>
         <div style={styles.readingTime}>{`${props.readingTime} mins`}</div>
         <FaCircle color={'black'} size={5} />
         <div style={styles.source}>{props.source}</div>
@@ -38,12 +39,12 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
         ) : undefined}
       </Row>
       {props.showTags ? (
-        <Row noGutters style={{paddingTop: 10}}>
+        <Row style={{paddingTop: 10}}>
           {props.topics.map((topic) => {
             return <TopicTag name={topic} />
           })}
           <div style={{width: 6}}></div>
-          <Row noGutters className="clickable" style={{alignItems: 'center'}}>
+          <Row className="clickable" style={{alignItems: 'center'}}>
             <FaPlus size={10} color="#9f9f9f" />
             <div style={{color: '#9f9f9f', paddingLeft: 6, cursor: 'pointer'}}>
               Add tags

@@ -1,12 +1,13 @@
 import React from 'react'
-import {Col, Row} from 'react-bootstrap'
+import {Col} from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 import {WhittleArticle} from '../../models/whittle'
 import ArticleUtils from '../../util/article'
+import Row from '../common/Row'
 import StoryHighLevel from './StoryHighLevel'
 
 type HelperPanelProps = {
-  article: WhittleArticle | undefined
+  article?: WhittleArticle
 }
 
 export default function HelperPanel(props: HelperPanelProps) {
@@ -14,11 +15,11 @@ export default function HelperPanel(props: HelperPanelProps) {
     <Col
       style={{
         backgroundColor: '#F2F5F7',
-        height: '100%',
+        minHeight: '100%',
       }}>
       {props.article ? (
         <>
-          <Row style={{paddingTop: 10}}>
+          <Row>
             <StoryHighLevel
               showTags={true}
               source={
@@ -41,7 +42,7 @@ export default function HelperPanel(props: HelperPanelProps) {
               }
             />
           </Row>
-          <Row noGutters>
+          <Row>
             <Col>
               <div
                 style={{

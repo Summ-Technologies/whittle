@@ -1,17 +1,17 @@
 import React, {CSSProperties, ReactElement} from 'react'
-import {Row} from 'react-bootstrap'
 import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import {FaPlus} from 'react-icons/fa'
-import {WhittleBox} from '../../models/whittle'
+import Row from './Row'
 
 type HeaderProps = {
-  inbox: WhittleBox | undefined
-  queue: WhittleBox | undefined
-  library: WhittleBox | undefined
+  inboxCount: number
+  queueCount: number
+  libraryCount: number
   activeTab?: HeaderTabs
   onSelectTab: (tab: HeaderTabs) => void
+  onClickHome: () => void
 }
 
 export const HeaderTabs = ['inbox', 'queue', 'library'] as const
@@ -36,9 +36,6 @@ const styles: {[key: string]: CSSProperties} = {
 }
 
 export default function Header(props: HeaderProps) {
-  function getArticleCount(box: WhittleBox): number {
-    return box && box.articles ? box.articles.length : 0
-  }
   function simpleTooltip(val: string): OverlayChildren {
     return <Tooltip id="button-tooltip">{val}</Tooltip>
   }
@@ -60,23 +57,23 @@ export default function Header(props: HeaderProps) {
         borderBottom: '1px solid #dee2e6',
         paddingLeft: '15px',
       }}>
-      <HeaderTitle name="Whittle" />
+      <HeaderTitle name="Whittle" onClick={props.onClickHome} />
       <div style={styles.boxesContainer}>
         <HeaderTab
-          title={props.inbox ? props.inbox.name : 'Inbox'}
-          count={props.inbox ? getArticleCount(props.inbox) : 0}
+          title={'Inbox'}
+          count={props.inboxCount}
           active={props.activeTab === 'inbox'}
           onClick={() => props.onSelectTab('inbox')}
         />
         <HeaderTab
-          title={props.queue ? props.queue.name : 'Queue'}
-          count={props.queue ? getArticleCount(props.queue) : 0}
+          title={'Queue'}
+          count={props.queueCount}
           active={props.activeTab === 'queue'}
           onClick={() => props.onSelectTab('queue')}
         />
         <HeaderTab
-          title={props.library ? props.library.name : 'Library'}
-          count={props.library ? getArticleCount(props.library) : 0}
+          title={'Library'}
+          count={props.libraryCount}
           active={props.activeTab === 'library'}
           onClick={() => props.onSelectTab('library')}
         />
@@ -89,10 +86,17 @@ export default function Header(props: HeaderProps) {
 
 type HeaderTitleProps = {
   name: string
+  onClick: () => void
 }
 
 function HeaderTitle(props: HeaderTitleProps) {
-  return <div style={{fontSize: '2em', fontWeight: 'bold'}}>Whittle</div>
+  return (
+    <div
+      style={{fontSize: '2em', fontWeight: 'bold', cursor: 'pointer'}}
+      onClick={props.onClick}>
+      Whittle
+    </div>
+  )
 }
 
 type HeaderTabProps = {
