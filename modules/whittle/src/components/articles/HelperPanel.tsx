@@ -11,7 +11,11 @@ type HelperPanelProps = {
 }
 
 const MyRoot = (props: any) => {
-  return <div className={'markdownContainer'}>{props.children}</div>
+  return (
+    <div style={{fontFamily: 'Inter'}} className={'markdownContainer'}>
+      {props.children}
+    </div>
+  )
 }
 
 export default function HelperPanel(props: HelperPanelProps) {

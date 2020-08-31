@@ -130,6 +130,6 @@ const styles: {[key: string]: CSSProperties} = {
   triageSection: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
 }

@@ -23,6 +23,7 @@ const styles: {[key: string]: CSSProperties} = {
     color: '#979797',
     paddingLeft: 12,
     paddingRight: 12,
+    fontFamily: 'Inter',
     cursor: 'pointer',
   },
   headerTabActive: {color: '#000000'},
@@ -55,7 +56,6 @@ export default function Header(props: HeaderProps) {
         alignItems: 'flex-end',
         margin: 0,
         borderBottom: '1px solid #dee2e6',
-        paddingLeft: '15px',
       }}>
       <HeaderTitle name="Whittle" onClick={props.onClickHome} />
       <div style={styles.boxesContainer}>
@@ -92,7 +92,12 @@ type HeaderTitleProps = {
 function HeaderTitle(props: HeaderTitleProps) {
   return (
     <div
-      style={{fontSize: '2em', fontWeight: 600, cursor: 'pointer'}}
+      style={{
+        fontSize: '2em',
+        fontWeight: 600,
+        fontFamily: 'Inter',
+        cursor: 'pointer',
+      }}
       onClick={props.onClick}>
       Whittle
     </div>

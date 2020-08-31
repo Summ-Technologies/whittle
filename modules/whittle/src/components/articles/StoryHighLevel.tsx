@@ -17,11 +17,13 @@ const styles: {[key: string]: CSSProperties} = {
   readingTime: {
     paddingRight: 6,
     color: '#AAABB7',
+    fontFamily: 'Inter',
   },
   source: {
     paddingRight: 6,
     paddingLeft: 6,
     color: '#AAABB7',
+    fontFamily: 'Inter',
   },
   title: {fontSize: 18, fontWeight: 500, fontFamily: 'Inter'},
 }
@@ -48,7 +50,13 @@ export default function StoryHighLevel(props: StoryHighLevelProps) {
           <div style={{width: 6}}></div>
           <Row className="clickable" style={{alignItems: 'center'}}>
             <FaPlus size={10} color="#BFC2C3" />
-            <div style={{color: '#BFC2C3', paddingLeft: 6, cursor: 'pointer'}}>
+            <div
+              style={{
+                color: '#BFC2C3',
+                paddingLeft: 6,
+                cursor: 'pointer',
+                fontFamily: 'Inter',
+              }}>
               Add tags
             </div>
           </Row>
