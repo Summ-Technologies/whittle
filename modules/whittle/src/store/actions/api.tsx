@@ -3,6 +3,7 @@ import {createAction, RSAACall} from 'redux-api-middleware'
 import {ThunkDispatch} from 'redux-thunk'
 import {RootState} from '..'
 import config, {SERVER_BASE_URL_KEY} from '../../config'
+import {logoutUser} from './user'
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
@@ -52,9 +53,7 @@ export function createApiAction(args: RSAACall<RootState, unknown, unknown>) {
     args.headers = headers(args.headers)
     const response = await dispatch(createAction(args) as any)
     if (response.error && response.payload.status === 401) {
-      alert('should call logoutUser')
-      return
-      //   return await dispatch(logoutUser())
+      return await dispatch(logoutUser())
     } else {
       return response
     }

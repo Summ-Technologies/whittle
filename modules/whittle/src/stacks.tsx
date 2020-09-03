@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import AdminPage from './pages/AdminPage'
 import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
 import ReadingPage from './pages/ReadingPage'
+import {getLoginStatus} from './store/getters/user'
 
 export type SummnRoute = {
   name: string
@@ -40,7 +42,15 @@ export class AppRoutes {
     },
   ]
 
-  static loggedOutRoutes: SummnRoute[] = []
+  static loggedOutRoutes: SummnRoute[] = [
+    {name: 'Login', path: '/login', component: LoginPage, showNav: false},
+    {
+      name: 'RedirectLogin',
+      path: '/*',
+      component: <Redirect to="/login" />,
+      showNav: false,
+    },
+  ]
 }
 
 const loggedInSwitch = AppRoutes.routes.map((route) => (
@@ -50,7 +60,6 @@ const loggedInSwitch = AppRoutes.routes.map((route) => (
 ))
 
 function LoggedInStack() {
-  // const loggedInNav = AppRoutes.routes.filter((route) => route.showNav)
   return (
     <>
       <Switch>{loggedInSwitch}</Switch>
@@ -70,7 +79,9 @@ function LoggedOutStack() {
 
 export default function Stack() {
   let dispatch = useDispatch()
-  let stack = false ? <LoggedOutStack /> : <LoggedInStack />
+  let loginStatus = useSelector(getLoginStatus)
+  let stack =
+    loginStatus === 'LOGGED_OUT' ? <LoggedOutStack /> : <LoggedInStack />
 
   useEffect(() => {}, [dispatch])
 

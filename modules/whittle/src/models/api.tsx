@@ -19,3 +19,10 @@ export type BoxResource = {
 }
 
 export type BoxesListResource = BoxResource[]
+
+export type UserResource = {
+  id: number
+  email: string
+  first_name: string
+  last_name: string
+}
