@@ -2,7 +2,9 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
+import AccountPage from './pages/AccountPage'
 import AdminPage from './pages/AdminPage'
+import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ReadingPage from './pages/ReadingPage'
@@ -17,7 +19,9 @@ export type SummnRoute = {
 
 export class AppRoutes {
   static getPath(name: string, pathParams: {[key: string]: string} = {}) {
-    let route = AppRoutes.routes.filter((route) => route.name === name)
+    let route = [...AppRoutes.routes, ...AppRoutes.loggedOutRoutes].filter(
+      (route) => route.name.toLowerCase() === name.toLowerCase()
+    )
     if (route.length !== 1) {
       throw Error("Can't get path for route named: " + name)
     }
@@ -31,6 +35,13 @@ export class AppRoutes {
   }
 
   static routes: SummnRoute[] = [
+    {name: 'Account', path: '/account', component: AccountPage, showNav: false},
+    {
+      name: 'GoogleCallback',
+      path: '/auth/google/callback',
+      component: GoogleAuthCallbackPage,
+      showNav: false,
+    },
     {name: 'Admin', path: '/admin', component: AdminPage, showNav: false},
     {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
     {name: 'Box', path: '/b/:box', component: HomePage, showNav: false},
