@@ -1,17 +1,23 @@
 import {UserResource} from '../../models/api'
 import {WhittleUser} from '../../models/whittle'
 import {WhittleAction} from '../actions'
-import {POST_LOGIN_SUCCESS, SET_LOGGED_OUT} from '../actions/user'
+import {
+  GET_LINKED_GMAIL_SUCCESS,
+  POST_LOGIN_SUCCESS,
+  SET_LOGGED_OUT,
+} from '../actions/user'
 
 export type LoginStatus = 'LOGGED_IN' | 'LOGGED_OUT' | 'UNKNOWN'
 
 export type UserState = {
   user: WhittleUser | undefined
+  googleAccount: string | undefined
   loginStatus: LoginStatus
 }
 
 const initialState: UserState = {
   user: undefined,
+  googleAccount: undefined,
   loginStatus: 'UNKNOWN',
 }
 
@@ -25,6 +31,7 @@ export default function articlesReducer(
       return {
         ...state,
         user: undefined,
+        googleAccount: undefined,
         loginStatus: 'LOGGED_OUT',
       }
     case POST_LOGIN_SUCCESS:
@@ -33,6 +40,11 @@ export default function articlesReducer(
         ...state,
         user: payload.user,
         loginStatus: 'LOGGED_IN',
+      }
+    case GET_LINKED_GMAIL_SUCCESS:
+      return {
+        ...state,
+        googleAccount: action.payload.email,
       }
     default:
       return state

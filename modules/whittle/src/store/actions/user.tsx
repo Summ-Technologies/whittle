@@ -17,6 +17,10 @@ export const POST_GOOGLE_CALLBACK_REQUEST = 'POST_GOOGLE_CALLBACK_REQUEST'
 export const POST_GOOGLE_CALLBACK_SUCCESS = 'POST_GOOGLE_CALLBACK_SUCCESS'
 export const POST_GOOGLE_CALLBACK_FAILURE = 'POST_GOOGLE_CALLBACK_FAILURE'
 
+export const GET_LINKED_GMAIL_REQUEST = 'GET_LINKED_GMAIL_REQUEST'
+export const GET_LINKED_GMAIL_SUCCESS = 'GET_LINKED_GMAIL_SUCCESS'
+export const GET_LINKED_GMAIL_FAILURE = 'GET_LINKED_GMAIL_FAILURE'
+
 export const SET_LOGGED_IN = 'SET_LOGGED_IN'
 export const SET_LOGGED_OUT = 'SET_LOGGED_OUT'
 
@@ -95,4 +99,20 @@ export function logoutUser() {
   return {
     type: SET_LOGGED_OUT,
   }
+}
+
+/**
+ * Get email address of linked google account if one exists.
+ */
+export function getLinkedGmailAccount() {
+  let endpoint = '/v1.0/user/google/email'
+  return createApiAction({
+    endpoint,
+    method: 'GET',
+    types: [
+      GET_LINKED_GMAIL_REQUEST,
+      GET_LINKED_GMAIL_SUCCESS,
+      GET_LINKED_GMAIL_FAILURE,
+    ],
+  })
 }
