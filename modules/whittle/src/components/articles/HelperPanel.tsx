@@ -22,7 +22,7 @@ export default function HelperPanel(props: HelperPanelProps) {
   return (
     <Col
       style={{
-        backgroundColor: '#F2F5F7',
+        backgroundColor: '#F0F5FE',
         paddingLeft: 24,
         paddingRight: 24,
         minHeight: '100%',
@@ -53,7 +53,7 @@ export default function HelperPanel(props: HelperPanelProps) {
             />
           </Row>
           <Row>
-            <Col className="joyride-preview-outline">
+            <Col>
               <div
                 style={{
                   height: 1,
@@ -61,32 +61,34 @@ export default function HelperPanel(props: HelperPanelProps) {
                   backgroundColor: '#c4c4c4',
                   marginTop: 24,
                 }}></div>
-              <div
-                style={{
-                  paddingTop: 16,
-                  fontWeight: 600,
-                  color: '#BFC2C3',
-                  paddingBottom: 8,
-                }}>
-                Outline
+              <div className="joyride-preview-outline">
+                <div
+                  style={{
+                    paddingTop: 16,
+                    fontWeight: 600,
+                    color: '#BFC2C3',
+                    paddingBottom: 8,
+                  }}>
+                  Outline
+                </div>
+                <div>
+                  {props.article && props.article.outline ? (
+                    <ReactMarkdown
+                      source={props.article.outline}
+                      renderers={{root: MyRoot}}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </div>
+                <div
+                  style={{
+                    height: 1,
+                    width: '100%',
+                    backgroundColor: '#c4c4c4',
+                    marginTop: 24,
+                  }}></div>
               </div>
-              <div>
-                {props.article && props.article.outline ? (
-                  <ReactMarkdown
-                    source={props.article.outline}
-                    renderers={{root: MyRoot}}
-                  />
-                ) : (
-                  ''
-                )}
-              </div>
-              <div
-                style={{
-                  height: 1,
-                  width: '100%',
-                  backgroundColor: '#c4c4c4',
-                  marginTop: 24,
-                }}></div>
               <div
                 style={{
                   paddingTop: 16,

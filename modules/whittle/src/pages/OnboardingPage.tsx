@@ -21,7 +21,8 @@ function OnboardingPage() {
   let [articles, setArticles] = useState<{[key: number]: WhittleArticle}>({
     '-69': {
       bookmarked: false,
-      outline: '## Test header 1\n## Test header 2',
+      outline:
+        '[**1. Your newsletter inbox**]()  \n[**2. Move to queue**]()  \n[**3. Your personal library**]()  \n[**4. Bookmark for later**]()  \n[**5. Outline**]()',
       html_content: '<div><h2>Test header 1</h2><h2>Test header 2</h2></div>',
       id: -69,
       source: 'Whittle team',
@@ -56,24 +57,22 @@ function OnboardingPage() {
       target: 'body',
       placement: 'center',
       disableBeacon: true,
-      title: 'Welcome to your newsletter home!',
-      content: "You're 1 minute away from less newsletter stress",
+      title: 'Welcome to your new newsletter home!',
+      content: "You're 1 minute away from less newsletter stress.",
     },
     {
       target: '.joyride-inbox',
       placement: 'bottom',
       disableBeacon: true,
       title: 'Your newsletter inbox',
-      content:
-        "Quickly triage your newsletters as they come in.\nLet's start with our onboarding newsletter to learn the ropes",
+      content: 'Quickly triage your newsletters into your queue and library',
     },
     {
       target: '.joyride-queue',
       placement: 'bottom',
       disableBeacon: true,
-      title: 'Queue your short-term reads',
-      content:
-        'To add a newsletter to your queue, just hit Q or press the queue button',
+      title: 'Queue your newsletters to read soon',
+      content: 'Add newsletters by tapping Q or pressing the queue button',
     },
     {
       target: '.joyride-library',
@@ -96,8 +95,7 @@ function OnboardingPage() {
       placement: 'left',
       disableBeacon: true,
       title: "Skip to what's important",
-      content:
-        'Click the outline to skip to relevant sections within the newsletter',
+      content: 'Click the outline to skip to sections within the newsletter',
     },
   ]
   let previewedArticle = articles[-69]
@@ -123,7 +121,17 @@ function OnboardingPage() {
           steps={onboardingHeaderSteps}
           scrollToFirstStep={true}
           continuous={true}
+          showSkipButton={true}
           run={true}
+          styles={{
+            options: {
+              primaryColor: '#9F8AFF',
+              arrowColor: '#c4c4c4',
+              textColor: '#000',
+              width: 500,
+              zIndex: 1000,
+            },
+          }}
         />
       ) : undefined}
       {joyrideTour === 2 ? (
@@ -169,8 +177,8 @@ function CallToActionModal(props: CTAProps) {
   }, [hovered, clicked, setImg])
   return (
     <Modal show>
-      <Modal.Header style={{textAlign: 'center'}}>
-        <h2>Now let's import your newsletters!</h2>
+      <Modal.Header style={{textAlign: 'center', width: '100%'}}>
+        <h2 style={{width: '100%'}}>Let's import your newsletters!</h2>
       </Modal.Header>
       <Modal.Body style={{textAlign: 'center'}}>
         <div>

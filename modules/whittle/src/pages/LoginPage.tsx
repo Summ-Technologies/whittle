@@ -30,11 +30,13 @@ function LoginPage() {
         xs={{span: 10, offset: 1}}
         md={{span: 6, offset: 3}}
         style={styles.pageContainer}>
+        {/* <img style={{width: 243, height: 80}} src={newsletterImg} /> */}
         <div style={styles.header}>Whittle</div>
         <div style={styles.bodyLine}>
           Automatically import your newsletters.
         </div>
-        <div style={styles.bodyLine}>Skim less. read more.</div>
+        <div style={styles.bodyLine}></div>
+        <div style={styles.bodyLine}>Skim less. Read more.</div>
         <img
           src={img}
           alt={'Sign up with Google button'}
@@ -67,10 +69,12 @@ const styles: {[key: string]: CSSProperties} = {
   },
   bodyLine: {
     textAlign: 'center',
-    fontSize: '2em',
+    fontFamily: 'Inter',
+    fontSize: '1.5em',
   },
   header: {
     fontWeight: 'bold',
+    fontFamily: 'Inter',
     fontSize: '3em',
     marginBottom: '10px',
   },

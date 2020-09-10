@@ -58,7 +58,7 @@ export default function StoriesList(props: StoriesListProps) {
   })
 
   return (
-    <Table responsive hover size="md">
+    <Table hover responsive size="md">
       <tbody>{tableRows}</tbody>
     </Table>
   )
