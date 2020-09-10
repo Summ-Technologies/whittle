@@ -1,16 +1,28 @@
 import React, {useEffect} from 'react'
 import {Spinner} from 'react-bootstrap'
 import {useDispatch} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import {RouteComponentProps, withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import {postGoogleAuthCallback} from '../store/actions/user'
+import {
+  googleLoginCallback,
+  postGoogleAuthCallback,
+} from '../store/actions/user'
 
-function GoogleAuthCallbackPage() {
+type GoogleAuthCallbackPageProps = RouteComponentProps<{type: string}>
+
+function GoogleAuthCallbackPage(props: GoogleAuthCallbackPageProps) {
   let dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(postGoogleAuthCallback(window.location.href))
-  }, [dispatch])
+    switch (props.match.params.type.toLowerCase()) {
+      case 'login':
+        dispatch(googleLoginCallback(window.location.href))
+        break
+      case 'gmail':
+        dispatch(postGoogleAuthCallback(window.location.href))
+        break
+    }
+  }, [dispatch, props.match.params.type])
 
   return (
     <Body>

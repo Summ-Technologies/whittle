@@ -3,7 +3,7 @@ import {WhittleUser} from '../../models/whittle'
 import {WhittleAction} from '../actions'
 import {
   GET_LINKED_GMAIL_SUCCESS,
-  POST_LOGIN_SUCCESS,
+  GOOGLE_LOGIN_CALLBACK_SUCCESS,
   SET_LOGGED_OUT,
 } from '../actions/user'
 
@@ -34,7 +34,7 @@ export default function articlesReducer(
         googleAccount: undefined,
         loginStatus: 'LOGGED_OUT',
       }
-    case POST_LOGIN_SUCCESS:
+    case GOOGLE_LOGIN_CALLBACK_SUCCESS:
       payload = action.payload as {user: UserResource}
       return {
         ...state,

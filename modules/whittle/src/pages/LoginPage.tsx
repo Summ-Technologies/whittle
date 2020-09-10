@@ -1,21 +1,27 @@
 import React, {CSSProperties, useState} from 'react'
-import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
 import {useDispatch} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import {postLogin} from '../store/actions/user'
+import hoveredGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_light_focus_web.png'
+import googleLoginIcon from '../imgs/google-signin/btn_google_signin_light_normal_web.png'
+import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_light_pressed_web.png'
+import {googleLoginStep1} from '../store/actions/user'
 
 function LoginPage() {
   let dispatch = useDispatch()
-  let [form, setForm] = useState({
-    email: '',
-    password: '',
-  })
+  let [hovered, setHovered] = useState(false)
+  let [clicked, setClicked] = useState(false)
 
-  function onSubmit() {
-    dispatch(postLogin(form.email, form.password))
+  function onClick() {
+    dispatch(googleLoginStep1())
+  }
+
+  let img = googleLoginIcon
+  if (clicked) {
+    img = clickedGoogleLoginIcon
+  } else if (hovered) {
+    img = hoveredGoogleLoginIcon
   }
 
   return (
@@ -24,28 +30,21 @@ function LoginPage() {
         xs={{span: 10, offset: 1}}
         md={{span: 6, offset: 3}}
         style={styles.pageContainer}>
-        <div style={styles.pageHeader}>Login</div>
-        <Form>
-          <Form.Group>
-            <Form.Control
-              value={form.email}
-              onChange={(event) =>
-                setForm({...form, email: event.target.value})
-              }
-              type="text"
-              placeholder="Email"
-            />
-            <Form.Control
-              value={form.password}
-              onChange={(event) =>
-                setForm({...form, password: event.target.value})
-              }
-              type="password"
-              placeholder="Password"
-            />
-          </Form.Group>
-        </Form>
-        <Button onClick={() => onSubmit()}>Submit</Button>
+        <div style={styles.header}>Whittle</div>
+        <div style={styles.button} onClick={onClick}>
+          <img
+            src={img}
+            alt={'Sign in with Google button'}
+            onMouseOver={() => setHovered(true)}
+            onMouseOut={() => {
+              setHovered(false)
+              setClicked(false)
+            }}
+            onMouseDown={() => setClicked(true)}
+            onMouseUp={() => setClicked(false)}
+            style={styles.googleLogo}
+          />
+        </div>
       </Col>
     </Body>
   )
@@ -55,16 +54,18 @@ const styles: {[key: string]: CSSProperties} = {
   pageContainer: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
     marginTop: 'auto',
     marginBottom: 'auto',
   },
-  pageHeader: {
-    fontSize: '1.4em',
+  header: {
     fontWeight: 'bold',
-    width: '100%',
-    textAlign: 'center',
+    fontSize: '1.5em',
+    marginBottom: '10px',
   },
-  formContainer: {},
+  button: {
+    cursor: 'pointer',
+  },
 }
 
 export default withRouter(LoginPage)
