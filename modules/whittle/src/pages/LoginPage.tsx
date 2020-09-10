@@ -3,9 +3,9 @@ import Col from 'react-bootstrap/Col'
 import {useDispatch} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import hoveredGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_light_focus_web.png'
-import googleLoginIcon from '../imgs/google-signin/btn_google_signin_light_normal_web.png'
-import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_light_pressed_web.png'
+import hoveredGoogleLoginIcon from '../imgs/google-signin/btn_google_signup_dark_focus_web.png'
+import googleLoginIcon from '../imgs/google-signin/btn_google_signup_dark_normal_web.png'
+import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signup_dark_pressed_web.png'
 import {googleLoginStep1} from '../store/actions/user'
 
 function LoginPage() {
@@ -31,20 +31,23 @@ function LoginPage() {
         md={{span: 6, offset: 3}}
         style={styles.pageContainer}>
         <div style={styles.header}>Whittle</div>
-        <div style={styles.button} onClick={onClick}>
-          <img
-            src={img}
-            alt={'Sign in with Google button'}
-            onMouseOver={() => setHovered(true)}
-            onMouseOut={() => {
-              setHovered(false)
-              setClicked(false)
-            }}
-            onMouseDown={() => setClicked(true)}
-            onMouseUp={() => setClicked(false)}
-            style={styles.googleLogo}
-          />
+        <div style={styles.bodyLine}>
+          Automatically import your newsletters.
         </div>
+        <div style={styles.bodyLine}>Skim less. read more.</div>
+        <img
+          src={img}
+          alt={'Sign up with Google button'}
+          onMouseOver={() => setHovered(true)}
+          onMouseOut={() => {
+            setHovered(false)
+            setClicked(false)
+          }}
+          onMouseDown={() => setClicked(true)}
+          onMouseUp={() => setClicked(false)}
+          style={styles.button}
+          onClick={onClick}
+        />
       </Col>
     </Body>
   )
@@ -55,15 +58,25 @@ const styles: {[key: string]: CSSProperties} = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '2px 2px rgba(0, 0,0, .4)',
     marginTop: 'auto',
     marginBottom: 'auto',
+    borderRadius: '3px',
+    backgroundColor: 'rgba(200, 200, 200, .4)',
+  },
+  bodyLine: {
+    textAlign: 'center',
+    fontSize: '2em',
   },
   header: {
     fontWeight: 'bold',
-    fontSize: '1.5em',
+    fontSize: '3em',
     marginBottom: '10px',
   },
   button: {
+    marginTop: '20px',
+    height: '60px',
     cursor: 'pointer',
   },
 }

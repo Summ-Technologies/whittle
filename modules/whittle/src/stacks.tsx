@@ -7,6 +7,7 @@ import AdminPage from './pages/AdminPage'
 import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
+import OnboardingPage from './pages/OnboardingPage'
 import ReadingPage from './pages/ReadingPage'
 import {getLoginStatus} from './store/getters/user'
 
@@ -53,6 +54,12 @@ export class AppRoutes {
     {name: 'Admin', path: '/admin', component: AdminPage, showNav: false},
     {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
     {name: 'Box', path: '/b/:box', component: HomePage, showNav: false},
+    {
+      name: 'Onboarding',
+      path: '/onboarding',
+      component: OnboardingPage,
+      showNav: false,
+    },
     {
       name: 'RedirectInbox',
       path: '/*',

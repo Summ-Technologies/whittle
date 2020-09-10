@@ -66,6 +66,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
                 ...styles.triageButton,
                 ...(done ? styles.triageButtonSelected : {}),
               }}
+              className="joyride-library"
               onClick={(event) => {
                 event.stopPropagation()
                 props.onArchive()
@@ -79,6 +80,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
                 ...styles.triageButton,
                 ...(bookmarked ? styles.triageButtonSelected : {}),
               }}
+              className="joyride-bookmark"
               onClick={(event) => {
                 event.stopPropagation()
                 props.onToggleBookmark(!props.bookmarked)
@@ -94,6 +96,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
                 ...styles.triageButton,
                 ...(queued ? styles.triageButtonSelected : {}),
               }}
+              className="joyride-queue"
               onClick={(event) => {
                 event.stopPropagation()
                 props.onQueue()

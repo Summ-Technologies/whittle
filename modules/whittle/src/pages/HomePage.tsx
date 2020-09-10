@@ -1,5 +1,6 @@
+import querystring from 'querystring'
 import React, {useEffect, useState} from 'react'
-import Row from 'react-bootstrap/Row'
+import Joyride, {Step} from 'react-joyride'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import StoriesList from '../components/articles/StoriesList'
@@ -14,8 +15,12 @@ import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {useArticles} from '../util/hooks'
 
 type HomePageProps = RouteComponentProps<{box: string}>
+type HomePageQueryParams = {showOnboarding?: boolean}
 
 function HomePage(props: HomePageProps) {
+  let params: HomePageQueryParams = querystring.parse(
+    props.location.search.substring(1)
+  )
   let dispatch = useDispatch()
   let history = useHistory()
   let boxes = useSelector(getBoxes)
@@ -71,6 +76,23 @@ function HomePage(props: HomePageProps) {
     }
   }, [activeTab, activeBox, setActiveBox, inbox, queue, library])
 
+  let onboardingSteps: Step[] = [
+    {
+      target: 'body',
+      placement: 'center',
+      disableBeacon: true,
+      title: 'Welcome to your newsletter home!',
+      content: "You're 1 minute away from less newsletter stress",
+    },
+    {
+      target: 'body',
+      disableBeacon: true,
+      title: 'Your newsletter inbox',
+      content:
+        "Quickly triage your newsletters as they come in.\nLet's start with our onboarding newsletter to learn the ropes",
+    },
+  ]
+
   /** Dispatch article to library box */
   function archiveArticle(article: WhittleArticle) {
     if (library && article) {
@@ -105,6 +127,14 @@ function HomePage(props: HomePageProps) {
       onClickHome={() =>
         history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
       }>
+      {params.showOnboarding ? (
+        <Joyride
+          steps={onboardingSteps}
+          scrollToFirstStep={true}
+          continuous={true}
+          run={true}
+        />
+      ) : undefined}
       <StoriesList
         onHoverArticle={(article: WhittleArticle) =>
           setPreviewedArticle(article)
@@ -122,31 +152,6 @@ function HomePage(props: HomePageProps) {
         }
         activeStory={previewedArticle}
       />
-      {activeTab === 'inbox' ? (
-        <Row>
-          <div
-            className="clickable"
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              color: '#9f9f9f',
-              marginLeft: 15,
-            }}>
-            <div style={{fontWeight: 600}}>{'175'}</div>
-            <div style={{paddingLeft: 7, color: '#9f9f9f'}}>
-              {'older (7+ days)'}
-            </div>
-          </div>
-          <div
-            className="clickable"
-            style={{
-              color: '#9f9f9f',
-              marginLeft: 24,
-            }}>
-            Move all to library?
-          </div>
-        </Row>
-      ) : undefined}
     </OutlineHeaderBody>
   )
 }

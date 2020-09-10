@@ -80,7 +80,9 @@ export function googleLoginCallback(currentUrl: string) {
       }) as unknown) as WhittleAction
     )
     if (!callbackResp.error) {
-      return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
+      // return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
+      // TODO this shouldn't goto onboarding after login, but rather after signup. Doing this now for user interviews
+      return dispatch(push(AppRoutes.getPath('Onboarding')))
     }
   }
 }
@@ -135,7 +137,11 @@ export function postGoogleAuthCallback(currentUrl: string) {
       })
     ) as unknown)) as WhittleAction
     if (!postCallbackResp.error) {
-      return dispatch(push(AppRoutes.getPath('Account')))
+      // ANOTHER HACK FOR USER INTERVIEWS ONLY (gives some time for gmail to scrape inbox)
+      const waitFor = (delay: number) =>
+        new Promise((resolve) => setTimeout(resolve, delay))
+      await waitFor(5000)
+      return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
     }
   }
 }

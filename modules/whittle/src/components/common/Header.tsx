@@ -64,6 +64,7 @@ export default function Header(props: HeaderProps) {
           count={props.inboxCount}
           active={props.activeTab === 'inbox'}
           onClick={() => props.onSelectTab('inbox')}
+          className="joyride-inbox"
         />
         <HeaderTab
           title={'Queue'}
@@ -108,11 +109,13 @@ type HeaderTabProps = {
   title: string
   count: number
   active: boolean
+  className?: string
   onClick: () => void
 }
 function HeaderTab(props: HeaderTabProps) {
   return (
     <div
+      className={props.className}
       style={
         props.active
           ? {...styles.headerTab, ...styles.headerTabActive}

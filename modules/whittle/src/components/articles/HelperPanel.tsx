@@ -53,7 +53,7 @@ export default function HelperPanel(props: HelperPanelProps) {
             />
           </Row>
           <Row>
-            <Col>
+            <Col className="joyride-preview-outline">
               <div
                 style={{
                   height: 1,
