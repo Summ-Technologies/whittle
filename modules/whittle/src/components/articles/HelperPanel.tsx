@@ -71,9 +71,9 @@ export default function HelperPanel(props: HelperPanelProps) {
                 Outline
               </div>
               <div>
-                {props.article && props.article.content ? (
+                {props.article && props.article.outline ? (
                   <ReactMarkdown
-                    source={props.article.content}
+                    source={props.article.outline}
                     renderers={{root: MyRoot}}
                   />
                 ) : (

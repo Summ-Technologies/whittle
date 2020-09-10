@@ -1,11 +1,11 @@
 export type ArticleResource = {
   id: number
-  user_id: number
   title: string
-  subjectline: string
-  content: string
+  outline: string
+  text_content?: string
   html_content: string
   source: string
+  author?: string
   tags: string[] // TODO remove this attribute (should be relation aka list of tag id's)
   bookmarked: boolean // TODO remove this attribute ?? maybe
 }

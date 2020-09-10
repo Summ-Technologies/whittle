@@ -21,14 +21,12 @@ function OnboardingPage() {
   let [articles, setArticles] = useState<{[key: number]: WhittleArticle}>({
     '-69': {
       bookmarked: false,
-      content: '## Test header 1\n## Test header 2',
+      outline: '## Test header 1\n## Test header 2',
       html_content: '<div><h2>Test header 1</h2><h2>Test header 2</h2></div>',
       id: -69,
       source: 'Whittle team',
-      subjectline: '',
       tags: ['Onboarding', 'Whittle'],
       title: 'Whittle onboarding newsletter',
-      user_id: -69,
     },
   })
   let inbox = {
