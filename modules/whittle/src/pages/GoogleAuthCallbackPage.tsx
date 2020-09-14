@@ -5,6 +5,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
 import {
   googleLoginCallback,
+  googleSignupCallback,
   postGoogleAuthCallback,
 } from '../store/actions/user'
 
@@ -17,6 +18,9 @@ function GoogleAuthCallbackPage(props: GoogleAuthCallbackPageProps) {
     switch (props.match.params.type.toLowerCase()) {
       case 'login':
         dispatch(googleLoginCallback(window.location.href))
+        break
+      case 'signup':
+        dispatch(googleSignupCallback(window.location.href))
         break
       case 'gmail':
         dispatch(postGoogleAuthCallback(window.location.href))

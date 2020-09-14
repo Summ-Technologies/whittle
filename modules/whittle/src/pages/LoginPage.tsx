@@ -1,27 +1,52 @@
-import React, {CSSProperties, useState} from 'react'
+import React, {CSSProperties, useEffect, useState} from 'react'
 import Col from 'react-bootstrap/Col'
 import {useDispatch} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
-import hoveredGoogleLoginIcon from '../imgs/google-signin/btn_google_signup_dark_focus_web.png'
-import googleLoginIcon from '../imgs/google-signin/btn_google_signup_dark_normal_web.png'
-import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signup_dark_pressed_web.png'
-import {googleLoginStep1} from '../store/actions/user'
+import hoveredGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_dark_focus_web.png'
+import googleLoginIcon from '../imgs/google-signin/btn_google_signin_dark_normal_web.png'
+import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_dark_pressed_web.png'
+import hoveredGoogleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_focus_web.png'
+import googleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_normal_web.png'
+import clickedGoogleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_pressed_web.png'
+import {googleLoginStep1, googleSignupStep1} from '../store/actions/user'
+
+type AuthType = 'login' | 'signup'
 
 function LoginPage() {
   let dispatch = useDispatch()
+  let [authType, setAuthType] = useState<AuthType>('signup')
   let [hovered, setHovered] = useState(false)
   let [clicked, setClicked] = useState(false)
+  let [img, setImg] = useState(googleSignupIcon)
 
-  function onClick() {
-    dispatch(googleLoginStep1())
+  useEffect(() => {
+    let buttons: [string, string, string] =
+      authType === 'login'
+        ? [googleLoginIcon, hoveredGoogleLoginIcon, clickedGoogleLoginIcon]
+        : [googleSignupIcon, hoveredGoogleSignupIcon, clickedGoogleSignupIcon]
+    let _img = buttons[0]
+    if (clicked) {
+      _img = buttons[2]
+    } else if (hovered) {
+      _img = buttons[1]
+    }
+    setImg(_img)
+  }, [authType, hovered, clicked, setImg])
+
+  function onClickGoogleButton() {
+    if (authType === 'login') {
+      dispatch(googleLoginStep1())
+    } else if (authType === 'signup') {
+      dispatch(googleSignupStep1())
+    }
   }
 
-  let img = googleLoginIcon
-  if (clicked) {
-    img = clickedGoogleLoginIcon
-  } else if (hovered) {
-    img = hoveredGoogleLoginIcon
+  function toggleAuthType() {
+    let newAuthType: AuthType = authType === 'login' ? 'signup' : 'login'
+    setAuthType(newAuthType)
+    setHovered(false)
+    setClicked(false)
   }
 
   return (
@@ -48,8 +73,13 @@ function LoginPage() {
           onMouseDown={() => setClicked(true)}
           onMouseUp={() => setClicked(false)}
           style={styles.button}
-          onClick={onClick}
+          onClick={onClickGoogleButton}
         />
+        <div style={{cursor: 'pointer'}} onClick={toggleAuthType}>
+          {authType === 'login'
+            ? "Don't have an account?"
+            : 'Already have an account?'}
+        </div>
       </Col>
     </Body>
   )

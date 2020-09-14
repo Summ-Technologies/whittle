@@ -25,6 +25,14 @@ export const GOOGLE_LOGIN_CALLBACK_REQUEST = 'GOOGLE_LOGIN_CALLBACK_REQUEST'
 export const GOOGLE_LOGIN_CALLBACK_SUCCESS = 'GOOGLE_LOGIN_CALLBACK_SUCCESS'
 export const GOOGLE_LOGIN_CALLBACK_FAILURE = 'GOOGLE_LOGIN_CALLBACK_FAILURE'
 
+export const GOOGLE_SIGNUP_REDIRECT_REQUEST = 'GOOGLE_SIGNUP_REDIRECT_REQUEST'
+export const GOOGLE_SIGNUP_REDIRECT_SUCCESS = 'GOOGLE_SIGNUP_REDIRECT_SUCCESS'
+export const GOOGLE_SIGNUP_REDIRECT_FAILURE = 'GOOGLE_SIGNUP_REDIRECT_FAILURE'
+
+export const GOOGLE_SIGNUP_CALLBACK_REQUEST = 'GOOGLE_SIGNUP_CALLBACK_REQUEST'
+export const GOOGLE_SIGNUP_CALLBACK_SUCCESS = 'GOOGLE_SIGNUP_CALLBACK_SUCCESS'
+export const GOOGLE_SIGNUP_CALLBACK_FAILURE = 'GOOGLE_SIGNUP_CALLBACK_FAILURE'
+
 export const GET_LINKED_GMAIL_REQUEST = 'GET_LINKED_GMAIL_REQUEST'
 export const GET_LINKED_GMAIL_SUCCESS = 'GET_LINKED_GMAIL_SUCCESS'
 export const GET_LINKED_GMAIL_FAILURE = 'GET_LINKED_GMAIL_FAILURE'
@@ -76,6 +84,61 @@ export function googleLoginCallback(currentUrl: string) {
           GOOGLE_LOGIN_CALLBACK_REQUEST,
           GOOGLE_LOGIN_CALLBACK_SUCCESS,
           GOOGLE_LOGIN_CALLBACK_FAILURE,
+        ],
+      }) as unknown) as WhittleAction
+    )
+    if (!callbackResp.error) {
+      // return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
+      // TODO this shouldn't goto onboarding after login, but rather after signup. Doing this now for user interviews
+      return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
+    }
+  }
+}
+
+/**
+ * Requests redirect URL to login with google
+ */
+export function googleSignupStep1() {
+  let endpoint = '/v1.0/auth/google/signup'
+  return async (
+    dispatch: ThunkDispatch<any, any, WhittleAction>,
+    getState: () => RootState
+  ) => {
+    let redirectUrlResp = await dispatch(
+      createApiAction({
+        endpoint,
+        method: 'GET',
+        types: [
+          GOOGLE_SIGNUP_REDIRECT_REQUEST,
+          GOOGLE_SIGNUP_REDIRECT_SUCCESS,
+          GOOGLE_SIGNUP_REDIRECT_FAILURE,
+        ],
+      })
+    )
+    if (!redirectUrlResp.error) {
+      window.location.href = redirectUrlResp.payload.redirect_url
+    }
+  }
+}
+
+/**
+ * Handles final step of google login flow and gets logged in user details.
+ */
+export function googleSignupCallback(currentUrl: string) {
+  let endpoint = '/v1.0/auth/google/signup/callback'
+  return async (
+    dispatch: ThunkDispatch<any, any, WhittleAction | CallHistoryMethodAction>,
+    getState: () => RootState
+  ) => {
+    let callbackResp = await dispatch(
+      (createApiAction({
+        endpoint,
+        method: 'POST',
+        body: JSON.stringify({callback_url: currentUrl}),
+        types: [
+          GOOGLE_SIGNUP_CALLBACK_REQUEST,
+          GOOGLE_SIGNUP_CALLBACK_SUCCESS,
+          GOOGLE_SIGNUP_CALLBACK_FAILURE,
         ],
       }) as unknown) as WhittleAction
     )

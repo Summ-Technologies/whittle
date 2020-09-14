@@ -6,7 +6,7 @@ import AccountPage from './pages/AccountPage'
 import AdminPage from './pages/AdminPage'
 import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
+import AuthPage from './pages/LoginPage'
 import OnboardingPage from './pages/OnboardingPage'
 import ReadingPage from './pages/ReadingPage'
 import {getLoginStatus} from './store/getters/user'
@@ -69,11 +69,17 @@ export class AppRoutes {
   ]
 
   static loggedOutRoutes: SummnRoute[] = [
-    {name: 'Login', path: '/login', component: LoginPage, showNav: false},
     {
-      name: 'RedirectLogin',
+      name: 'UserAuth',
+      path: '/auth',
+      component: AuthPage,
+      showNav: false,
+    },
+
+    {
+      name: 'RedirectSignup',
       path: '/*',
-      component: <Redirect to="/login" />,
+      component: <Redirect to="/auth" />,
       showNav: false,
     },
   ]
