@@ -52,7 +52,6 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
         if (props.onSelect) props.onSelect()
       }}>
       <StoryHighLevel
-        showTags={false}
         title={props.title}
         source={props.source}
         topics={props.tags}

@@ -4,8 +4,8 @@ import {CSSProperties} from 'react'
 
 const vars = {
   colors: {
-    grey: '#D3D3D3',
-    lightGrey: '#E9E9E9', // lightened by 50 using https://pinetools.com/lighten-color
+    grey: '#B3B3B3',
+    lightGrey: '#F3F3F3',
     purple: '#957ef9',
     lightPurple: '#CABEFC', // lightened by 50 using https://pinetools.com/lighten-color
     white: '#FFFFFF',

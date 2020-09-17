@@ -1,6 +1,7 @@
 import React, {CSSProperties} from 'react'
 import Table from 'react-bootstrap/Table'
 import {WhittleArticle} from '../../models/whittle'
+import defaultStyles from '../../styles'
 import ArticleUtils from '../../util/article'
 import StoryRowPreview from './StoryRowPreview'
 
@@ -15,6 +16,18 @@ type StoriesListProps = {
 }
 
 export default function StoriesList(props: StoriesListProps) {
+  let styles: {[key: string]: CSSProperties} = {
+    storyRow: {
+      cursor: 'pointer',
+      borderBottomWidth: defaultStyles.defaultBorderWidth,
+      borderBottomStyle: 'solid',
+      borderBottomColor: defaultStyles.colors.lightGrey,
+    },
+    storyRowActive: {
+      backgroundColor: defaultStyles.colors.lightGrey,
+    },
+  }
+
   const tableRows = props.storiesList.map((story, index) => {
     return (
       <tr
@@ -58,18 +71,8 @@ export default function StoriesList(props: StoriesListProps) {
   })
 
   return (
-    <Table hover responsive size="md">
+    <Table responsive size="md">
       <tbody>{tableRows}</tbody>
     </Table>
   )
-}
-const styles: {[key: string]: CSSProperties} = {
-  storyRow: {
-    cursor: 'pointer',
-    borderBottom: '1px solid #dee2e6',
-    borderTop: '0px solid',
-  },
-  storyRowActive: {
-    backgroundColor: 'rgba(0,0,0,0.075)',
-  },
 }

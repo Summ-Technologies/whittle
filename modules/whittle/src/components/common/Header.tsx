@@ -1,8 +1,6 @@
-import React, {CSSProperties, ReactElement} from 'react'
-import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
-import {FaBars, FaPlus} from 'react-icons/fa'
+import React, {CSSProperties} from 'react'
+import {FaBars} from 'react-icons/fa'
+import defaultStyles from '../../styles'
 import Row from './Row'
 
 type HeaderProps = {
@@ -18,20 +16,6 @@ export const HeaderTabs = ['inbox', 'queue', 'library'] as const
 export type HeaderTabs = typeof HeaderTabs[number]
 
 export default function Header(props: HeaderProps) {
-  function simpleTooltip(val: string): OverlayChildren {
-    return <Tooltip id="button-tooltip">{val}</Tooltip>
-  }
-  function simpleOverlay(val: string) {
-    return (children: ReactElement) => (
-      <OverlayTrigger
-        placement="bottom"
-        delay={{show: 150, hide: 150}}
-        overlay={simpleTooltip(val)}>
-        {children}
-      </OverlayTrigger>
-    )
-  }
-
   // Styling
   const headerHeightPx = 50
   const menuIconPaddingPx = 10
@@ -39,8 +23,11 @@ export default function Header(props: HeaderProps) {
     container: {
       alignItems: 'flex-end',
       margin: 0,
-      borderBottom: '1px solid #dee2e6',
+      borderBottomStyle: 'solid',
+      borderBottomColor: defaultStyles.colors.grey,
+      borderBottomWidth: defaultStyles.defaultBorderWidth,
       height: `${headerHeightPx}px`,
+      color: defaultStyles.colors.grey,
     },
     menuIconContainer: {
       paddingLeft: `${menuIconPaddingPx}px`,
@@ -55,12 +42,20 @@ export default function Header(props: HeaderProps) {
       width: `${headerHeightPx - menuIconPaddingPx * 2}px`,
     },
     boxesContainer: {
-      paddingLeft: 5,
-      paddingBottom: 7,
+      marginTop: 'auto',
+      marginBottom: 'auto',
       flexDirection: 'row',
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
     },
+    boxTab: {
+      fontWeight: 600,
+      paddingLeft: 12,
+      paddingRight: 12,
+      cursor: 'pointer',
+    },
+    boxTabActive: {color: defaultStyles.colors.black},
   }
   return (
     <Row style={styles.container}>
@@ -68,61 +63,38 @@ export default function Header(props: HeaderProps) {
         <FaBars style={styles.menuIcon} />
       </div>
       <div style={styles.boxesContainer}>
-        <HeaderTab
-          title={'Inbox'}
-          count={props.inboxCount}
-          active={props.activeTab === 'inbox'}
-          onClick={() => props.onSelectTab('inbox')}
+        <div
           className="joyride-inbox"
-        />
-        <HeaderTab
-          title={'Queue'}
-          count={props.queueCount}
-          active={props.activeTab === 'queue'}
-          onClick={() => props.onSelectTab('queue')}
-        />
-        <HeaderTab
-          title={'Library'}
-          count={props.libraryCount}
-          active={props.activeTab === 'library'}
-          onClick={() => props.onSelectTab('library')}
-        />
+          style={
+            props.activeTab === 'inbox'
+              ? {...styles.boxTab, ...styles.boxTabActive}
+              : styles.boxTab
+          }
+          onClick={() =>
+            props.onSelectTab('inbox')
+          }>{`Inbox ${props.inboxCount}`}</div>
+        <div
+          className="joyride-queue"
+          style={
+            props.activeTab === 'queue'
+              ? {...styles.boxTab, ...styles.boxTabActive}
+              : styles.boxTab
+          }
+          onClick={() =>
+            props.onSelectTab('queue')
+          }>{`Queue ${props.queueCount}`}</div>
+        <div
+          className="joyride-library"
+          style={
+            props.activeTab === 'library'
+              ? {...styles.boxTab, ...styles.boxTabActive}
+              : styles.boxTab
+          }
+          onClick={() =>
+            props.onSelectTab('library')
+          }>{`Library ${props.libraryCount}`}</div>
         <div style={{width: 10}}></div>
-        {simpleOverlay('New box')(<FaPlus size={16} color="#c4c4c4" />)}
       </div>
     </Row>
-  )
-}
-
-type HeaderTabProps = {
-  title: string
-  count: number
-  active: boolean
-  className?: string
-  onClick: () => void
-}
-function HeaderTab(props: HeaderTabProps) {
-  let styles: {[key: string]: CSSProperties} = {
-    headerTab: {
-      fontWeight: 600,
-      color: '#979797',
-      paddingLeft: 12,
-      paddingRight: 12,
-      fontFamily: 'Inter',
-      cursor: 'pointer',
-    },
-    headerTabActive: {color: '#000000'},
-  }
-  return (
-    <div
-      className={props.className}
-      style={
-        props.active
-          ? {...styles.headerTab, ...styles.headerTabActive}
-          : styles.headerTab
-      }
-      onClick={(event) =>
-        props.onClick()
-      }>{`${props.title} ${props.count}`}</div>
   )
 }

@@ -42,6 +42,20 @@ export default function ReaderNavigationButtons(
     setDownColor,
   ])
 
+  let styles: {[key: string]: CSSProperties} = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    button: {
+      cursor: 'pointer',
+      color: '#c4c4c4',
+    },
+    buttonDisabled: {
+      cursor: 'not-allowed',
+    },
+  }
   return (
     <div style={styles.container}>
       <div
@@ -67,19 +81,4 @@ export default function ReaderNavigationButtons(
       </div>
     </div>
   )
-}
-
-const styles: {[key: string]: CSSProperties} = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  button: {
-    cursor: 'pointer',
-    color: '#c4c4c4',
-  },
-  buttonDisabled: {
-    cursor: 'not-allowed',
-  },
 }

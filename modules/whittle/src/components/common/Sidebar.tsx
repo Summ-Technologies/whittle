@@ -49,7 +49,12 @@ export default function Sidebar(props: SidebarProps) {
         ...styles.container,
         ...(props.active ? styles.containerActive : {}),
       }}>
-      <Col xs={{span: 12}} md={{span: 4}} lg={{span: 3}} style={styles.sidebar}>
+      <Col
+        xs={{span: 12}}
+        md={{span: 6}}
+        lg={{span: 4}}
+        xl={{span: 3}}
+        style={styles.sidebar}>
         <Row>
           <UserIcon firstName={'Jared'} color={defaultStyles.colors.main} />
           <Col style={styles.userInfo}>
@@ -57,6 +62,7 @@ export default function Sidebar(props: SidebarProps) {
             <div>{props.userEmail}</div>
           </Col>
         </Row>
+        <hr />
         <div style={defaultStyles.header2}>Add newsletter subscription</div>
         <div>
           Did we miss a newsletter? Enter the{' '}
