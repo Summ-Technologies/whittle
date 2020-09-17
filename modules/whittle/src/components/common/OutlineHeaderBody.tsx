@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Col} from 'react-bootstrap'
 import {WhittleArticle} from '../../models/whittle'
 import HelperPanel from '../articles/HelperPanel'
 import Row from '../common/Row'
 import Body from './Body'
 import Header, {HeaderTabs} from './Header'
+import Sidebar from './Sidebar'
 
 type OutlineHeaderBodyProps = {
   article?: WhittleArticle
@@ -14,12 +15,15 @@ type OutlineHeaderBodyProps = {
   queueCount: number
   libraryCount: number
   onSelectTab: (tab: HeaderTabs) => void
-  onClickHome: () => void
 }
 
 export default function OutlineHeaderBody(
   props: React.PropsWithChildren<OutlineHeaderBodyProps>
 ) {
+  let [sidebarActive, setSidebarActive] = useState(false)
+  let [gmailArchiveSettingActive, setGmailArchiveSettingActive] = useState(
+    false
+  )
   return (
     <Body>
       <Header
@@ -28,9 +32,22 @@ export default function OutlineHeaderBody(
         libraryCount={props.libraryCount}
         activeTab={props.activeTab}
         onSelectTab={props.onSelectTab}
-        onClickHome={props.onClickHome}
+        onClickMenu={() => setSidebarActive(!sidebarActive)}
       />
+
       <Row style={{height: '0', flex: '1 1 auto'}}>
+        <Sidebar
+          active={sidebarActive}
+          onLogout={() => undefined}
+          userEmail={'test'}
+          userFirstName={'test'}
+          userLastName={'test'}
+          gmailArchiveSettingActive={gmailArchiveSettingActive}
+          onAddNewsletterSubscription={() => undefined}
+          onToggleGmailArchive={() =>
+            setGmailArchiveSettingActive(!gmailArchiveSettingActive)
+          }
+        />
         <Col xs={8} style={{height: '100%', overflow: 'scroll'}}>
           {props.children}
         </Col>

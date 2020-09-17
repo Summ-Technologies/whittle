@@ -123,9 +123,6 @@ function HomePage(props: HomePageProps) {
       activeTab={activeTab}
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
-      }
-      onClickHome={() =>
-        history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
       }>
       {params.showOnboarding ? (
         <Joyride

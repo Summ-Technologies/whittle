@@ -132,9 +132,6 @@ function ReadingPage(props: ReadingPageProps) {
       activeTab={currentBoxTab}
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
-      }
-      onClickHome={() =>
-        history.push(AppRoutes.getPath('Box', {box: 'inbox'}))
       }>
       <Col
         style={{

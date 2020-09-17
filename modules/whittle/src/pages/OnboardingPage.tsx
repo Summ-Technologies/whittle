@@ -113,8 +113,7 @@ function OnboardingPage() {
       libraryCount={library && library.articles ? library.articles.length : 0}
       article={previewedArticle}
       activeTab={activeTab}
-      onSelectTab={(tab: HeaderTabs) => undefined}
-      onClickHome={() => undefined}>
+      onSelectTab={(tab: HeaderTabs) => undefined}>
       {joyrideTour === 1 ? (
         <Joyride
           callback={transitionToCTA}
