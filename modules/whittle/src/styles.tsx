@@ -25,13 +25,20 @@ export const colors = {
 export const header2: CSSProperties = {
   fontWeight: 700,
   color: colors.grey,
-  fontSize: '1em',
+  fontSize: '1.1em',
 }
 
 export const defaultBorderWidth: number = 2
+
+export const ellipsisOverflow: CSSProperties = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}
 
 export default {
   header2,
   colors,
   defaultBorderWidth,
+  ellipsisOverflow,
 }

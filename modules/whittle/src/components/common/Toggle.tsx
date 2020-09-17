@@ -16,6 +16,7 @@ export default function Toggle(props: ToggleProps) {
   let containerWidth = sliderHeight * 2
   let styles: {[key: string]: CSSProperties} = {
     container: {
+      height: sliderHeight + sliderMargin * 2,
       width: containerWidth,
       cursor: 'pointer',
       borderRadius: '34px',

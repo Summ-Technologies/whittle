@@ -35,12 +35,31 @@ export default function Sidebar(props: SidebarProps) {
       borderRightColor: defaultStyles.colors.grey,
       borderRightStyle: 'solid',
       borderRightWidth: defaultStyles.defaultBorderWidth,
+      paddingTop: 10,
+    },
+    userInfoRow: {
+      flexWrap: 'nowrap',
+      justifyContent: 'space-between',
     },
     userInfo: {
+      width: 0, // make ellipsis work (doesn't work when width is auto)
       paddingLeft: '30px',
+      fontWeight: 'bold',
+    },
+    bodyText: {
+      fontSize: '.9em',
     },
     logoutButton: {
       width: '30%',
+    },
+    settingsToggleRow: {
+      flexWrap: 'nowrap',
+      justifyContent: 'space-between',
+    },
+    settingsToggleRowText: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   }
   return (
@@ -55,16 +74,22 @@ export default function Sidebar(props: SidebarProps) {
         lg={{span: 4}}
         xl={{span: 3}}
         style={styles.sidebar}>
-        <Row>
-          <UserIcon firstName={'Jared'} color={defaultStyles.colors.main} />
+        <Row style={styles.userInfoRow}>
+          <UserIcon
+            firstName={props.userFirstName}
+            color={defaultStyles.colors.main}
+          />
           <Col style={styles.userInfo}>
-            <div>{`${props.userFirstName} ${props.userLastName}`}</div>
-            <div>{props.userEmail}</div>
+            <div
+              style={
+                defaultStyles.ellipsisOverflow
+              }>{`${props.userFirstName} ${props.userLastName}`}</div>
+            <div style={defaultStyles.ellipsisOverflow}>{props.userEmail}</div>
           </Col>
         </Row>
         <hr />
-        <div style={defaultStyles.header2}>Add newsletter subscription</div>
-        <div>
+        <div style={defaultStyles.header2}>Subscriptions</div>
+        <div style={styles.bodyText}>
           Did we miss a newsletter? Enter the{' '}
           <b>
             <i>from address</i>
@@ -77,15 +102,17 @@ export default function Sidebar(props: SidebarProps) {
         </Row>
         <hr />
         <div style={defaultStyles.header2}>Settings</div>
-        <Row>
-          <div>Archive in Gmail after action</div>
+        <Row style={styles.settingsToggleRow}>
+          <div style={{...styles.settingsToggleRowText, ...styles.bodyText}}>
+            Archive in Gmail after action
+          </div>
           <Toggle
             onClick={props.onToggleGmailArchive}
             active={props.gmailArchiveSettingActive}
           />
         </Row>
         <div style={styles.logoutButton}>
-          <Button text="Logout" onClick={() => undefined} />
+          <Button text="Logout" onClick={props.onLogout} />
         </div>
       </Col>
     </div>

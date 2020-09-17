@@ -39,9 +39,9 @@ export default function OutlineHeaderBody(
         <Sidebar
           active={sidebarActive}
           onLogout={() => undefined}
-          userEmail={'test'}
-          userFirstName={'test'}
-          userLastName={'test'}
+          userEmail={'jred0011@gmail.com'}
+          userFirstName={'Jared'}
+          userLastName={'Hanson'}
           gmailArchiveSettingActive={gmailArchiveSettingActive}
           onAddNewsletterSubscription={() => undefined}
           onToggleGmailArchive={() =>

@@ -11,8 +11,10 @@ type UserIconProps = {
 export default function UserIcon(props: UserIconProps) {
   let styles: {[key: string]: CSSProperties} = {
     container: {
-      height: props.size ? `${props.size} px` : '50px',
-      width: props.size ? `${props.size} px` : '50px',
+      height: props.size ? props.size : 50,
+      width: props.size ? props.size : 50,
+      minWidth: props.size ? props.size : 50,
+      minHeight: props.size ? props.size : 50,
       borderRadius: '50%',
       backgroundColor: props.color,
     },

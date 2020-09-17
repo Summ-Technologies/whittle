@@ -23,6 +23,9 @@ export default function HelperPanel(props: HelperPanelProps) {
       borderLeftStyle: 'solid',
       borderLeftWidth: defaultStyles.defaultBorderWidth,
     },
+    header2: {
+      paddingBottom: 5,
+    },
   }
   return (
     <Col style={styles.container}>
@@ -54,7 +57,9 @@ export default function HelperPanel(props: HelperPanelProps) {
             <Col>
               <hr />
               <div className="joyride-preview-outline">
-                <div style={defaultStyles.header2}>Outline</div>
+                <div style={{...defaultStyles.header2, ...styles.header2}}>
+                  Outline
+                </div>
                 <div>
                   {props.article && props.article.outline ? (
                     <ReactMarkdown
