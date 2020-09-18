@@ -40,6 +40,26 @@ export const GET_LINKED_GMAIL_FAILURE = 'GET_LINKED_GMAIL_FAILURE'
 export const SET_LOGGED_IN = 'SET_LOGGED_IN'
 export const SET_LOGGED_OUT = 'SET_LOGGED_OUT'
 
+export const DELETE_LOGOUT_REQUEST = 'DELETE_LOGOUT_REQUEST'
+export const DELETE_LOGOUT_SUCCESS = 'DELETE_LOGOUT_SUCCESS'
+export const DELETE_LOGOUT_FAILURE = 'DELETE_LOGOUT_FAILURE'
+
+/**
+ * Sends DELETE request to login resource to remove cookie and logout user.
+ */
+export function deleteUserLogin() {
+  let endpoint = '/v1.0/auth/login'
+  return createApiAction({
+    endpoint,
+    method: 'DELETE',
+    types: [
+      DELETE_LOGOUT_REQUEST,
+      DELETE_LOGOUT_SUCCESS,
+      DELETE_LOGOUT_FAILURE,
+    ],
+  })
+}
+
 /**
  * Requests redirect URL to login with google
  */

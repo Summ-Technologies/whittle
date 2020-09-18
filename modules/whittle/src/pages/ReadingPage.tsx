@@ -12,8 +12,10 @@ import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {toggleBookmark} from '../store/actions/articles'
 import {triageArticle} from '../store/actions/boxes'
+import {deleteUserLogin} from '../store/actions/user'
 import {getArticle} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
+import {getUser} from '../store/getters/user'
 import ArticleUtils from '../util/article'
 import {useArticles} from '../util/hooks'
 
@@ -26,6 +28,7 @@ function ReadingPage(props: ReadingPageProps) {
   let queue = useSelector(getQueue)
   let library = useSelector(getLibrary)
   let article = useSelector(getArticle(parseInt(props.match.params.id)))
+  let user = useSelector(getUser)
   let history = useHistory()
   let [nextArticle, setNextArticle] = useState<number | undefined>(undefined)
   let [previousArticle, setPreviousArticle] = useState<number | undefined>(
@@ -126,13 +129,15 @@ function ReadingPage(props: ReadingPageProps) {
   return (
     <OutlineHeaderBody
       article={article}
+      user={user}
       inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
       queueCount={queue && queue.articles ? queue.articles.length : 0}
       libraryCount={library && library.articles ? library.articles.length : 0}
       activeTab={currentBoxTab}
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
-      }>
+      }
+      onLogoutUser={() => dispatch(deleteUserLogin())}>
       <Col
         style={{
           height: '100%',

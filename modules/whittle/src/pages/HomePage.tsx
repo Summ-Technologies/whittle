@@ -10,8 +10,10 @@ import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {toggleBookmark} from '../store/actions/articles'
 import {triageArticle} from '../store/actions/boxes'
+import {deleteUserLogin} from '../store/actions/user'
 import {getArticles} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
+import {getUser} from '../store/getters/user'
 import {useArticles} from '../util/hooks'
 
 type HomePageProps = RouteComponentProps<{box: string}>
@@ -28,6 +30,7 @@ function HomePage(props: HomePageProps) {
   let inbox = useSelector(getInbox)
   let queue = useSelector(getQueue)
   let library = useSelector(getLibrary)
+  let user = useSelector(getUser)
 
   let activeTab = (HeaderTabs as ReadonlyArray<string>).includes(
     props.match.params.box.toLowerCase()
@@ -120,10 +123,12 @@ function HomePage(props: HomePageProps) {
       queueCount={queue && queue.articles ? queue.articles.length : 0}
       libraryCount={library && library.articles ? library.articles.length : 0}
       article={previewedArticle}
+      user={user}
       activeTab={activeTab}
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
-      }>
+      }
+      onLogoutUser={() => dispatch(deleteUserLogin())}>
       {params.showOnboarding ? (
         <Joyride
           steps={onboardingSteps}

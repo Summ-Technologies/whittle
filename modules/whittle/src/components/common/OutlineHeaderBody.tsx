@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Col} from 'react-bootstrap'
-import {WhittleArticle} from '../../models/whittle'
+import {WhittleArticle, WhittleUser} from '../../models/whittle'
 import HelperPanel from '../articles/HelperPanel'
 import Row from '../common/Row'
 import Body from './Body'
@@ -9,12 +9,14 @@ import Sidebar from './Sidebar'
 
 type OutlineHeaderBodyProps = {
   article?: WhittleArticle
+  user?: WhittleUser
   hidden?: boolean
   activeTab: HeaderTabs | undefined
   inboxCount: number
   queueCount: number
   libraryCount: number
   onSelectTab: (tab: HeaderTabs) => void
+  onLogoutUser: () => void
 }
 
 export default function OutlineHeaderBody(
@@ -38,10 +40,10 @@ export default function OutlineHeaderBody(
       <Row style={{height: '0', flex: '1 1 auto'}}>
         <Sidebar
           active={sidebarActive}
-          onLogout={() => undefined}
-          userEmail={'jred0011@gmail.com'}
-          userFirstName={'Jared'}
-          userLastName={'Hanson'}
+          onLogout={props.onLogoutUser}
+          userEmail={props.user ? props.user.email : ''}
+          userFirstName={props.user ? props.user.first_name : ''}
+          userLastName={props.user ? props.user.last_name : ''}
           gmailArchiveSettingActive={gmailArchiveSettingActive}
           onAddNewsletterSubscription={() => undefined}
           onToggleGmailArchive={() =>

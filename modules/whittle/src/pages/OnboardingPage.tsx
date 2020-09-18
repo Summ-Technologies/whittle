@@ -9,12 +9,18 @@ import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import hoveredGmailConnectIcon from '../imgs/google-signin/btn_connect_gmail_dark_focus_web.png'
 import gmailConnectIcon from '../imgs/google-signin/btn_connect_gmail_dark_normal_web.png'
 import clickedGmailConnectIcon from '../imgs/google-signin/btn_connect_gmail_dark_pressed_web.png'
-import {WhittleArticle} from '../models/whittle'
+import {WhittleArticle, WhittleUser} from '../models/whittle'
 import {connectGoogleAccountStep1} from '../store/actions/user'
 
 function OnboardingPage() {
   let dispatch = useDispatch()
   let activeTab: HeaderTabs = 'inbox'
+  let user: WhittleUser = {
+    email: 'welcome@usewhittle.com',
+    first_name: 'Welcome',
+    last_name: 'User',
+    id: 69,
+  }
   let [joyrideTour, setJoyrideTour] = useState<1 | 2>(1)
 
   // Fake data that we can play around with in onboarding
@@ -108,12 +114,14 @@ function OnboardingPage() {
 
   return (
     <OutlineHeaderBody
+      user={user}
       inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
       queueCount={queue && queue.articles ? queue.articles.length : 0}
       libraryCount={library && library.articles ? library.articles.length : 0}
       article={previewedArticle}
       activeTab={activeTab}
-      onSelectTab={(tab: HeaderTabs) => undefined}>
+      onSelectTab={(tab: HeaderTabs) => undefined}
+      onLogoutUser={() => undefined}>
       {joyrideTour === 1 ? (
         <Joyride
           callback={transitionToCTA}

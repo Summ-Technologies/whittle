@@ -2,6 +2,7 @@ import {UserResource} from '../../models/api'
 import {WhittleUser} from '../../models/whittle'
 import {WhittleAction} from '../actions'
 import {
+  DELETE_LOGOUT_SUCCESS,
   GET_LINKED_GMAIL_SUCCESS,
   GOOGLE_LOGIN_CALLBACK_SUCCESS,
   SET_LOGGED_OUT,
@@ -28,6 +29,7 @@ export default function articlesReducer(
   var payload
   switch (action.type) {
     case SET_LOGGED_OUT:
+    case DELETE_LOGOUT_SUCCESS:
       return {
         ...state,
         user: undefined,
