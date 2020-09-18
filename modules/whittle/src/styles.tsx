@@ -30,6 +30,10 @@ export const header2: CSSProperties = {
 
 export const defaultBorderWidth: number = 2
 
+export const roundedCorners: CSSProperties = {
+  borderRadius: '5px',
+}
+
 export const ellipsisOverflow: CSSProperties = {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -40,5 +44,6 @@ export default {
   header2,
   colors,
   defaultBorderWidth,
+  roundedCorners,
   ellipsisOverflow,
 }

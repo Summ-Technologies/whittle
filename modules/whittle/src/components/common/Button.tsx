@@ -13,15 +13,23 @@ export default function Button(props: ButtonProps) {
       textAlign: 'center',
       color: defaultStyles.colors.white,
       backgroundColor: defaultStyles.colors.main,
-      borderRadius: '5px',
-      paddingLeft: '10px',
-      paddingRight: '10px',
-      paddingTop: '5px',
-      paddingBottom: '5px',
+      ...defaultStyles.roundedCorners,
+      height: '100%',
       cursor: 'pointer',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: '100%',
+      paddingLeft: 5, // essentially min padding
+      paddingRight: 5,
     },
     hovered: {
       textDecoration: 'underline',
+    },
+    text: {
+      paddingLeft: 5, // essentially min padding
+      paddingRight: 5,
     },
   }
   return (
@@ -30,7 +38,7 @@ export default function Button(props: ButtonProps) {
       onMouseLeave={() => setHovered(false)}
       onClick={props.onClick}
       style={{...styles.button, ...(hovered ? styles.hovered : {})}}>
-      {props.text}
+      <div style={styles.text}>{props.text}</div>
     </div>
   )
 }
