@@ -7,7 +7,6 @@ import defaultStyles from '../../styles'
 import {imageNames, ImageUtils} from '../../util/image'
 
 type OnboardingImportCTAProps = {
-  show: boolean
   onConnectGmail: () => void
 }
 
@@ -52,7 +51,7 @@ export default function OnboardingImportCTA(props: OnboardingImportCTAProps) {
     },
   }
   return (
-    <Modal show={props.show}>
+    <Modal>
       <div style={styles.modalBody}>
         <img
           src={ImageUtils.getImageUrl(imageNames.personWithArticlePreview)}

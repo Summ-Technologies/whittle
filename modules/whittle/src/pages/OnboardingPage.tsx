@@ -138,12 +138,13 @@ function OnboardingPage() {
           }}
         />
       ) : undefined}
-      <OnboardingImportCTA
-        show={joyrideTour === 2}
-        onConnectGmail={() => {
-          dispatch(connectGoogleAccountStep1())
-        }}
-      />
+      {joyrideTour === 2 ? (
+        <OnboardingImportCTA
+          onConnectGmail={() => {
+            dispatch(connectGoogleAccountStep1())
+          }}
+        />
+      ) : undefined}
       <StoriesList
         onHoverArticle={(article: WhittleArticle) => undefined}
         onSelectArticle={() => undefined}
