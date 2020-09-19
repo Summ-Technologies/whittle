@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {Modal} from 'react-bootstrap'
+import React, {useState} from 'react'
 import Joyride, {CallBackProps, EVENTS, Step} from 'react-joyride'
 import {useDispatch} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
-import hoveredGmailConnectIcon from '../imgs/google-signin/btn_connect_gmail_dark_focus_web.png'
-import gmailConnectIcon from '../imgs/google-signin/btn_connect_gmail_dark_normal_web.png'
-import clickedGmailConnectIcon from '../imgs/google-signin/btn_connect_gmail_dark_pressed_web.png'
+import OnboardingImportCTA from '../components/onboarding/OnboardingImportCTA'
 import {WhittleArticle, WhittleUser} from '../models/whittle'
 import {connectGoogleAccountStep1} from '../store/actions/user'
 
@@ -141,13 +138,12 @@ function OnboardingPage() {
           }}
         />
       ) : undefined}
-      {joyrideTour === 2 ? (
-        <CallToActionModal
-          onConnectGmail={() => {
-            dispatch(connectGoogleAccountStep1())
-          }}
-        />
-      ) : undefined}
+      <OnboardingImportCTA
+        show={joyrideTour === 2}
+        onConnectGmail={() => {
+          dispatch(connectGoogleAccountStep1())
+        }}
+      />
       <StoriesList
         onHoverArticle={(article: WhittleArticle) => undefined}
         onSelectArticle={() => undefined}
@@ -166,49 +162,4 @@ function OnboardingPage() {
     </OutlineHeaderBody>
   )
 }
-
-type CTAProps = {onConnectGmail: () => void}
-
-function CallToActionModal(props: CTAProps) {
-  let [hovered, setHovered] = useState(false)
-  let [clicked, setClicked] = useState(false)
-  let [img, setImg] = useState(gmailConnectIcon)
-  useEffect(() => {
-    let _img = gmailConnectIcon
-    if (clicked) {
-      _img = clickedGmailConnectIcon
-    } else if (hovered) {
-      _img = hoveredGmailConnectIcon
-    }
-    setImg(_img)
-  }, [hovered, clicked, setImg])
-  return (
-    <Modal show>
-      <Modal.Header style={{textAlign: 'center', width: '100%'}}>
-        <h2 style={{width: '100%'}}>Let's import your newsletters!</h2>
-      </Modal.Header>
-      <Modal.Body style={{textAlign: 'center'}}>
-        <div>
-          Connect your Google email to automatically import your newsletter
-          subscriptions.
-        </div>
-        <img
-          src={img}
-          style={{marginTop: '20px', height: '60px', cursor: 'pointer'}}
-          alt="Connect Google email account button"
-          onMouseOver={() => setHovered(true)}
-          onMouseOut={() => {
-            setHovered(false)
-            setClicked(false)
-          }}
-          onClick={() => {
-            setClicked(true)
-            props.onConnectGmail()
-          }}
-        />
-      </Modal.Body>
-    </Modal>
-  )
-}
-
 export default withRouter(OnboardingPage)
