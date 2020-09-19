@@ -6,10 +6,11 @@ const vars = {
   colors: {
     grey: '#B3B3B3',
     lightGrey: '#F3F3F3',
-    purple: '#957ef9',
-    lightPurple: '#CABEFC', // lightened by 50 using https://pinetools.com/lighten-color
+    purple: '#9F8AFF',
+    lightPurple: '#CFC4FF', // lightened by 50 using https://pinetools.com/lighten-color
     white: '#FFFFFF',
     black: '#000000',
+    blue: '#0000EE',
   },
 }
 
@@ -20,18 +21,35 @@ export const colors = {
   main: vars.colors.purple,
   lightMain: vars.colors.lightPurple,
   black: vars.colors.black,
+  blueLink: vars.colors.blue,
+}
+
+export const header: CSSProperties = {
+  fontWeight: 700,
+  color: colors.black,
+  fontSize: '2.5em',
 }
 
 export const header2: CSSProperties = {
-  fontWeight: 700,
+  fontWeight: 500,
   color: colors.grey,
   fontSize: '1.1em',
+}
+
+export const body: CSSProperties = {
+  fontWeight: 300,
+  color: colors.black,
+  fontSize: '1em',
 }
 
 export const defaultBorderWidth: number = 2
 
 export const roundedCorners: CSSProperties = {
   borderRadius: '5px',
+}
+
+export const defaultBoxShadow: CSSProperties = {
+  boxShadow: `3px 3px 5px 5px rgba(0, 0, 0, .25)`,
 }
 
 export const ellipsisOverflow: CSSProperties = {
@@ -41,9 +59,12 @@ export const ellipsisOverflow: CSSProperties = {
 }
 
 export default {
+  header,
   header2,
+  body,
   colors,
   defaultBorderWidth,
+  defaultBoxShadow,
   roundedCorners,
   ellipsisOverflow,
 }

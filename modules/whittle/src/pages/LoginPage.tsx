@@ -3,6 +3,8 @@ import Col from 'react-bootstrap/Col'
 import {useDispatch} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import Body from '../components/common/Body'
+import Link from '../components/common/Link'
+import Row from '../components/common/Row'
 import hoveredGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_dark_focus_web.png'
 import googleLoginIcon from '../imgs/google-signin/btn_google_signin_dark_normal_web.png'
 import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_dark_pressed_web.png'
@@ -10,6 +12,8 @@ import hoveredGoogleSignupIcon from '../imgs/google-signin/btn_google_signup_dar
 import googleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_normal_web.png'
 import clickedGoogleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_pressed_web.png'
 import {googleLoginStep1, googleSignupStep1} from '../store/actions/user'
+import defaultStyles from '../styles'
+import {imageNames, ImageUtils} from '../util/image'
 
 type AuthType = 'login' | 'signup'
 
@@ -49,70 +53,91 @@ function LoginPage() {
     setClicked(false)
   }
 
+  let styles: {[key: string]: CSSProperties} = {
+    pageContainer: {
+      backgroundImage: `url(${ImageUtils.getImageUrl(
+        imageNames.treesCloudsSunBackground
+      )})`,
+      backgroundPosition: 'center bottom',
+      backgroundAttachment: 'fixed',
+      width: '100%',
+      height: '100%',
+    },
+    modalContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      paddingTop: '20px',
+      paddingBottom: '20px',
+      ...defaultStyles.defaultBoxShadow,
+      ...defaultStyles.roundedCorners,
+      backgroundColor: defaultStyles.colors.lightGrey,
+    },
+    bodyLine: {
+      textAlign: 'center',
+      ...defaultStyles.body,
+      fontSize: '1.5em',
+    },
+    header: {
+      ...defaultStyles.header,
+      marginBottom: '8px',
+    },
+    button: {
+      marginTop: 15,
+      marginBottom: 5,
+      height: 60,
+      cursor: 'pointer',
+    },
+  }
+
   return (
     <Body>
-      <Col
-        xs={{span: 10, offset: 1}}
-        md={{span: 6, offset: 3}}
-        style={styles.pageContainer}>
-        {/* <img style={{width: 243, height: 80}} src={newsletterImg} /> */}
-        <div style={styles.header}>Whittle</div>
-        <div style={styles.bodyLine}>
-          Automatically import your newsletters.
-        </div>
-        <div style={styles.bodyLine}></div>
-        <div style={styles.bodyLine}>Skim less. Read more.</div>
-        <img
-          src={img}
-          alt={'Sign up with Google button'}
-          onMouseOver={() => setHovered(true)}
-          onMouseOut={() => {
-            setHovered(false)
-            setClicked(false)
-          }}
-          onMouseDown={() => setClicked(true)}
-          onMouseUp={() => setClicked(false)}
-          style={styles.button}
-          onClick={onClickGoogleButton}
-        />
-        <div style={{cursor: 'pointer'}} onClick={toggleAuthType}>
-          {authType === 'login'
-            ? "Don't have an account?"
-            : 'Already have an account?'}
-        </div>
-      </Col>
+      <Row style={styles.pageContainer}>
+        <Col
+          xs={{span: 10, offset: 1}}
+          md={{span: 6, offset: 3}}
+          lg={{span: 4, offset: 4}}
+          style={styles.modalContainer}>
+          <div style={styles.header}>Whittle</div>
+          {authType === 'signup' ? (
+            <>
+              <div style={styles.bodyLine}>
+                Automatically import your newsletters.
+              </div>
+              <div style={styles.bodyLine}>Skim less. Read more.</div>
+            </>
+          ) : (
+            <div style={styles.bodyLine}>Welcome back!</div>
+          )}
+          <img
+            src={img}
+            alt={'Sign up with Google button'}
+            onMouseOver={() => setHovered(true)}
+            onMouseOut={() => {
+              setHovered(false)
+              setClicked(false)
+            }}
+            onMouseDown={() => setClicked(true)}
+            onMouseUp={() => setClicked(false)}
+            style={styles.button}
+            onClick={onClickGoogleButton}
+          />
+          <Link
+            color={defaultStyles.colors.blueLink}
+            text={
+              authType === 'signup'
+                ? 'Already have an account?'
+                : "Don't have an account?"
+            }
+            onClick={toggleAuthType}
+          />
+        </Col>
+      </Row>
     </Body>
   )
-}
-
-const styles: {[key: string]: CSSProperties} = {
-  pageContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '2px 2px rgba(0, 0,0, .4)',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '3px',
-    backgroundColor: 'rgba(200, 200, 200, .4)',
-  },
-  bodyLine: {
-    textAlign: 'center',
-    fontFamily: 'Inter',
-    fontSize: '1.5em',
-  },
-  header: {
-    fontWeight: 'bold',
-    fontFamily: 'Inter',
-    fontSize: '3em',
-    marginBottom: '10px',
-  },
-  button: {
-    marginTop: '20px',
-    height: '60px',
-    cursor: 'pointer',
-  },
 }
 
 export default withRouter(LoginPage)

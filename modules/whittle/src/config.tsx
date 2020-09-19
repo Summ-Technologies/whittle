@@ -1,6 +1,7 @@
 /* Config keys */
 export const SERVER_BASE_URL_KEY = 'server_base_url'
-type ConfigKey = typeof SERVER_BASE_URL_KEY
+export const IMAGES_BASE_URL_KEY = 'images_base_url'
+type ConfigKey = typeof SERVER_BASE_URL_KEY | typeof IMAGES_BASE_URL_KEY
 
 class Config {
   appConfig: {[key: string]: any}
@@ -15,6 +16,12 @@ class Config {
         this.appConfig[SERVER_BASE_URL_KEY] = apiUrl
       } else {
         throw Error('Environment variable missing: REACT_APP_API_URL')
+      }
+      let imagesBaseUrl = process.env.REACT_APP_IMAGES_URL
+      if (imagesBaseUrl) {
+        this.appConfig[IMAGES_BASE_URL_KEY] = imagesBaseUrl
+      } else {
+        throw Error('Environment variable missing: REACT_APP_IMAGES_URL')
       }
     } else {
       // When in production, comes from config.js file at runtime
