@@ -51,7 +51,7 @@ export default function OnboardingImportCTA(props: OnboardingImportCTAProps) {
     },
   }
   return (
-    <Modal>
+    <Modal show>
       <div style={styles.modalBody}>
         <img
           src={ImageUtils.getImageUrl(imageNames.personWithArticlePreview)}
