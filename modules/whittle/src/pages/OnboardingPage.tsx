@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
+import JoyrideModal from '../components/onboarding/JoyrideModal'
 import OnboardingImportCTA from '../components/onboarding/OnboardingImportCTA'
 import {WhittleArticle, WhittleUser} from '../models/whittle'
 import {connectGoogleAccountStep1} from '../store/actions/user'
@@ -122,20 +123,12 @@ function OnboardingPage() {
       {joyrideTour === 1 ? (
         <Joyride
           callback={transitionToCTA}
+          tooltipComponent={JoyrideModal}
           steps={onboardingHeaderSteps}
           scrollToFirstStep={true}
           continuous={true}
           showSkipButton={true}
           run={true}
-          styles={{
-            options: {
-              primaryColor: '#9F8AFF',
-              arrowColor: '#c4c4c4',
-              textColor: '#000',
-              width: 500,
-              zIndex: 1000,
-            },
-          }}
         />
       ) : undefined}
       {joyrideTour === 2 ? (

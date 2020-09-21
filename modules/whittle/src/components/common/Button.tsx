@@ -4,6 +4,7 @@ import defaultStyles from '../../styles'
 type ButtonProps = {
   text: string
   onClick: (event: SyntheticEvent<HTMLDivElement>) => void
+  style?: CSSProperties
 }
 
 export default function Button(props: ButtonProps) {
@@ -37,7 +38,11 @@ export default function Button(props: ButtonProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={props.onClick}
-      style={{...styles.button, ...(hovered ? styles.hovered : {})}}>
+      style={{
+        ...styles.button,
+        ...(hovered ? styles.hovered : {}),
+        ...(props.style ? props.style : {}),
+      }}>
       <div style={styles.text}>{props.text}</div>
     </div>
   )
