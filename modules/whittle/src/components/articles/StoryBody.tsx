@@ -20,6 +20,6 @@ export default function StoryBody(props: StoryBodyProps) {
     if (props.scrollRef && props.scrollRef.current && scrollTop) {
       props.scrollRef.current.scrollTop = scrollTop
     }
-  }, [scrollTop])
+  }, [scrollTop, props.scrollRef])
   return <div dangerouslySetInnerHTML={{__html: props.html}}></div>
 }

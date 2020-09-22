@@ -23,7 +23,6 @@ type StoryRowPreviewProps = {
 export default function StoryRowPreview(props: StoryRowPreviewProps) {
   let [done, setDone] = useState(false)
   let [queued, setQueued] = useState(false)
-  let [bookmarked, setBookmarked] = useState(props.bookmarked)
 
   function simpleTooltip(val: string): OverlayChildren {
     return <Tooltip id="button-tooltip">{val}</Tooltip>

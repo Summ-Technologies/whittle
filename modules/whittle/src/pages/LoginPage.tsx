@@ -74,7 +74,7 @@ function LoginPage() {
       paddingBottom: '20px',
       ...defaultStyles.defaultBoxShadow,
       ...defaultStyles.roundedCorners,
-      backgroundColor: defaultStyles.colors.lightGrey,
+      backgroundColor: defaultStyles.colors.white,
     },
     bodyLine: {
       textAlign: 'center',

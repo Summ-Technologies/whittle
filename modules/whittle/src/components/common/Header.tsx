@@ -1,5 +1,5 @@
 import React, {CSSProperties} from 'react'
-import {FaBars} from 'react-icons/fa'
+import {FaBars, FaSearch} from 'react-icons/fa'
 import defaultStyles from '../../styles'
 import Row from './Row'
 
@@ -21,12 +21,20 @@ export default function Header(props: HeaderProps) {
   const menuIconPaddingPx = 10
   const styles: {[key: string]: CSSProperties} = {
     container: {
-      alignItems: 'flex-end',
-      margin: 0,
       height: `${headerHeightPx}px`,
       color: defaultStyles.colors.grey,
+      justifyContent: 'space-between',
+      display: 'flex',
+      width: '100%',
+    },
+    leftContainer: {
+      height: '100%',
+      flexWrap: 'nowrap',
+      alignItems: 'flex-end',
+      display: 'flex',
     },
     menuIconContainer: {
+      margin: 0,
       paddingLeft: `${menuIconPaddingPx}px`,
       paddingRight: `${menuIconPaddingPx}px`,
       paddingTop: `${menuIconPaddingPx}px`,
@@ -53,42 +61,58 @@ export default function Header(props: HeaderProps) {
       cursor: 'pointer',
     },
     boxTabActive: {color: defaultStyles.colors.black},
+    searchIcon: {
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      flexDirection: 'row',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      paddingRight: 20,
+      paddingLeft: 20,
+    },
   }
   return (
     <Row style={styles.container}>
-      <div style={styles.menuIconContainer} onClick={props.onClickMenu}>
-        <FaBars style={styles.menuIcon} />
+      <div style={styles.leftContainer}>
+        <div style={styles.menuIconContainer} onClick={props.onClickMenu}>
+          <FaBars style={styles.menuIcon} />
+        </div>
+        <div style={styles.boxesContainer}>
+          <div
+            className="joyride-inbox"
+            style={
+              props.activeTab === 'inbox'
+                ? {...styles.boxTab, ...styles.boxTabActive}
+                : styles.boxTab
+            }
+            onClick={() =>
+              props.onSelectTab('inbox')
+            }>{`Inbox ${props.inboxCount}`}</div>
+          <div
+            className="joyride-queue"
+            style={
+              props.activeTab === 'queue'
+                ? {...styles.boxTab, ...styles.boxTabActive}
+                : styles.boxTab
+            }
+            onClick={() =>
+              props.onSelectTab('queue')
+            }>{`Queue ${props.queueCount}`}</div>
+          <div
+            className="joyride-library"
+            style={
+              props.activeTab === 'library'
+                ? {...styles.boxTab, ...styles.boxTabActive}
+                : styles.boxTab
+            }
+            onClick={() => props.onSelectTab('library')}>{`Library`}</div>
+          <div style={{width: 10}}></div>
+        </div>
       </div>
-      <div style={styles.boxesContainer}>
-        <div
-          className="joyride-inbox"
-          style={
-            props.activeTab === 'inbox'
-              ? {...styles.boxTab, ...styles.boxTabActive}
-              : styles.boxTab
-          }
-          onClick={() =>
-            props.onSelectTab('inbox')
-          }>{`Inbox ${props.inboxCount}`}</div>
-        <div
-          className="joyride-queue"
-          style={
-            props.activeTab === 'queue'
-              ? {...styles.boxTab, ...styles.boxTabActive}
-              : styles.boxTab
-          }
-          onClick={() =>
-            props.onSelectTab('queue')
-          }>{`Queue ${props.queueCount}`}</div>
-        <div
-          className="joyride-library"
-          style={
-            props.activeTab === 'library'
-              ? {...styles.boxTab, ...styles.boxTabActive}
-              : styles.boxTab
-          }
-          onClick={() => props.onSelectTab('library')}>{`Library`}</div>
-        <div style={{width: 10}}></div>
+      <div style={styles.searchIcon}>
+        <FaSearch />
       </div>
     </Row>
   )
