@@ -152,6 +152,7 @@ function OnboardingPage() {
             : []
         }
         activeStory={previewedArticle}
+        onScrollEnd={() => undefined}
       />
     </OutlineHeaderBody>
   )

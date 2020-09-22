@@ -60,7 +60,7 @@ export default function boxesReducer(
       }
       updatedBox = {
         ...state.boxes[boxId],
-        page: isFullyLoaded ? state.boxes[boxId].page : page,
+        page: page,
         isFullyLoaded,
         articles: [
           ...(existingArticles ? existingArticles : []),

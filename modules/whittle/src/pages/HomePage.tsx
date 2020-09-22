@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import StoriesList from '../components/articles/StoriesList'
@@ -66,11 +66,10 @@ function HomePage(props: HomePageProps) {
         setActiveBox(library)
         break
     }
-  }, [activeTab, activeBox, setActiveBox, inbox, queue, library])
-
-  useEffect(() => {
-    /** Get next page */
-    function getNextPageOfArticles() {
+  }, [activeTab, activeBox, setActiveBox, inbox, queue, library, dispatch])
+  /** Gets next page */
+  let getNextPageOfArticles = useCallback(
+    (box: WhittleBox | undefined) => {
       if (activeBox) {
         let page = 0
         if (activeBox.page !== undefined) {
@@ -80,8 +79,18 @@ function HomePage(props: HomePageProps) {
           dispatch(getBoxArticles(activeBox.id, page))
         }
       }
+    },
+    [activeBox, dispatch]
+  )
+
+  useEffect(() => {
+    function getFirstPage(activeBox: WhittleBox | undefined) {
+      if (activeBox && activeBox.page === undefined) {
+        let page = 0
+        dispatch(getBoxArticles(activeBox.id, page))
+      }
     }
-    getNextPageOfArticles()
+    getFirstPage(activeBox)
   }, [activeBox, dispatch])
 
   /** Dispatch article to library box */
@@ -139,6 +148,7 @@ function HomePage(props: HomePageProps) {
             : []
         }
         activeStory={previewedArticle}
+        onScrollEnd={() => getNextPageOfArticles(activeBox)}
       />
     </OutlineHeaderBody>
   )

@@ -1,4 +1,10 @@
-import React, {CSSProperties} from 'react'
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import Table from 'react-bootstrap/Table'
 import {WhittleArticle} from '../../models/whittle'
 import defaultStyles from '../../styles'
@@ -13,9 +19,12 @@ type StoriesListProps = {
   onBookmarkArticle: (article: WhittleArticle, doBookmark: boolean) => void
   onQueueArticle: (article: WhittleArticle) => void
   onArchiveArticle: (article: WhittleArticle) => void
+  onScrollEnd: () => void
 }
 
 export default function StoriesList(props: StoriesListProps) {
+  let [reachedBottom, setReachedBottom] = useState(false)
+  let lastRowRef = useRef<HTMLTableRowElement>(null)
   let styles: {[key: string]: CSSProperties} = {
     storyRow: {
       cursor: 'pointer',
@@ -27,6 +36,39 @@ export default function StoriesList(props: StoriesListProps) {
       backgroundColor: defaultStyles.colors.lightGrey,
     },
   }
+
+  let onScroll = useCallback(function onScroll() {
+    if (lastRowRef && lastRowRef.current) {
+      const rect = lastRowRef.current.getBoundingClientRect()
+      const visible =
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <=
+          (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <=
+          (window.innerWidth || document.documentElement.clientWidth)
+      if (visible) {
+        let isScrolled = lastRowRef.current.getAttribute('data-scrolled')
+        if (isScrolled !== '1') {
+          console.log('scroll ended')
+          lastRowRef.current.setAttribute('data-scrolled', '1')
+          setReachedBottom(true)
+        }
+      }
+    }
+  }, [])
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll, true)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [onScroll])
+
+  useEffect(() => {
+    if (reachedBottom) {
+      console.log('caused here')
+      props.onScrollEnd()
+      setReachedBottom(false)
+    }
+  }, [reachedBottom, setReachedBottom, props])
 
   const tableRows = props.storiesList.map((story, index) => {
     return (
@@ -42,7 +84,8 @@ export default function StoriesList(props: StoriesListProps) {
         ) => {
           props.onHoverArticle(story)
         }}
-        key={index}>
+        ref={index === props.storiesList.length - 1 ? lastRowRef : undefined}
+        key={story.id}>
         <td>
           <StoryRowPreview
             title={story.title}
@@ -72,7 +115,7 @@ export default function StoriesList(props: StoriesListProps) {
 
   return (
     <Table responsive size="md">
-      <tbody>{tableRows}</tbody>
+      <tbody onScroll={onScroll}>{tableRows}</tbody>
     </Table>
   )
 }
