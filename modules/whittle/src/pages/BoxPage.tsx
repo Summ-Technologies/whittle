@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
+import EmptyBox from '../components/articles/EmptyBox'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
@@ -13,6 +14,7 @@ import {getArticles} from '../store/getters/articles'
 import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
 import {useHome} from '../util/hooks'
+import {imageNames, ImageUtils} from '../util/image'
 
 type BoxPageProps = RouteComponentProps<{box: string}>
 
@@ -144,24 +146,33 @@ function BoxPage(props: BoxPageProps) {
       }
       onLogoutUser={() => dispatch(deleteUserLogin())}
       redirectOutline={redirectOutline}>
-      <StoriesList
-        onHoverArticle={(article: WhittleArticle) =>
-          setPreviewedArticle(article)
-        }
-        onSelectArticle={(article: WhittleArticle) =>
-          history.push(AppRoutes.getPath('Read', {id: article.id.toString()}))
-        }
-        onBookmarkArticle={doToggleBookmark}
-        onQueueArticle={queueArticle}
-        onArchiveArticle={archiveArticle}
-        storiesList={
-          activeBox && activeBox.articles
-            ? activeBox.articles.map((id) => articles[id]).filter((val) => val)
-            : []
-        }
-        activeStory={previewedArticle}
-        onScrollEnd={() => getNextPageOfArticles(activeBox)}
-      />
+      {activeBox && activeBox.numArticles > 0 ? (
+        <StoriesList
+          onHoverArticle={(article: WhittleArticle) =>
+            setPreviewedArticle(article)
+          }
+          onSelectArticle={(article: WhittleArticle) =>
+            history.push(AppRoutes.getPath('Read', {id: article.id.toString()}))
+          }
+          onBookmarkArticle={doToggleBookmark}
+          onQueueArticle={queueArticle}
+          onArchiveArticle={archiveArticle}
+          storiesList={
+            activeBox && activeBox.articles
+              ? activeBox.articles
+                  .map((id) => articles[id])
+                  .filter((val) => val)
+              : []
+          }
+          activeStory={previewedArticle}
+          onScrollEnd={() => getNextPageOfArticles(activeBox)}
+        />
+      ) : (
+        <EmptyBox
+          text={'🎉 You’ve hit inbox 0!'}
+          imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
+        />
+      )}
     </OutlineHeaderBody>
   )
 }
