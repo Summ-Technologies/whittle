@@ -30,7 +30,7 @@ export default function OutlineHeaderBody(
   return (
     <Body>
       <Row style={{height: '0', flex: '1 1 auto'}}>
-        <Col xs={8} style={{height: '100%', overflow: 'scroll'}}>
+        <Col xs={8} style={{height: '100%', overflow: 'hidden'}}>
           <Header
             inboxCount={props.inboxCount}
             queueCount={props.queueCount}
@@ -51,7 +51,9 @@ export default function OutlineHeaderBody(
               setGmailArchiveSettingActive(!gmailArchiveSettingActive)
             }
           />
-          {props.children}
+          <div style={{height: '100%', overflow: 'scroll'}}>
+            {props.children}
+          </div>
         </Col>
         <Col xs={4} style={{height: '100%', overflow: 'scroll'}}>
           <HelperPanel
