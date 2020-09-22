@@ -11,6 +11,7 @@ const vars = {
     white: '#FFFFFF',
     black: '#000000',
     blue: '#0000EE',
+    lightBlue: '#F0F5FE',
   },
 }
 
@@ -22,6 +23,7 @@ export const colors = {
   lightMain: vars.colors.lightPurple,
   black: vars.colors.black,
   blueLink: vars.colors.blue,
+  lightBlue: vars.colors.lightBlue,
 }
 
 export const header: CSSProperties = {
