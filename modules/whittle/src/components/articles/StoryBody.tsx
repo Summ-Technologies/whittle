@@ -9,10 +9,14 @@ export default function StoryBody(props: StoryBodyProps) {
   let [scrollTop, setScrollTop] = useState<number | undefined>(undefined)
   useEffect(() => {
     if (props.anchor) {
-      let anchor = document.getElementById(props.anchor.replace('#', ''))
-      if (anchor) {
-        setScrollTop(anchor.offsetTop)
-      }
+      let anchorTag = props.anchor
+      // TODO REMOVE THIS. IT'S A HACK FOR YC DEMO
+      setTimeout(() => {
+        let anchor = document.getElementById(anchorTag.replace('#', ''))
+        if (anchor) {
+          setScrollTop(anchor.offsetTop)
+        }
+      }, 500)
     }
   }, [props.anchor, setScrollTop])
 
