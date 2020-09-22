@@ -3,12 +3,7 @@ import Col from 'react-bootstrap/Col'
 import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import {
-  FaBookmark,
-  FaList,
-  FaRegBookmark,
-  FaRegCheckCircle,
-} from 'react-icons/fa'
+import {FaList, FaRegCheckCircle} from 'react-icons/fa'
 import Row from '../common/Row'
 import StoryHighLevel from './StoryHighLevel'
 
@@ -72,9 +67,9 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               }}
               onMouseOver={() => setDone(true)}
               onMouseOut={() => setDone(false)}>
-              {simpleOverlay('Mark as Done')(<FaRegCheckCircle size={20} />)}
+              {simpleOverlay('Move to library')(<FaRegCheckCircle size={20} />)}
             </div>
-            <div
+            {/* <div
               style={{
                 ...styles.triageButton,
                 ...(bookmarked ? styles.triageButtonSelected : {}),
@@ -89,7 +84,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               {props.bookmarked
                 ? simpleOverlay('Remove Bookmark')(<FaBookmark size={20} />)
                 : simpleOverlay('Bookmark')(<FaRegBookmark size={20} />)}
-            </div>
+            </div> */}
             <div
               style={{
                 ...styles.triageButton,

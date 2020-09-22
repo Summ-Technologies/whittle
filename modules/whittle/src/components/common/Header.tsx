@@ -38,8 +38,8 @@ export default function Header(props: HeaderProps) {
       cursor: 'pointer',
     },
     menuIcon: {
-      height: `${headerHeightPx - menuIconPaddingPx * 2}px`,
-      width: `${headerHeightPx - menuIconPaddingPx * 2}px`,
+      height: 22,
+      width: 22,
     },
     boxesContainer: {
       marginTop: 'auto',
@@ -90,9 +90,7 @@ export default function Header(props: HeaderProps) {
               ? {...styles.boxTab, ...styles.boxTabActive}
               : styles.boxTab
           }
-          onClick={() =>
-            props.onSelectTab('library')
-          }>{`Library ${props.libraryCount}`}</div>
+          onClick={() => props.onSelectTab('library')}>{`Library`}</div>
         <div style={{width: 10}}></div>
       </div>
     </Row>
