@@ -15,6 +15,7 @@ type OutlineHeaderBodyProps = {
   inboxCount: number
   queueCount: number
   libraryCount: number
+  redirectOutline: (articleId: number, uri: string) => void
   onSelectTab: (tab: HeaderTabs) => void
   onLogoutUser: () => void
 }
@@ -54,7 +55,10 @@ export default function OutlineHeaderBody(
           {props.children}
         </Col>
         <Col xs={4} style={{height: '100%', overflow: 'scroll'}}>
-          <HelperPanel article={props.article} />
+          <HelperPanel
+            article={props.article}
+            redirectOutline={props.redirectOutline}
+          />
         </Col>
       </Row>
     </Body>

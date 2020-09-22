@@ -126,6 +126,17 @@ function ReadingPage(props: ReadingPageProps) {
     history.push(AppRoutes.getPath('Read', {id: id.toString()}))
   }
 
+  /** Redirects outline link to page with anchor */
+  function redirectOutline(articleId: number, uri: string) {
+    if (uri.startsWith('#')) {
+      history.push(
+        `${AppRoutes.getPath('Read', {id: articleId.toString()})}${uri}`
+      )
+    } else {
+      history.push(uri)
+    }
+  }
+
   return (
     <OutlineHeaderBody
       article={article}
@@ -137,7 +148,8 @@ function ReadingPage(props: ReadingPageProps) {
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
       }
-      onLogoutUser={() => dispatch(deleteUserLogin())}>
+      onLogoutUser={() => dispatch(deleteUserLogin())}
+      redirectOutline={redirectOutline}>
       <Col
         style={{
           height: '100%',

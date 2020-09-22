@@ -4,14 +4,33 @@ import ReactMarkdown from 'react-markdown'
 import {WhittleArticle} from '../../models/whittle'
 import defaultStyles from '../../styles'
 import ArticleUtils from '../../util/article'
+import Link from '../common/Link'
 import Row from '../common/Row'
 import StoryHighLevel from './StoryHighLevel'
 
 type HelperPanelProps = {
   article?: WhittleArticle
+  redirectOutline: (articleId: number, uri: string) => void
 }
 
 export default function HelperPanel(props: HelperPanelProps) {
+  let redirectOutline = props.redirectOutline
+  let article = props.article
+
+  function MarkdownLinkRenderer(
+    props: React.PropsWithChildren<{href: string}>
+  ) {
+    return (
+      <Link
+        color="unset"
+        onClick={() => {
+          if (article) redirectOutline(article.id, props.href)
+        }}>
+        {props.children}
+      </Link>
+    )
+  }
+
   let styles: {[key: string]: CSSProperties} = {
     container: {
       backgroundColor: defaultStyles.colors.lightGrey,
@@ -64,7 +83,10 @@ export default function HelperPanel(props: HelperPanelProps) {
                   {props.article && props.article.outline ? (
                     <ReactMarkdown
                       source={props.article.outline}
-                      renderers={{root: MarkdownRoot}}
+                      renderers={{
+                        root: MarkdownRoot,
+                        link: MarkdownLinkRenderer,
+                      }}
                     />
                   ) : (
                     ''

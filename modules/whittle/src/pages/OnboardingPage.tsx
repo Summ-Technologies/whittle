@@ -119,7 +119,8 @@ function OnboardingPage() {
       article={previewedArticle}
       activeTab={activeTab}
       onSelectTab={(tab: HeaderTabs) => undefined}
-      onLogoutUser={() => undefined}>
+      onLogoutUser={() => undefined}
+      redirectOutline={() => undefined}>
       {joyrideTour === 1 ? (
         <Joyride
           callback={transitionToCTA}

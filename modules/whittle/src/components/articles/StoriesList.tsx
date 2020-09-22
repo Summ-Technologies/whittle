@@ -50,7 +50,6 @@ export default function StoriesList(props: StoriesListProps) {
       if (visible) {
         let isScrolled = lastRowRef.current.getAttribute('data-scrolled')
         if (isScrolled !== '1') {
-          console.log('scroll ended')
           lastRowRef.current.setAttribute('data-scrolled', '1')
           setReachedBottom(true)
         }
@@ -64,7 +63,6 @@ export default function StoriesList(props: StoriesListProps) {
 
   useEffect(() => {
     if (reachedBottom) {
-      console.log('caused here')
       props.onScrollEnd()
       setReachedBottom(false)
     }

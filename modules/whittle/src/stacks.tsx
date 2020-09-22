@@ -4,8 +4,8 @@ import {Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import AccountPage from './pages/AccountPage'
 import AdminPage from './pages/AdminPage'
+import BoxPage from './pages/BoxPage'
 import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
-import HomePage from './pages/HomePage'
 import AuthPage from './pages/LoginPage'
 import OnboardingPage from './pages/OnboardingPage'
 import ReadingPage from './pages/ReadingPage'
@@ -53,7 +53,7 @@ export class AppRoutes {
     {name: 'Account', path: '/account', component: AccountPage, showNav: false},
     {name: 'Admin', path: '/admin', component: AdminPage, showNav: false},
     {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
-    {name: 'Box', path: '/b/:box', component: HomePage, showNav: false},
+    {name: 'Box', path: '/b/:box', component: BoxPage, showNav: false},
     {
       name: 'Onboarding',
       path: '/onboarding',

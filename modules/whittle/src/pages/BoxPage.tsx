@@ -14,9 +14,9 @@ import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
 import {useHome} from '../util/hooks'
 
-type HomePageProps = RouteComponentProps<{box: string}>
+type BoxPageProps = RouteComponentProps<{box: string}>
 
-function HomePage(props: HomePageProps) {
+function BoxPage(props: BoxPageProps) {
   let dispatch = useDispatch()
   let history = useHistory()
   let articles = useSelector(getArticles)
@@ -114,6 +114,17 @@ function HomePage(props: HomePageProps) {
     }
   }
 
+  /** Redirects outline link to page with anchor */
+  function redirectOutline(articleId: number, uri: string) {
+    if (uri.startsWith('#')) {
+      history.push(
+        `${AppRoutes.getPath('Read', {id: articleId.toString()})}${uri}`
+      )
+    } else {
+      history.push(uri)
+    }
+  }
+
   return (
     <OutlineHeaderBody
       inboxCount={
@@ -131,7 +142,8 @@ function HomePage(props: HomePageProps) {
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
       }
-      onLogoutUser={() => dispatch(deleteUserLogin())}>
+      onLogoutUser={() => dispatch(deleteUserLogin())}
+      redirectOutline={redirectOutline}>
       <StoriesList
         onHoverArticle={(article: WhittleArticle) =>
           setPreviewedArticle(article)
@@ -154,4 +166,4 @@ function HomePage(props: HomePageProps) {
   )
 }
 
-export default withRouter(HomePage)
+export default withRouter(BoxPage)

@@ -1,12 +1,12 @@
 import React, {CSSProperties, SyntheticEvent, useState} from 'react'
 
 type LinkProps = {
-  text: string
+  text?: string
   color?: string
   onClick: (event: SyntheticEvent<HTMLDivElement>) => void
 }
 
-export default function Link(props: LinkProps) {
+export default function Link(props: React.PropsWithChildren<LinkProps>) {
   let [hovered, setHovered] = useState(false)
   let styles: {[key: string]: CSSProperties} = {
     link: {
@@ -23,7 +23,7 @@ export default function Link(props: LinkProps) {
       onMouseLeave={() => setHovered(false)}
       onClick={props.onClick}
       style={{...styles.link, ...(hovered ? styles.hovered : {})}}>
-      {props.text}
+      {props.text ? props.text : props.children}
     </div>
   )
 }
