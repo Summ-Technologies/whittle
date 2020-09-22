@@ -33,7 +33,7 @@ export default function StoriesList(props: StoriesListProps) {
       borderBottomColor: defaultStyles.colors.lightGrey,
     },
     storyRowActive: {
-      backgroundColor: defaultStyles.colors.lightGrey,
+      backgroundColor: defaultStyles.colors.lightBlue,
     },
   }
 

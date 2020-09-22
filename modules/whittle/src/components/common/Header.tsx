@@ -23,9 +23,6 @@ export default function Header(props: HeaderProps) {
     container: {
       alignItems: 'flex-end',
       margin: 0,
-      borderBottomStyle: 'solid',
-      borderBottomColor: defaultStyles.colors.grey,
-      borderBottomWidth: defaultStyles.defaultBorderWidth,
       height: `${headerHeightPx}px`,
       color: defaultStyles.colors.grey,
     },

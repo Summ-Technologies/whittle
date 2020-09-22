@@ -33,12 +33,12 @@ export default function HelperPanel(props: HelperPanelProps) {
 
   let styles: {[key: string]: CSSProperties} = {
     container: {
-      backgroundColor: defaultStyles.colors.lightGrey,
+      backgroundColor: defaultStyles.colors.lightBlue,
       paddingLeft: 24,
       paddingRight: 24,
       minHeight: '100%',
       paddingTop: 16,
-      borderLeftColor: defaultStyles.colors.grey,
+      borderLeftColor: defaultStyles.colors.lightGrey,
       borderLeftStyle: 'solid',
       borderLeftWidth: defaultStyles.defaultBorderWidth,
     },
