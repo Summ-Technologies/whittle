@@ -83,20 +83,13 @@ export default function boxesReducer(
         state.boxes[boxId] && state.boxes[boxId].articles
           ? state.boxes[boxId].articles
           : []
-      let updatedArticlesList = []
-      if (articlesList) {
-        let add = false
-        if (!articlesList.includes(articleId)) {
-          add = true
-        }
-        articlesList.forEach((articleId) => updatedArticlesList.push(articleId))
-        if (add) {
-          updatedArticlesList.push(articleId)
-        }
+      if (articlesList && articlesList.includes(articleId)) {
+        return {...state}
+      } else {
       }
       updatedBox = {
         ...state.boxes[boxId],
-        articles: updatedArticlesList,
+        numArticles: state.boxes[boxId].numArticles + 1,
       }
 
       // remove article from old box
@@ -111,6 +104,7 @@ export default function boxesReducer(
           updatedBox2 = {
             ...state.boxes[parseInt(key)],
             articles: updatedArticlesList2,
+            numArticles: state.boxes[parseInt(key)].numArticles - 1,
           }
         }
       })

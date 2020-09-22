@@ -147,9 +147,15 @@ function ReadingPage(props: ReadingPageProps) {
     <OutlineHeaderBody
       article={article}
       user={user}
-      inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
-      queueCount={queue && queue.articles ? queue.articles.length : 0}
-      libraryCount={library && library.articles ? library.articles.length : 0}
+      inboxCount={
+        inbox && inbox.numArticles !== undefined ? inbox.numArticles : 0
+      }
+      queueCount={
+        queue && queue.numArticles !== undefined ? queue.numArticles : 0
+      }
+      libraryCount={
+        library && library.numArticles !== undefined ? library.numArticles : 0
+      }
       activeTab={currentBoxTab}
       onSelectTab={(tab: HeaderTabs) =>
         history.push(AppRoutes.getPath('Box', {box: tab}))
