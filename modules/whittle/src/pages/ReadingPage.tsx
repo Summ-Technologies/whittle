@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
@@ -31,6 +31,7 @@ function ReadingPage(props: ReadingPageProps) {
   let user = useSelector(getUser)
   let history = useHistory()
   let [nextArticle, setNextArticle] = useState<number | undefined>(undefined)
+  let [anchor, setAnchor] = useState(props.location.hash)
   let [previousArticle, setPreviousArticle] = useState<number | undefined>(
     undefined
   )
@@ -38,8 +39,13 @@ function ReadingPage(props: ReadingPageProps) {
   let [currentBoxTab, setCurrentBoxTab] = useState<HeaderTabs | undefined>(
     undefined
   )
+  let contentRef = useRef<HTMLDivElement>(null)
 
   useHome(dispatch)
+
+  useEffect(() => {
+    setAnchor(props.location.hash)
+  }, [props.location.hash])
 
   useEffect(() => {
     if (article && article.id !== undefined) {
@@ -197,10 +203,16 @@ function ReadingPage(props: ReadingPageProps) {
             </Col>
           ) : undefined}
         </Row>
-        <Row style={{minHeight: 0, flex: 1, overflowY: 'scroll'}}>
+        <Row
+          style={{minHeight: 0, flex: 1, overflowY: 'scroll'}}
+          ref={contentRef}>
           {article ? (
             <Col xs={{span: 11, offset: 1}}>
-              <StoryBody html={article.html_content} />
+              <StoryBody
+                html={article.html_content}
+                anchor={anchor}
+                scrollRef={contentRef}
+              />
             </Col>
           ) : undefined}
         </Row>
