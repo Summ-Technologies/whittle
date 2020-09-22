@@ -41,7 +41,10 @@ function GoogleAuthCallbackPage(props: GoogleAuthCallbackPageProps) {
         dispatch(postGoogleAuthCallback(window.location.href))
         setLoadingComponent(
           <CallbackLoadingModal
-            text={['Hold tight!', "We're importing all your newsletters"]}
+            text={[
+              'Hang on, we’re auto-importing your newsletters.',
+              'If we missed any, you can easily add them in the lefthand settings panel.',
+            ]}
             includeLoadingDots
           />
         )

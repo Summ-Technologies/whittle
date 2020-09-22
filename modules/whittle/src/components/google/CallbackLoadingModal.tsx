@@ -1,5 +1,5 @@
 import React, {CSSProperties, useEffect, useState} from 'react'
-import {Modal} from 'react-bootstrap'
+import {Modal, Spinner} from 'react-bootstrap'
 import {imageNames, ImageUtils} from '../../util/image'
 
 type CallbackLoadingModalProps = {
@@ -41,12 +41,20 @@ export default function CallbackLoadingModal(props: CallbackLoadingModalProps) {
     },
     imageContainer: {
       height: '200px',
+      paddingTop: 40,
       display: 'flex',
       justifyContent: 'center',
     },
+    spinnerContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      paddingTop: 50,
+      paddingBottom: 50,
+    },
     image: {height: '100%', marginLeft: 'auto', marginRight: 'auto'},
-    paragraph: {textAlign: 'center'},
+    paragraph: {textAlign: 'center', paddingBottom: 20},
     loading: {display: 'inline'},
+    paragraphsContainer: {paddingTop: 50, marginLeft: 40, marginRight: 40},
   }
   return (
     <Modal show>
@@ -58,13 +66,18 @@ export default function CallbackLoadingModal(props: CallbackLoadingModalProps) {
             style={styles.image}
           />
         </div>
-        {paragraphs.map((val: string, currIndex: number) => {
-          let _val = val
-          if (props.includeLoadingDots && currIndex === paragraphs.length - 1) {
-            _val += dots
-          }
-          return <div style={styles.paragraph}>{_val}</div>
-        })}
+        <div style={styles.paragraphsContainer}>
+          {paragraphs.map((val: string, currIndex: number) => {
+            return <div style={styles.paragraph}>{val}</div>
+          })}
+        </div>
+        {props.includeLoadingDots ? (
+          <div style={styles.spinnerContainer}>
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </Modal>
   )
