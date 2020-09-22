@@ -42,7 +42,7 @@ export const body: CSSProperties = {
   fontSize: '1em',
 }
 
-export const defaultBorderWidth: number = 2
+export const defaultBorderWidth: number = 1
 
 export const roundedCorners: CSSProperties = {
   borderRadius: '5px',

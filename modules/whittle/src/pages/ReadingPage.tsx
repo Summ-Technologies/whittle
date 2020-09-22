@@ -17,7 +17,7 @@ import {getArticle} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
 import ArticleUtils from '../util/article'
-import {useArticles} from '../util/hooks'
+import {useHome} from '../util/hooks'
 
 type ReadingPageProps = RouteComponentProps<{id: string}>
 
@@ -39,7 +39,7 @@ function ReadingPage(props: ReadingPageProps) {
     undefined
   )
 
-  useArticles(dispatch, boxes)
+  useHome(dispatch)
 
   useEffect(() => {
     if (article && article.id !== undefined) {

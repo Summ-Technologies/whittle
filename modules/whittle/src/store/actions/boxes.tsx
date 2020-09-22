@@ -1,3 +1,4 @@
+import querystring from 'querystring'
 import {createApiAction} from './api'
 
 export const GET_USER_BOXES_REQUEST = 'GET_USER_BOXES_REQUEST'
@@ -12,6 +13,23 @@ export const POST_USER_TRIAGE_REQUEST = 'POST_USER_TRIAGE_REQUEST'
 export const POST_USER_TRIAGE_SUCCESS = 'POST_USER_TRIAGE_SUCCESS'
 export const POST_USER_TRIAGE_FAILURE = 'POST_USER_TRIAGE_FAILURE'
 
+export const GET_USER_HOME_REQUEST = 'GET_USER_HOME_REQUEST'
+export const GET_USER_HOME_SUCCESS = 'GET_USER_HOME_SUCCESS'
+export const GET_USER_HOME_FAILURE = 'GET_USER_HOME_FAILURE'
+
+export function getUserHome() {
+  let endpoint = `/v1.0/user/home`
+  return createApiAction({
+    endpoint,
+    method: 'GET',
+    types: [
+      GET_USER_HOME_REQUEST,
+      GET_USER_HOME_SUCCESS,
+      GET_USER_HOME_FAILURE,
+    ],
+  })
+}
+
 export function getUserBoxes() {
   let endpoint = '/v1.0/user/boxes'
   return createApiAction({
@@ -25,14 +43,21 @@ export function getUserBoxes() {
   })
 }
 
-export function getBoxArticles(boxId: number) {
-  let endpoint = `/v1.0/user/boxes/${boxId}/articles`
+export function getBoxArticles(boxId: number, page: number) {
+  let endpoint = `/v1.0/user/boxes/${boxId}/articles?${querystring.stringify({
+    page,
+  })}`
   return createApiAction({
     endpoint,
     method: 'GET',
     types: [
       GET_USER_BOXES_REQUEST,
-      {type: GET_BOX_ARTICLES_SUCCESS, meta: () => boxId},
+      {
+        type: GET_BOX_ARTICLES_SUCCESS,
+        meta: () => {
+          return {boxId, page}
+        },
+      },
       GET_USER_BOXES_FAILURE,
     ],
   })

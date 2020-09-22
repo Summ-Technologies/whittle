@@ -1,4 +1,4 @@
-import {ArticleListResource, ArticleResource} from '../../models/api'
+import {ArticleListResponse, ArticleResource} from '../../models/api'
 import {WhittleArticle} from '../../models/whittle'
 import {WhittleAction} from '../actions'
 import {ApiUtils} from '../actions/api'
@@ -20,10 +20,10 @@ export default function articlesReducer(
   var payload
   switch (action.type) {
     case GET_BOX_ARTICLES_SUCCESS:
-      payload = action.payload as ArticleListResource
+      payload = action.payload as ArticleListResponse
       return {
         ...state,
-        articles: {...state.articles, ...ApiUtils.listToDict(payload)},
+        articles: {...state.articles, ...ApiUtils.listToDict(payload.articles)},
       }
     case TOGGLE_BOOKMARK_SUCCESS:
       payload = action.payload as ArticleResource

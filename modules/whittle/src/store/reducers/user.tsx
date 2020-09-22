@@ -1,6 +1,7 @@
-import {UserResource} from '../../models/api'
+import {UserHomeResponse, UserResponse} from '../../models/api'
 import {WhittleUser} from '../../models/whittle'
 import {WhittleAction} from '../actions'
+import {GET_USER_HOME_SUCCESS} from '../actions/boxes'
 import {
   DELETE_LOGOUT_SUCCESS,
   GET_LINKED_GMAIL_SUCCESS,
@@ -28,6 +29,12 @@ export default function articlesReducer(
 ): UserState {
   var payload
   switch (action.type) {
+    case GET_USER_HOME_SUCCESS:
+      payload = action.payload as UserHomeResponse
+      return {
+        ...state,
+        user: payload.user,
+      }
     case SET_LOGGED_OUT:
     case DELETE_LOGOUT_SUCCESS:
       return {
@@ -37,7 +44,7 @@ export default function articlesReducer(
         loginStatus: 'LOGGED_OUT',
       }
     case GOOGLE_LOGIN_CALLBACK_SUCCESS:
-      payload = action.payload as {user: UserResource}
+      payload = action.payload as UserResponse
       return {
         ...state,
         user: payload.user,

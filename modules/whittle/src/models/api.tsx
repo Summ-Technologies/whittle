@@ -10,7 +10,8 @@ export type ArticleResource = {
   bookmarked: boolean // TODO remove this attribute ?? maybe
 }
 
-export type ArticleListResource = ArticleResource[]
+export type ArticleResponse = {article: ArticleResource}
+export type ArticleListResponse = {articles: ArticleResource[]}
 
 export type BoxResource = {
   id: number
@@ -18,11 +19,21 @@ export type BoxResource = {
   name: string
 }
 
-export type BoxesListResource = BoxResource[]
+export type BoxesListResponse = {boxes: BoxResource[]}
 
 export type UserResource = {
   id: number
   email: string
   first_name: string
   last_name: string
+}
+
+export type UserResponse = {
+  user: UserResource
+}
+
+export type UserHomeResponse = {
+  user: UserResource
+  boxes: BoxResource[]
+  boxes_articles_count: {[key: number]: number}
 }

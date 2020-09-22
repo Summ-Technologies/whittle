@@ -1,6 +1,4 @@
-import querystring from 'querystring'
 import React, {useEffect, useState} from 'react'
-import Joyride, {Step} from 'react-joyride'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import StoriesList from '../components/articles/StoriesList'
@@ -9,23 +7,18 @@ import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {toggleBookmark} from '../store/actions/articles'
-import {triageArticle} from '../store/actions/boxes'
+import {getBoxArticles, triageArticle} from '../store/actions/boxes'
 import {deleteUserLogin} from '../store/actions/user'
 import {getArticles} from '../store/getters/articles'
-import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
+import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
-import {useArticles} from '../util/hooks'
+import {useHome} from '../util/hooks'
 
 type HomePageProps = RouteComponentProps<{box: string}>
-type HomePageQueryParams = {showOnboarding?: boolean}
 
 function HomePage(props: HomePageProps) {
-  let params: HomePageQueryParams = querystring.parse(
-    props.location.search.substring(1)
-  )
   let dispatch = useDispatch()
   let history = useHistory()
-  let boxes = useSelector(getBoxes)
   let articles = useSelector(getArticles)
   let inbox = useSelector(getInbox)
   let queue = useSelector(getQueue)
@@ -43,24 +36,20 @@ function HomePage(props: HomePageProps) {
     WhittleArticle | undefined
   >(undefined)
 
-  useArticles(dispatch, boxes)
+  useHome(dispatch)
 
   useEffect(() => {
     if (
       activeBox &&
       activeBox.articles &&
-      activeBox.articles.length &&
+      activeBox.numArticles &&
       (previewedArticle === undefined ||
         !activeBox.articles.includes(previewedArticle.id))
     ) {
       let activeArticleId = activeBox.articles[0]
       let activeArticle = articles[activeArticleId]
       setPreviewedArticle(activeArticle)
-    } else if (
-      !activeBox ||
-      !activeBox.articles ||
-      !activeBox.articles.length
-    ) {
+    } else if (!activeBox || !activeBox.articles || !activeBox.numArticles) {
       setPreviewedArticle(undefined)
     }
   }, [previewedArticle, setPreviewedArticle, activeBox, articles])
@@ -79,22 +68,21 @@ function HomePage(props: HomePageProps) {
     }
   }, [activeTab, activeBox, setActiveBox, inbox, queue, library])
 
-  let onboardingSteps: Step[] = [
-    {
-      target: 'body',
-      placement: 'center',
-      disableBeacon: true,
-      title: 'Welcome to your newsletter home!',
-      content: "You're 1 minute away from less newsletter stress",
-    },
-    {
-      target: 'body',
-      disableBeacon: true,
-      title: 'Your newsletter inbox',
-      content:
-        "Quickly triage your newsletters as they come in.\nLet's start with our onboarding newsletter to learn the ropes",
-    },
-  ]
+  useEffect(() => {
+    /** Get next page */
+    function getNextPageOfArticles() {
+      if (activeBox) {
+        let page = 0
+        if (activeBox.page !== undefined) {
+          page = activeBox.page + 1
+        }
+        if (activeBox.isFullyLoaded !== true) {
+          dispatch(getBoxArticles(activeBox.id, page))
+        }
+      }
+    }
+    getNextPageOfArticles()
+  }, [activeBox, dispatch])
 
   /** Dispatch article to library box */
   function archiveArticle(article: WhittleArticle) {
@@ -119,9 +107,15 @@ function HomePage(props: HomePageProps) {
 
   return (
     <OutlineHeaderBody
-      inboxCount={inbox && inbox.articles ? inbox.articles.length : 0}
-      queueCount={queue && queue.articles ? queue.articles.length : 0}
-      libraryCount={library && library.articles ? library.articles.length : 0}
+      inboxCount={
+        inbox && inbox.numArticles !== undefined ? inbox.numArticles : 0
+      }
+      queueCount={
+        queue && queue.numArticles !== undefined ? queue.numArticles : 0
+      }
+      libraryCount={
+        library && library.numArticles !== undefined ? library.numArticles : 0
+      }
       article={previewedArticle}
       user={user}
       activeTab={activeTab}
@@ -129,14 +123,6 @@ function HomePage(props: HomePageProps) {
         history.push(AppRoutes.getPath('Box', {box: tab}))
       }
       onLogoutUser={() => dispatch(deleteUserLogin())}>
-      {params.showOnboarding ? (
-        <Joyride
-          steps={onboardingSteps}
-          scrollToFirstStep={true}
-          continuous={true}
-          run={true}
-        />
-      ) : undefined}
       <StoriesList
         onHoverArticle={(article: WhittleArticle) =>
           setPreviewedArticle(article)
