@@ -146,7 +146,12 @@ function BoxPage(props: BoxPageProps) {
       }
       onLogoutUser={() => dispatch(deleteUserLogin())}
       redirectOutline={redirectOutline}>
-      {activeBox && activeBox.numArticles > 0 ? (
+      {activeBox && activeBox.isFullyLoaded && activeBox.numArticles === 0 ? (
+        <EmptyBox
+          text={'🎉 You’ve hit inbox 0!'}
+          imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
+        />
+      ) : (
         <StoriesList
           onHoverArticle={(article: WhittleArticle) =>
             setPreviewedArticle(article)
@@ -166,11 +171,6 @@ function BoxPage(props: BoxPageProps) {
           }
           activeStory={previewedArticle}
           onScrollEnd={() => getNextPageOfArticles(activeBox)}
-        />
-      ) : (
-        <EmptyBox
-          text={'🎉 You’ve hit inbox 0!'}
-          imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
         />
       )}
     </OutlineHeaderBody>
