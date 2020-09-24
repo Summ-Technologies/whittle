@@ -75,8 +75,8 @@ function OnboardingPage() {
       target: '.joyride-queue',
       placement: 'bottom',
       disableBeacon: true,
-      title: 'Queue your newsletters to read soon',
-      content: 'Add newsletters by tapping Q or pressing the queue button',
+      title: 'Queue newsletters you want to read soon',
+      content: 'Add newsletters to the queue by pressing the queue button',
     },
     {
       target: '.joyride-library',
@@ -84,22 +84,15 @@ function OnboardingPage() {
       disableBeacon: true,
       title: 'Your personal library',
       content:
-        "Press E to move newsletters you've read or don't have time to read to your library. Don't worry, it's easy to find these later.",
-    },
-    {
-      target: '.joyride-bookmark',
-      placement: 'bottom',
-      disableBeacon: true,
-      title: 'Bookmark for later',
-      content:
-        "Press B to bookmark a newsletter so it's easy to search for later.",
+        "Move newsletters you've read or don't have time to read to your library. Don't worry, it's easy to search for them later.",
     },
     {
       target: '.joyride-preview-outline',
       placement: 'left',
       disableBeacon: true,
       title: "Skip to what's important",
-      content: 'Click the outline to skip to sections within the newsletter',
+      content:
+        'Click the outline to skip to relevant sections in each newsletter',
     },
   ]
   let previewedArticle = articles[-69]
