@@ -10,7 +10,7 @@ import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import Row from '../components/common/Row'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
-import {toggleBookmark} from '../store/actions/articles'
+import {getArticles, toggleBookmark} from '../store/actions/articles'
 import {triageArticle} from '../store/actions/boxes'
 import {deleteUserLogin} from '../store/actions/user'
 import {getArticle} from '../store/getters/articles'
@@ -42,6 +42,15 @@ function ReadingPage(props: ReadingPageProps) {
   let contentRef = useRef<HTMLDivElement>(null)
 
   useHome(dispatch)
+
+  useEffect(() => {
+    if (article === undefined) {
+      let id = parseInt(props.match.params.id)
+      if (id) {
+        dispatch(getArticles([id]))
+      }
+    }
+  }, [article, props.match.params.id])
 
   useEffect(() => {
     setAnchor(props.location.hash)

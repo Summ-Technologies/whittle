@@ -75,7 +75,7 @@ function BoxPage(props: BoxPageProps) {
           break
         }
       }
-      if (articleList.length === 0) {
+      if (articleList.length <= config.get(NUM_ARTICLES_PER_PAGE_KEY)) {
         getNextPageOfArticles()
       }
     }
