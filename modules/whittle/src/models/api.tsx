@@ -12,6 +12,7 @@ export type ArticleResource = {
 
 export type ArticleResponse = {article: ArticleResource}
 export type ArticleListResponse = {articles: ArticleResource[]}
+export type ArticleIdsListResponse = {article_ids: number[]}
 
 export type BoxResource = {
   id: number

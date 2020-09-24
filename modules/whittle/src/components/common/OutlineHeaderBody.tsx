@@ -30,7 +30,14 @@ export default function OutlineHeaderBody(
   return (
     <Body>
       <Row style={{height: '0', flex: '1 1 auto'}}>
-        <Col xs={8} style={{height: '100%', overflow: 'hidden'}}>
+        <Col
+          xs={8}
+          style={{
+            height: '100%',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
           <Header
             inboxCount={props.inboxCount}
             queueCount={props.queueCount}
@@ -39,19 +46,19 @@ export default function OutlineHeaderBody(
             onSelectTab={props.onSelectTab}
             onClickMenu={() => setSidebarActive(!sidebarActive)}
           />
-          <Sidebar
-            active={sidebarActive}
-            onLogout={props.onLogoutUser}
-            userEmail={props.user ? props.user.email : ''}
-            userFirstName={props.user ? props.user.first_name : ''}
-            userLastName={props.user ? props.user.last_name : ''}
-            gmailArchiveSettingActive={gmailArchiveSettingActive}
-            onAddNewsletterSubscription={() => undefined}
-            onToggleGmailArchive={() =>
-              setGmailArchiveSettingActive(!gmailArchiveSettingActive)
-            }
-          />
-          <div style={{height: '100%', overflow: 'scroll'}}>
+          <div style={{flexGrow: 1, overflow: 'scroll'}}>
+            <Sidebar
+              active={sidebarActive}
+              onLogout={props.onLogoutUser}
+              userEmail={props.user ? props.user.email : ''}
+              userFirstName={props.user ? props.user.first_name : ''}
+              userLastName={props.user ? props.user.last_name : ''}
+              gmailArchiveSettingActive={gmailArchiveSettingActive}
+              onAddNewsletterSubscription={() => undefined}
+              onToggleGmailArchive={() =>
+                setGmailArchiveSettingActive(!gmailArchiveSettingActive)
+              }
+            />
             {props.children}
           </div>
         </Col>

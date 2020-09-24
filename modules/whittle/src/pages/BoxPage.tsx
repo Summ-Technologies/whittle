@@ -5,12 +5,13 @@ import EmptyBox from '../components/articles/EmptyBox'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
+import config, {NUM_ARTICLES_PER_PAGE_KEY} from '../config'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
-import {toggleBookmark} from '../store/actions/articles'
+import {getArticles, toggleBookmark} from '../store/actions/articles'
 import {getBoxArticles, triageArticle} from '../store/actions/boxes'
 import {deleteUserLogin} from '../store/actions/user'
-import {getArticles} from '../store/getters/articles'
+import {getArticlesData} from '../store/getters/articles'
 import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
 import {useHome} from '../util/hooks'
@@ -21,7 +22,7 @@ type BoxPageProps = RouteComponentProps<{box: string}>
 function BoxPage(props: BoxPageProps) {
   let dispatch = useDispatch()
   let history = useHistory()
-  let articles = useSelector(getArticles)
+  let articles = useSelector(getArticlesData)
   let inbox = useSelector(getInbox)
   let queue = useSelector(getQueue)
   let library = useSelector(getLibrary)
@@ -34,11 +35,52 @@ function BoxPage(props: BoxPageProps) {
     : 'inbox'
 
   let [activeBox, setActiveBox] = useState<WhittleBox | undefined>(undefined)
+  let [activeBoxFullyLoaded, setActiveBoxFullyLoaded] = useState(false)
+  let [storiesList, setStoriesList] = useState<WhittleArticle[]>([])
   let [previewedArticle, setPreviewedArticle] = useState<
     WhittleArticle | undefined
   >(undefined)
 
   useHome(dispatch)
+  /** Gets next page */
+  let getNextPageOfArticles = useCallback(() => {
+    const loadedArticles = Object.keys(articles)
+    let articlesToLoad: number[] = []
+    if (activeBox && activeBox.articles) {
+      for (let i = 0; i < activeBox.articles.length; i++) {
+        let id = activeBox.articles[i]
+        if (!loadedArticles.includes(id.toString())) {
+          articlesToLoad.push(id)
+          if (articlesToLoad.length >= config.get(NUM_ARTICLES_PER_PAGE_KEY)) {
+            break
+          }
+        }
+      }
+      if (articlesToLoad.length > 0) {
+        // GET FIRST PAGE OF ARTICLES
+        dispatch(getArticles(articlesToLoad))
+      }
+    }
+  }, [articles, activeBox, dispatch])
+
+  useEffect(() => {
+    let articleList: WhittleArticle[] = []
+    if (activeBox && activeBox.articles) {
+      for (let i = 0; i < activeBox.articles.length; i++) {
+        let id = activeBox.articles[i]
+        let article = articles[id]
+        if (article !== undefined) {
+          articleList.push(article)
+        } else {
+          break
+        }
+      }
+      if (articleList.length === 0) {
+        getNextPageOfArticles()
+      }
+    }
+    setStoriesList(articleList)
+  }, [articles, activeBox, setStoriesList, getNextPageOfArticles])
 
   useEffect(() => {
     if (
@@ -69,31 +111,27 @@ function BoxPage(props: BoxPageProps) {
         break
     }
   }, [activeTab, activeBox, setActiveBox, inbox, queue, library, dispatch])
-  /** Gets next page */
-  let getNextPageOfArticles = useCallback(
-    (box: WhittleBox | undefined) => {
-      if (activeBox) {
-        let page = 0
-        if (activeBox.page !== undefined) {
-          page = activeBox.page + 1
-        }
-        if (activeBox.isFullyLoaded !== true) {
-          dispatch(getBoxArticles(activeBox.id, page))
-        }
-      }
-    },
-    [activeBox, dispatch]
-  )
 
   useEffect(() => {
-    function getFirstPage(activeBox: WhittleBox | undefined) {
-      if (activeBox && activeBox.page === undefined) {
-        let page = 0
-        dispatch(getBoxArticles(activeBox.id, page))
-      }
+    if (activeBox && activeBox.articles === undefined) {
+      dispatch(getBoxArticles(activeBox.id))
     }
-    getFirstPage(activeBox)
-  }, [activeBox, dispatch])
+  }, [activeBox, getNextPageOfArticles, dispatch])
+
+  useEffect(() => {
+    if (activeBox && activeBox.articles) {
+      let allLoaded = true
+      const loadedArticles = Object.keys(articles)
+      for (let i = 0; i < activeBox.articles.length; i++) {
+        let id = activeBox.articles[i]
+        if (!loadedArticles.includes(id.toString())) {
+          allLoaded = false
+          break
+        }
+      }
+      setActiveBoxFullyLoaded(allLoaded)
+    }
+  }, [articles, activeBox, setActiveBoxFullyLoaded])
 
   /** Dispatch article to library box */
   function archiveArticle(article: WhittleArticle) {
@@ -146,7 +184,7 @@ function BoxPage(props: BoxPageProps) {
       }
       onLogoutUser={() => dispatch(deleteUserLogin())}
       redirectOutline={redirectOutline}>
-      {activeBox && activeBox.isFullyLoaded && activeBox.numArticles === 0 ? (
+      {activeBox && activeBoxFullyLoaded && activeBox.numArticles === 0 ? (
         <EmptyBox
           text={'🎉 You’ve hit inbox 0!'}
           imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
@@ -162,15 +200,9 @@ function BoxPage(props: BoxPageProps) {
           onBookmarkArticle={doToggleBookmark}
           onQueueArticle={queueArticle}
           onArchiveArticle={archiveArticle}
-          storiesList={
-            activeBox && activeBox.articles
-              ? activeBox.articles
-                  .map((id) => articles[id])
-                  .filter((val) => val)
-              : []
-          }
+          storiesList={storiesList}
           activeStory={previewedArticle}
-          onScrollEnd={() => getNextPageOfArticles(activeBox)}
+          onScrollEnd={() => getNextPageOfArticles()}
         />
       )}
     </OutlineHeaderBody>

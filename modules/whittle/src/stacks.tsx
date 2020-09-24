@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {Redirect} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
-import AccountPage from './pages/AccountPage'
-import AdminPage from './pages/AdminPage'
 import BoxPage from './pages/BoxPage'
 import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import AuthPage from './pages/LoginPage'
@@ -50,8 +48,6 @@ export class AppRoutes {
   ]
 
   static routes: SummnRoute[] = [
-    {name: 'Account', path: '/account', component: AccountPage, showNav: false},
-    {name: 'Admin', path: '/admin', component: AdminPage, showNav: false},
     {name: 'Read', path: '/read/:id', component: ReadingPage, showNav: false},
     {name: 'Box', path: '/b/:box', component: BoxPage, showNav: false},
     {

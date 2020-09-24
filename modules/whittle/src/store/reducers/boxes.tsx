@@ -1,6 +1,5 @@
 import {
-  ArticleListResponse,
-  BoxesListResponse,
+  ArticleIdsListResponse,
   BoxResource,
   UserHomeResponse,
 } from '../../models/api'
@@ -8,8 +7,7 @@ import {WhittleBox} from '../../models/whittle'
 import {WhittleAction} from '../actions'
 import {ApiUtils} from '../actions/api'
 import {
-  GET_BOX_ARTICLES_SUCCESS,
-  GET_USER_BOXES_SUCCESS,
+  GET_BOX_ARTICLE_IDS_SUCCESS,
   GET_USER_HOME_SUCCESS,
   POST_USER_TRIAGE_SUCCESS,
 } from '../actions/boxes'
@@ -27,7 +25,6 @@ export default function boxesReducer(
   action: WhittleAction
 ): BoxesState {
   var payload
-  var updatedBox: WhittleBox
   var boxId: number
   var articleId: number
   switch (action.type) {
@@ -42,58 +39,29 @@ export default function boxesReducer(
         ...state,
         boxes: {...state.boxes, ...ApiUtils.listToDict(whittleBoxes)},
       }
-    case GET_USER_BOXES_SUCCESS:
-      // DEPRECATED, populate with GET_USER_HOME_SUCCESS
-      payload = action.payload as BoxesListResponse
-      return {
-        ...state,
-        boxes: {...state.boxes, ...ApiUtils.listToDict(payload.boxes)},
-      }
-    case GET_BOX_ARTICLES_SUCCESS:
-      payload = action.payload as ArticleListResponse
+
+    case GET_BOX_ARTICLE_IDS_SUCCESS:
+      payload = action.payload as ArticleIdsListResponse
       boxId = (action as {meta: {boxId: number; pageNumber: number}}).meta.boxId
-      let page = (action as {meta: {boxId: number; page: number}}).meta.page
-      let existingArticles = state.boxes[boxId].articles
-      let isFullyLoaded = false
-      if (payload.articles.length === 0) {
-        isFullyLoaded = true
-      }
-      updatedBox = {
-        ...state.boxes[boxId],
-        page: page,
-        isFullyLoaded,
-        articles: [
-          ...(existingArticles ? existingArticles : []),
-          ...payload.articles.map((articleResource) => articleResource.id),
-        ],
-      }
       return {
         ...state,
         boxes: {
           ...state.boxes,
-          [boxId]: updatedBox,
+          [boxId]: {
+            ...state.boxes[boxId],
+            articles: payload.article_ids,
+            numArticles: payload.article_ids.length,
+          },
         },
       }
+
     case POST_USER_TRIAGE_SUCCESS:
+      payload = action.payload as ArticleIdsListResponse
       articleId = (action as {meta: {boxId: number; articleId: number}}).meta
         .articleId
       boxId = (action as {meta: {boxId: number; articleId: number}}).meta.boxId
-      // add article to new box
-      let articlesList =
-        state.boxes[boxId] && state.boxes[boxId].articles
-          ? state.boxes[boxId].articles
-          : []
-      if (articlesList && articlesList.includes(articleId)) {
-        return {...state}
-      } else {
-      }
-      updatedBox = {
-        ...state.boxes[boxId],
-        numArticles: state.boxes[boxId].numArticles + 1,
-      }
-
       // remove article from old box
-      let updatedBox2: WhittleBox | undefined = undefined
+      let updatedOriginBox: WhittleBox | undefined = undefined
       Object.keys(state.boxes).forEach((key) => {
         let _articles = state.boxes[parseInt(key)].articles
         let found = _articles ? _articles.includes(articleId) : false
@@ -101,21 +69,28 @@ export default function boxesReducer(
           let updatedArticlesList2 = _articles
             ? _articles.filter((val) => val !== articleId)
             : []
-          updatedBox2 = {
+          updatedOriginBox = {
             ...state.boxes[parseInt(key)],
             articles: updatedArticlesList2,
-            numArticles: state.boxes[parseInt(key)].numArticles - 1,
+            numArticles: updatedArticlesList2.length,
           }
         }
       })
 
-      if (updatedBox2 !== undefined) {
+      // update origin box
+      let updatedDestinationBox: WhittleBox = {
+        ...state.boxes[boxId],
+        articles: payload.article_ids,
+        numArticles: payload.article_ids.length,
+      }
+
+      if (updatedOriginBox !== undefined) {
         return {
           ...state,
           boxes: {
             ...state.boxes,
-            [(updatedBox2 as WhittleBox).id]: updatedBox2,
-            [boxId]: updatedBox,
+            [(updatedOriginBox as WhittleBox).id]: updatedOriginBox,
+            [boxId]: updatedDestinationBox,
           },
         }
       } else {
@@ -123,7 +98,7 @@ export default function boxesReducer(
           ...state,
           boxes: {
             ...state.boxes,
-            [boxId]: updatedBox,
+            [boxId]: updatedDestinationBox,
           },
         }
       }

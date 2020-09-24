@@ -1,11 +1,17 @@
 /* Config keys */
 export const SERVER_BASE_URL_KEY = 'server_base_url'
 export const IMAGES_BASE_URL_KEY = 'images_base_url'
-type ConfigKey = typeof SERVER_BASE_URL_KEY | typeof IMAGES_BASE_URL_KEY
+export const NUM_ARTICLES_PER_PAGE_KEY = 'num_articles_per_page'
+type ConfigKey =
+  | typeof SERVER_BASE_URL_KEY
+  | typeof IMAGES_BASE_URL_KEY
+  | typeof NUM_ARTICLES_PER_PAGE_KEY
 
 class Config {
   appConfig: {[key: string]: any}
-  defaultConfig: {[key: string]: any} = {}
+  defaultConfig: {[key: string]: any} = {
+    [NUM_ARTICLES_PER_PAGE_KEY]: 20,
+  }
   constructor() {
     this.appConfig = {}
     // Set url values passed in at runtime
