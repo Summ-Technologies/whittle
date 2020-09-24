@@ -8,7 +8,7 @@ type ToggleProps = {
 }
 
 export default function Toggle(props: ToggleProps) {
-  let defaultHeightPx = 30
+  let defaultHeightPx = 20
   let height = props.height !== undefined ? props.height : defaultHeightPx
   let sliderFillPercent = 0.8
   let sliderHeight = height * sliderFillPercent

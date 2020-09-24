@@ -32,8 +32,8 @@ export default function Sidebar(props: SidebarProps) {
     sidebar: {
       backgroundColor: defaultStyles.colors.white,
       height: '100%',
-      paddingLeft: '30px',
-      paddingRight: '30px',
+      paddingLeft: '20px',
+      paddingRight: '20px',
       borderRightColor: defaultStyles.colors.grey,
       borderRightStyle: 'solid',
       borderRightWidth: defaultStyles.defaultBorderWidth,
@@ -66,6 +66,7 @@ export default function Sidebar(props: SidebarProps) {
     },
     subscriptionSubmitContainer: {
       minWidth: '20%',
+      paddingLeft: 10,
     },
     logoutButton: {
       width: '30%',
@@ -75,12 +76,15 @@ export default function Sidebar(props: SidebarProps) {
       flexWrap: 'nowrap',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingBottom: 10,
+      paddingBottom: 15,
     },
     settingsToggleRowText: {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+    },
+    supportText: {
+      paddingTop: 15,
     },
   }
   return (
@@ -142,6 +146,9 @@ export default function Sidebar(props: SidebarProps) {
         </Row>
         <div style={styles.logoutButton}>
           <Button text="Logout" onClick={props.onLogout} />
+        </div>
+        <div style={{...styles.bodyText, ...styles.supportText}}>
+          Need help? Contact us at: <b>support@usewhittle.com</b>
         </div>
       </Col>
     </div>
