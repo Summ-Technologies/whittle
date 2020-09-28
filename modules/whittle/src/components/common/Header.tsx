@@ -77,7 +77,7 @@ export default function Header(props: HeaderProps) {
     <Row style={styles.container}>
       <div style={styles.leftContainer}>
         <div style={styles.menuIconContainer} onClick={props.onClickMenu}>
-          <FaBars style={styles.menuIcon} />
+          <FaBars className="joyride-settings" style={styles.menuIcon} />
         </div>
         <div style={styles.boxesContainer}>
           <div

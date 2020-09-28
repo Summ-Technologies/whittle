@@ -94,6 +94,14 @@ function OnboardingPage() {
       content:
         'Click the outline to skip to relevant sections in each newsletter',
     },
+    {
+      target: '.joyride-settings',
+      placement: 'right',
+      disableBeacon: true,
+      title: 'Add newsletters in settings',
+      content:
+        "Easily add newsletters that weren't imported in the settings panel.",
+    },
   ]
   let previewedArticle = articles[-69]
 

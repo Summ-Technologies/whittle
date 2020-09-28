@@ -119,7 +119,7 @@ export default function Sidebar(props: SidebarProps) {
           <b>
             <i>from address</i>
           </b>{' '}
-          and we will auto-import the next newsletter they send you.
+          and we will auto-import all their future newsletters.
         </div>
         <Row style={styles.subscriptionInputRow}>
           <div style={styles.subscriptionInputContainer}>
