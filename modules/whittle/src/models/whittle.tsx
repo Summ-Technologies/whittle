@@ -8,3 +8,7 @@ export type WhittleBox = BoxResource & {
 }
 export type WhittleArticle = ArticleResource
 export type WhittleUser = UserResource
+
+export type WhittleArticleSearch = {
+  [key: number]: number[] // boxId -> articleId[]
+}

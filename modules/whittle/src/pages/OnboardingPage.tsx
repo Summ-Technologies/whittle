@@ -121,7 +121,12 @@ function OnboardingPage() {
       activeTab={activeTab}
       onSelectTab={(tab: HeaderTabs) => undefined}
       onLogoutUser={() => undefined}
-      redirectOutline={() => undefined}>
+      redirectOutline={() => undefined}
+      //Search related
+      searchQuery={''}
+      setSearchQuery={() => undefined}
+      showSearchBar={false}
+      setShowSearchBar={() => undefined}>
       {joyrideTour === 1 ? (
         <Joyride
           callback={transitionToCTA}

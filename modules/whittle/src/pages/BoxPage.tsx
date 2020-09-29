@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import EmptyBox from '../components/articles/EmptyBox'
+import SearchScreen from '../components/articles/SearchScreen'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
@@ -14,7 +15,7 @@ import {deleteUserLogin} from '../store/actions/user'
 import {getArticlesData} from '../store/getters/articles'
 import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
-import {useHome} from '../util/hooks'
+import {useHome, useSearch} from '../util/hooks'
 import {imageNames, ImageUtils} from '../util/image'
 
 type BoxPageProps = RouteComponentProps<{box: string}>
@@ -41,7 +42,17 @@ function BoxPage(props: BoxPageProps) {
     WhittleArticle | undefined
   >(undefined)
 
+  let [
+    showSearchBar,
+    setShowSearchBar,
+    searchQuery,
+    setSearchQuery,
+    searchResults,
+  ] = useSearch(dispatch)
   useHome(dispatch)
+
+  console.log(searchResults)
+
   /** Gets next page */
   let getNextPageOfArticles = useCallback(() => {
     const loadedArticles = Object.keys(articles)
@@ -133,6 +144,11 @@ function BoxPage(props: BoxPageProps) {
     }
   }, [articles, activeBox, setActiveBoxFullyLoaded])
 
+  useEffect(() => {
+    setSearchQuery('')
+    setShowSearchBar(false)
+  }, [activeTab, setSearchQuery, setShowSearchBar])
+
   /** Dispatch article to library box */
   function archiveArticle(article: WhittleArticle) {
     if (library && article) {
@@ -183,8 +199,15 @@ function BoxPage(props: BoxPageProps) {
         history.push(AppRoutes.getPath('Box', {box: tab}))
       }
       onLogoutUser={() => dispatch(deleteUserLogin())}
-      redirectOutline={redirectOutline}>
-      {activeBox && activeBoxFullyLoaded && activeBox.numArticles === 0 ? (
+      redirectOutline={redirectOutline}
+      //Search related
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      showSearchBar={showSearchBar}
+      setShowSearchBar={setShowSearchBar}>
+      {searchQuery.length ? (
+        <SearchScreen query={searchQuery} search={{}} articles={articles} />
+      ) : activeBox && activeBoxFullyLoaded && activeBox.numArticles === 0 ? (
         <EmptyBox
           text={'🎉 You’ve hit inbox 0!'}
           imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}

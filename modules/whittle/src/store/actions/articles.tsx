@@ -13,6 +13,10 @@ export const TOGGLE_BOOKMARK_REQUEST = 'TOGGLE_BOOKMARK_REQUEST'
 export const TOGGLE_BOOKMARK_SUCCESS = 'TOGGLE_BOOKMARK_SUCCESS'
 export const TOGGLE_BOOKMARK_FAILURE = 'TOGGLE_BOOKMARK_FAILURE'
 
+export const GET_SEARCH_REQUEST = 'GET_SEARCH_REQUEST'
+export const GET_SEARCH_SUCCESS = 'GET_SEARCH_SUCCESS'
+export const GET_SEARCH_FAILURE = 'GET_SEARCH_FAILURE'
+
 /**
  * Gets article data for articles in given articleIds list
  */
@@ -60,5 +64,20 @@ export function toggleBookmark(articleId: number, doBookmark: boolean) {
       TOGGLE_BOOKMARK_SUCCESS,
       TOGGLE_BOOKMARK_FAILURE,
     ],
+  })
+}
+
+/**
+ * Get search results for a given query
+ */
+
+export function getSearch(query: string) {
+  let endpoint = `/v1.0/user/articles/search?${querystring.stringify({
+    q: query,
+  })}`
+  return createApiAction({
+    endpoint,
+    method: 'GET',
+    types: [GET_SEARCH_REQUEST, GET_SEARCH_SUCCESS, GET_SEARCH_FAILURE],
   })
 }

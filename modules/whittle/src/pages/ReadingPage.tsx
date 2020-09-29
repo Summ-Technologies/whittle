@@ -17,7 +17,7 @@ import {getArticle} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
 import ArticleUtils from '../util/article'
-import {useHome} from '../util/hooks'
+import {useHome, useSearch} from '../util/hooks'
 
 type ReadingPageProps = RouteComponentProps<{id: string}>
 
@@ -41,6 +41,12 @@ function ReadingPage(props: ReadingPageProps) {
   )
   let contentRef = useRef<HTMLDivElement>(null)
 
+  let [
+    showSearchBar,
+    setShowSearchBar,
+    searchQuery,
+    setSearchQuery,
+  ] = useSearch(dispatch)
   useHome(dispatch)
 
   useEffect(() => {
@@ -50,7 +56,7 @@ function ReadingPage(props: ReadingPageProps) {
         dispatch(getArticles([id]))
       }
     }
-  }, [article, props.match.params.id])
+  }, [article, props.match.params.id, dispatch])
 
   useEffect(() => {
     setAnchor(props.location.hash)
@@ -170,7 +176,12 @@ function ReadingPage(props: ReadingPageProps) {
         history.push(AppRoutes.getPath('Box', {box: tab}))
       }
       onLogoutUser={() => dispatch(deleteUserLogin())}
-      redirectOutline={redirectOutline}>
+      redirectOutline={redirectOutline}
+      //Search related
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      showSearchBar={showSearchBar}
+      setShowSearchBar={setShowSearchBar}>
       <Col
         style={{
           height: '100%',

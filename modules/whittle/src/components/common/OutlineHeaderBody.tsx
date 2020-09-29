@@ -15,6 +15,10 @@ type OutlineHeaderBodyProps = {
   inboxCount: number
   queueCount: number
   libraryCount: number
+  showSearchBar: boolean
+  setShowSearchBar: (show: boolean) => void
+  searchQuery: string
+  setSearchQuery: (query: string) => void
   redirectOutline: (articleId: number, uri: string) => void
   onSelectTab: (tab: HeaderTabs) => void
   onLogoutUser: () => void
@@ -43,6 +47,10 @@ export default function OutlineHeaderBody(
             queueCount={props.queueCount}
             libraryCount={props.libraryCount}
             activeTab={props.activeTab}
+            showSearchBar={props.showSearchBar}
+            setShowSearchBar={props.setShowSearchBar}
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
             onSelectTab={props.onSelectTab}
             onClickMenu={() => setSidebarActive(!sidebarActive)}
           />

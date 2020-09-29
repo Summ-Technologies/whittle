@@ -26,10 +26,18 @@ export default function TextInput(props: TextInputProps) {
       borderColor: defaultStyles.colors.main,
       borderWidth: 2,
     },
+    containsText: {
+      // the input box is not showing placeholder
+      color: undefined,
+    },
   }
   return (
     <input
-      style={{...styles.input, ...(focused ? styles.inputFocused : {})}}
+      style={{
+        ...styles.input,
+        ...(focused ? styles.inputFocused : {}),
+        ...(props.value.length ? styles.containsText : {}),
+      }}
       type="text"
       placeholder={props.placeholder}
       value={props.value}

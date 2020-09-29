@@ -38,3 +38,8 @@ export type UserHomeResponse = {
   boxes: BoxResource[]
   boxes_articles_count: {[key: number]: number}
 }
+
+export type UserArticleSearchResponse = {
+  matches: {[key: number]: number[]} // boxId -> articleIds[]
+  query: string
+}

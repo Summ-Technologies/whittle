@@ -1,15 +1,17 @@
-import {ArticleListResponse} from '../../models/api'
-import {WhittleArticle} from '../../models/whittle'
+import {ArticleListResponse, UserArticleSearchResponse} from '../../models/api'
+import {WhittleArticle, WhittleArticleSearch} from '../../models/whittle'
 import {WhittleAction} from '../actions'
 import {ApiUtils} from '../actions/api'
-import {GET_ARTICLES_SUCCESS} from '../actions/articles'
+import {GET_ARTICLES_SUCCESS, GET_SEARCH_SUCCESS} from '../actions/articles'
 
 export type ArticlesState = {
   articles: {[key: number]: WhittleArticle}
+  search: {[key: string]: WhittleArticleSearch} //query -> WhittleSearch
 }
 
 const initialState: ArticlesState = {
   articles: {},
+  search: {},
 }
 
 export default function articlesReducer(
@@ -23,6 +25,15 @@ export default function articlesReducer(
       return {
         ...state,
         articles: {...state.articles, ...ApiUtils.listToDict(payload.articles)},
+      }
+    case GET_SEARCH_SUCCESS:
+      payload = action.payload as UserArticleSearchResponse
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          [payload.query]: payload.matches,
+        },
       }
     default:
       return state

@@ -1,5 +1,5 @@
 import {RootState} from '..'
-import {WhittleArticle} from '../../models/whittle'
+import {WhittleArticle, WhittleArticleSearch} from '../../models/whittle'
 
 export function getArticlesData(
   state: RootState
@@ -13,4 +13,11 @@ export function getArticle(articleId: number) {
   }
 
   return _getArticle
+}
+
+export function getSearchResults(query: string) {
+  function _getSearch(state: RootState): WhittleArticleSearch | undefined {
+    return state.articles.search[query]
+  }
+  return _getSearch
 }

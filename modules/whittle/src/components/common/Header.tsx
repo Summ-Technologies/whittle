@@ -2,12 +2,17 @@ import React, {CSSProperties} from 'react'
 import {FaBars, FaSearch} from 'react-icons/fa'
 import defaultStyles from '../../styles'
 import Row from './Row'
+import TextInput from './TextInput'
 
 type HeaderProps = {
   inboxCount: number
   queueCount: number
   libraryCount: number
   activeTab?: HeaderTabs
+  showSearchBar: boolean
+  setShowSearchBar: (show: boolean) => void
+  searchQuery: string
+  setSearchQuery: (query: string) => void
   onSelectTab: (tab: HeaderTabs) => void
   onClickMenu: () => void
 }
@@ -61,13 +66,13 @@ export default function Header(props: HeaderProps) {
       cursor: 'pointer',
     },
     boxTabActive: {color: defaultStyles.colors.black},
-    searchIcon: {
+    search: {
+      textAlign: 'center',
       marginTop: 'auto',
       marginBottom: 'auto',
       flexDirection: 'row',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
       cursor: 'pointer',
       paddingRight: 20,
       paddingLeft: 20,
@@ -111,8 +116,20 @@ export default function Header(props: HeaderProps) {
           <div style={{width: 10}}></div>
         </div>
       </div>
-      <div style={styles.searchIcon}>
-        <FaSearch />
+      <div style={styles.search}>
+        {props.showSearchBar ? (
+          <TextInput
+            placeholder={`Search your ${props.activeTab}`}
+            value={props.searchQuery}
+            onChangeValue={props.setSearchQuery}
+          />
+        ) : undefined}
+        <FaSearch
+          onClick={() => {
+            props.setSearchQuery('')
+            props.setShowSearchBar(!props.showSearchBar)
+          }}
+        />
       </div>
     </Row>
   )
