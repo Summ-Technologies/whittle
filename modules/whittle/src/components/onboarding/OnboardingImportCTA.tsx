@@ -59,8 +59,6 @@ export default function OnboardingImportCTA(props: OnboardingImportCTAProps) {
           style={styles.headerImg}
         />
         <div style={styles.title}>Now let's import your newsletters!</div>
-        <div style={styles.bodyText}>We only organize your newsletters.</div>
-        <div style={styles.bodyText}>Never your personal emails.</div>
         <img
           src={img}
           style={styles.googleButton}

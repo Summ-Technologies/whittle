@@ -7,6 +7,7 @@ import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import AuthPage from './pages/LoginPage'
 import OnboardingPage from './pages/OnboardingPage'
 import ReadingPage from './pages/ReadingPage'
+import SecurityGIFPage from './pages/SecurityGIFPage'
 import {getLoginStatus} from './store/getters/user'
 
 export type SummnRoute = {
@@ -54,6 +55,12 @@ export class AppRoutes {
       name: 'Onboarding',
       path: '/onboarding',
       component: OnboardingPage,
+      showNav: false,
+    },
+    {
+      name: 'SecurityGIFPage',
+      path: '/security',
+      component: SecurityGIFPage,
       showNav: false,
     },
     {

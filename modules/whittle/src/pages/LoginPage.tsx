@@ -83,10 +83,6 @@ function LoginPage() {
       fontSize: '1.2em',
       paddingBottom: 5,
     },
-    header: {
-      ...defaultStyles.header,
-      marginBottom: '8px',
-    },
     button: {
       marginTop: 15,
       marginBottom: 5,
