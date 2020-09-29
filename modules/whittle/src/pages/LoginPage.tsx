@@ -11,6 +11,7 @@ import clickedGoogleLoginIcon from '../imgs/google-signin/btn_google_signin_dark
 import hoveredGoogleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_focus_web.png'
 import googleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_normal_web.png'
 import clickedGoogleSignupIcon from '../imgs/google-signin/btn_google_signup_dark_pressed_web.png'
+import whittleLogo from '../imgs/whittle-logo.png'
 import {googleLoginStep1, googleSignupStep1} from '../store/actions/user'
 import defaultStyles from '../styles'
 import {imageNames, ImageUtils} from '../util/image'
@@ -79,7 +80,8 @@ function LoginPage() {
     bodyLine: {
       textAlign: 'center',
       ...defaultStyles.body,
-      fontSize: '1.5em',
+      fontSize: '1.2em',
+      paddingBottom: 5,
     },
     header: {
       ...defaultStyles.header,
@@ -91,6 +93,10 @@ function LoginPage() {
       height: 60,
       cursor: 'pointer',
     },
+    logo: {
+      width: 300,
+      paddingBottom: 20,
+    },
   }
 
   return (
@@ -101,13 +107,13 @@ function LoginPage() {
           md={{span: 6, offset: 3}}
           lg={{span: 4, offset: 4}}
           style={styles.modalContainer}>
-          <div style={styles.header}>Whittle</div>
+          <img style={styles.logo} src={whittleLogo} alt={'Whittle logo'} />
           {authType === 'signup' ? (
             <>
               <div style={styles.bodyLine}>
-                Automatically import your newsletters.
+                Take control of your newsletters.
               </div>
-              <div style={styles.bodyLine}>Skim less. Read more.</div>
+              <div style={styles.bodyLine}>Stress less. Read more.</div>
             </>
           ) : (
             <div style={styles.bodyLine}>Welcome back!</div>
