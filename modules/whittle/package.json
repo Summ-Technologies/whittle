@@ -12,6 +12,7 @@
     "@types/redux-api-middleware": "^3.2.2",
     "bootstrap": "^4.5.0",
     "connected-react-router": "^6.8.0",
+    "font-awesome": "^4.7.0",
     "popper": "^1.0.1",
     "querystring": "^0.2.0",
     "react": "^16.13.1",

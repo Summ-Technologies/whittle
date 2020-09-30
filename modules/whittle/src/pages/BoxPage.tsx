@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {RouteComponentProps, useHistory, withRouter} from 'react-router-dom'
 import EmptyBox from '../components/articles/EmptyBox'
-import SearchScreen from '../components/articles/SearchScreen'
+import SearchRow from '../components/articles/SearchRow'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
@@ -51,7 +51,41 @@ function BoxPage(props: BoxPageProps) {
   ] = useSearch(dispatch)
   useHome(dispatch)
 
-  console.log(searchResults)
+  useEffect(() => {
+    if (searchResults && library && activeBox === library) {
+      const loadedArticles = Object.keys(articles)
+      let results = searchResults[library.id]
+      if (results) {
+        if (previewedArticle && !results.includes(previewedArticle.id)) {
+          setPreviewedArticle(undefined)
+        }
+        let articlesToLoad: number[] = []
+        for (let i = 0; i < results.length; i++) {
+          let id = results[i]
+          if (!loadedArticles.includes(id.toString())) {
+            articlesToLoad.push(id)
+            if (
+              articlesToLoad.length >= config.get(NUM_ARTICLES_PER_PAGE_KEY)
+            ) {
+              break
+            }
+          }
+        }
+        if (articlesToLoad.length > 0) {
+          // GET FIRST PAGE OF ARTICLES
+          dispatch(getArticles(articlesToLoad))
+        }
+      }
+    }
+  }, [
+    searchQuery,
+    dispatch,
+    articles,
+    searchResults,
+    activeBox,
+    previewedArticle,
+    library,
+  ])
 
   /** Gets next page */
   let getNextPageOfArticles = useCallback(() => {
@@ -90,10 +124,32 @@ function BoxPage(props: BoxPageProps) {
         getNextPageOfArticles()
       }
     }
+    if (searchResults && library && searchResults[library.id]) {
+      articleList = []
+      for (let i = 0; i < searchResults[library.id].length; i++) {
+        let id = searchResults[library.id][i]
+        let article = articles[id]
+        if (article !== undefined) {
+          articleList.push(article)
+        } else {
+          break
+        }
+      }
+    }
     setStoriesList(articleList)
-  }, [articles, activeBox, setStoriesList, getNextPageOfArticles])
+  }, [
+    articles,
+    activeBox,
+    setStoriesList,
+    getNextPageOfArticles,
+    library,
+    searchResults,
+  ])
 
   useEffect(() => {
+    if (searchResults && library && activeBox === library) {
+      return
+    }
     if (
       activeBox &&
       activeBox.articles &&
@@ -107,7 +163,14 @@ function BoxPage(props: BoxPageProps) {
     } else if (!activeBox || !activeBox.articles || !activeBox.numArticles) {
       setPreviewedArticle(undefined)
     }
-  }, [previewedArticle, setPreviewedArticle, activeBox, articles])
+  }, [
+    previewedArticle,
+    setPreviewedArticle,
+    activeBox,
+    articles,
+    searchResults,
+    library,
+  ])
 
   useEffect(() => {
     switch (activeTab) {
@@ -181,6 +244,10 @@ function BoxPage(props: BoxPageProps) {
     }
   }
 
+  let showEmptyBox =
+    activeBox && activeBoxFullyLoaded && activeBox.numArticles === 0
+  let isLibrary = activeBox && activeBox.name.toLowerCase() === 'library'
+
   return (
     <OutlineHeaderBody
       inboxCount={
@@ -205,9 +272,10 @@ function BoxPage(props: BoxPageProps) {
       setSearchQuery={setSearchQuery}
       showSearchBar={showSearchBar}
       setShowSearchBar={setShowSearchBar}>
-      {searchQuery.length ? (
-        <SearchScreen query={searchQuery} search={{}} articles={articles} />
-      ) : activeBox && activeBoxFullyLoaded && activeBox.numArticles === 0 ? (
+      {!showEmptyBox && isLibrary ? (
+        <SearchRow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      ) : undefined}
+      {showEmptyBox ? (
         <EmptyBox
           text={'🎉 You’ve hit inbox 0!'}
           imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
@@ -228,6 +296,12 @@ function BoxPage(props: BoxPageProps) {
           onScrollEnd={() => getNextPageOfArticles()}
         />
       )}
+      {!showEmptyBox && isLibrary && !storiesList.length ? (
+        <EmptyBox
+          text={'No results match your search!'}
+          imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
+        />
+      ) : undefined}
     </OutlineHeaderBody>
   )
 }
