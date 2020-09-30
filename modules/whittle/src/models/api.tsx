@@ -43,3 +43,9 @@ export type UserArticleSearchResponse = {
   matches: {[key: number]: number[]} // boxId -> articleIds[]
   query: string
 }
+
+export type SignupResponse = {
+  user: UserResource
+  error?: string
+  error_code?: string
+}

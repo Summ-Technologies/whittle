@@ -71,11 +71,13 @@ export default function Header(props: HeaderProps) {
       marginTop: 'auto',
       marginBottom: 'auto',
       flexDirection: 'row',
-      display: 'flex',
+      // display: 'flex',
       alignItems: 'center',
       cursor: 'pointer',
       paddingRight: 20,
       paddingLeft: 20,
+
+      display: 'none', // search in library only for now
     },
   }
   return (

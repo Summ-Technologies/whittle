@@ -2,6 +2,7 @@ import {CallHistoryMethodAction, push} from 'connected-react-router'
 import {ThunkDispatch} from 'redux-thunk'
 import {WhittleAction} from '.'
 import {RootState} from '..'
+import {SignupResponse} from '../../models/api'
 import {AppRoutes} from '../../stacks'
 import {createApiAction} from './api'
 
@@ -165,7 +166,12 @@ export function googleSignupCallback(currentUrl: string) {
     if (!callbackResp.error) {
       // return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
       // TODO this shouldn't goto onboarding after login, but rather after signup. Doing this now for user interviews
-      return dispatch(push(AppRoutes.getPath('Onboarding')))
+      let payload = callbackResp.payload as SignupResponse
+      if (payload.error_code && payload.error_code === '1002') {
+        return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
+      } else {
+        return dispatch(push(AppRoutes.getPath('Onboarding')))
+      }
     }
   }
 }
