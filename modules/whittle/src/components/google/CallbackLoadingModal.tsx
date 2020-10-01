@@ -27,7 +27,7 @@ export default function CallbackLoadingModal(props: CallbackLoadingModalProps) {
       }
     }
     if (props.includeLoadingDots) {
-      let cycle = setTimeout(cycleDots, 1000)
+      let cycle = setTimeout(cycleDots, 500)
       return () => clearTimeout(cycle)
     }
   }, [dots, setDots, props.includeLoadingDots])

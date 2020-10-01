@@ -233,7 +233,7 @@ export function postGoogleAuthCallback(currentUrl: string) {
       // ANOTHER HACK FOR USER INTERVIEWS ONLY (gives some time for gmail to scrape inbox)
       const waitFor = (delay: number) =>
         new Promise((resolve) => setTimeout(resolve, delay))
-      await waitFor(5000)
+      await waitFor(10000)
       return dispatch(push(AppRoutes.getPath('Box', {box: 'inbox'})))
     }
   }
