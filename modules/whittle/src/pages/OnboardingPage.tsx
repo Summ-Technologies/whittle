@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom'
 import StoriesList from '../components/articles/StoriesList'
 import {HeaderTabs} from '../components/common/Header'
 import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
+import SecurityGIFPage from '../components/google/SecurityGIFPage'
 import JoyrideModal from '../components/onboarding/JoyrideModal'
 import OnboardingImportCTA from '../components/onboarding/OnboardingImportCTA'
 import {WhittleArticle, WhittleUser} from '../models/whittle'
@@ -19,7 +20,7 @@ function OnboardingPage() {
     last_name: 'User',
     id: 69,
   }
-  let [joyrideTour, setJoyrideTour] = useState<1 | 2>(1)
+  let [joyrideTour, setJoyrideTour] = useState<1 | 2 | 3>(1)
 
   // Fake data that we can play around with in onboarding
   let [articles, setArticles] = useState<{[key: number]: WhittleArticle}>({
@@ -126,7 +127,8 @@ function OnboardingPage() {
       searchQuery={''}
       setSearchQuery={() => undefined}
       showSearchBar={false}
-      setShowSearchBar={() => undefined}>
+      setShowSearchBar={() => undefined}
+      onAddNewsletterSubscription={() => undefined}>
       {joyrideTour === 1 ? (
         <Joyride
           callback={transitionToCTA}
@@ -141,8 +143,14 @@ function OnboardingPage() {
       {joyrideTour === 2 ? (
         <OnboardingImportCTA
           onConnectGmail={() => {
-            dispatch(connectGoogleAccountStep1())
+            setJoyrideTour(3)
           }}
+        />
+      ) : undefined}
+
+      {joyrideTour === 3 ? (
+        <SecurityGIFPage
+          onConfirm={() => dispatch(dispatch(connectGoogleAccountStep1()))}
         />
       ) : undefined}
       <StoriesList

@@ -11,7 +11,7 @@ import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {getArticles, toggleBookmark} from '../store/actions/articles'
 import {getBoxArticles, triageArticle} from '../store/actions/boxes'
-import {deleteUserLogin} from '../store/actions/user'
+import {deleteUserLogin, postUserSubscription} from '../store/actions/user'
 import {getArticlesData} from '../store/getters/articles'
 import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
@@ -308,7 +308,10 @@ function BoxPage(props: BoxPageProps) {
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
       showSearchBar={showSearchBar}
-      setShowSearchBar={setShowSearchBar}>
+      setShowSearchBar={setShowSearchBar}
+      onAddNewsletterSubscription={(fromAddress: string) =>
+        dispatch(postUserSubscription(fromAddress))
+      }>
       {!showEmptyBox && isLibrary ? (
         <SearchRow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       ) : undefined}

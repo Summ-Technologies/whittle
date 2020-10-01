@@ -38,6 +38,10 @@ export const GET_LINKED_GMAIL_REQUEST = 'GET_LINKED_GMAIL_REQUEST'
 export const GET_LINKED_GMAIL_SUCCESS = 'GET_LINKED_GMAIL_SUCCESS'
 export const GET_LINKED_GMAIL_FAILURE = 'GET_LINKED_GMAIL_FAILURE'
 
+export const POST_USER_SUBSCRIPTION_REQUEST = 'POST_USER_SUBSCRIPTION_REQUEST'
+export const POST_USER_SUBSCRIPTION_SUCCESS = 'POST_USER_SUBSCRIPTION_SUCCESS'
+export const POST_USER_SUBSCRIPTION_FAILURE = 'POST_USER_SUBSCRIPTION_FAILURE'
+
 export const SET_LOGGED_IN = 'SET_LOGGED_IN'
 export const SET_LOGGED_OUT = 'SET_LOGGED_OUT'
 
@@ -256,6 +260,24 @@ export function getLinkedGmailAccount() {
       GET_LINKED_GMAIL_REQUEST,
       GET_LINKED_GMAIL_SUCCESS,
       GET_LINKED_GMAIL_FAILURE,
+    ],
+  })
+}
+
+/**
+ * Post user subscription
+ */
+
+export function postUserSubscription(fromAddress: string) {
+  let endpoint = '/v1.0/user/subscriptions'
+  return createApiAction({
+    endpoint,
+    method: 'POST',
+    body: JSON.stringify({fromAddress}),
+    types: [
+      POST_USER_SUBSCRIPTION_REQUEST,
+      POST_USER_SUBSCRIPTION_SUCCESS,
+      POST_USER_SUBSCRIPTION_FAILURE,
     ],
   })
 }

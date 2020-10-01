@@ -12,7 +12,7 @@ import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
 import {getArticles} from '../store/actions/articles'
 import {getBoxArticles, triageArticle} from '../store/actions/boxes'
-import {deleteUserLogin} from '../store/actions/user'
+import {deleteUserLogin, postUserSubscription} from '../store/actions/user'
 import {getArticle} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
 import {getUser} from '../store/getters/user'
@@ -177,7 +177,10 @@ function ReadingPage(props: ReadingPageProps) {
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
       showSearchBar={showSearchBar}
-      setShowSearchBar={setShowSearchBar}>
+      setShowSearchBar={setShowSearchBar}
+      onAddNewsletterSubscription={(fromAddress: string) =>
+        dispatch(postUserSubscription(fromAddress))
+      }>
       <Col
         style={{
           height: '100%',

@@ -98,7 +98,6 @@ export default function Header(props: HeaderProps) {
               props.onSelectTab('inbox')
             }>{`Inbox ${props.inboxCount}`}</div>
           <div
-            className="joyride-queue"
             style={
               props.activeTab === 'queue'
                 ? {...styles.boxTab, ...styles.boxTabActive}
@@ -108,7 +107,6 @@ export default function Header(props: HeaderProps) {
               props.onSelectTab('queue')
             }>{`Queue ${props.queueCount}`}</div>
           <div
-            className="joyride-library"
             style={
               props.activeTab === 'library'
                 ? {...styles.boxTab, ...styles.boxTabActive}

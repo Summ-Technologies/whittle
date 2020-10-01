@@ -5,10 +5,8 @@ import {Route, Switch} from 'react-router-dom'
 import BoxPage from './pages/BoxPage'
 import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import AuthPage from './pages/LoginPage'
-import NoMobilePage from './pages/NoMobilePage'
 import OnboardingPage from './pages/OnboardingPage'
 import ReadingPage from './pages/ReadingPage'
-import SecurityGIFPage from './pages/SecurityGIFPage'
 import {getLoginStatus} from './store/getters/user'
 
 export type SummnRoute = {
@@ -58,18 +56,7 @@ export class AppRoutes {
       component: OnboardingPage,
       showNav: false,
     },
-    {
-      name: 'SecurityGIFPage',
-      path: '/security',
-      component: SecurityGIFPage,
-      showNav: false,
-    },
-    {
-      name: 'NoMobile',
-      path: '/mobile',
-      component: NoMobilePage,
-      showNav: false,
-    },
+
     {
       name: 'RedirectInbox',
       path: '/*',

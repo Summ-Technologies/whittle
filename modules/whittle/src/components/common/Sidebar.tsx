@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from 'react'
+import React, {CSSProperties, useEffect, useState} from 'react'
 import {Col} from 'react-bootstrap'
 import defaultStyles from '../../styles'
 import Button from './Button'
@@ -20,6 +20,12 @@ type SidebarProps = {
 
 export default function Sidebar(props: SidebarProps) {
   let [newSubscription, setNewSubscription] = useState('')
+  let [submitted, setSubmitted] = useState(false)
+
+  useEffect(() => {
+    setSubmitted(false)
+  }, [props.active])
+
   let styles: {[key: string]: CSSProperties} = {
     container: {
       zIndex: 1,
@@ -130,9 +136,17 @@ export default function Sidebar(props: SidebarProps) {
             />
           </div>
           <div style={styles.subscriptionSubmitContainer}>
-            <Button text="Submit" onClick={() => undefined} />
+            <Button
+              text="Submit"
+              onClick={() => {
+                props.onAddNewsletterSubscription(newSubscription)
+                setNewSubscription('')
+                setSubmitted(true)
+              }}
+            />
           </div>
         </Row>
+        {submitted ? <div style={styles.bodyText}>Success!</div> : undefined}
         <hr />
         {/* TODO the archive in gmail section is not active for now */}
         {true ? undefined : (

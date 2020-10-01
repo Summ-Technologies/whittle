@@ -22,6 +22,7 @@ type OutlineHeaderBodyProps = {
   redirectOutline: (articleId: number, uri: string) => void
   onSelectTab: (tab: HeaderTabs) => void
   onLogoutUser: () => void
+  onAddNewsletterSubscription: (fromAddress: string) => void
 }
 
 export default function OutlineHeaderBody(
@@ -62,7 +63,7 @@ export default function OutlineHeaderBody(
               userFirstName={props.user ? props.user.first_name : ''}
               userLastName={props.user ? props.user.last_name : ''}
               gmailArchiveSettingActive={gmailArchiveSettingActive}
-              onAddNewsletterSubscription={() => undefined}
+              onAddNewsletterSubscription={props.onAddNewsletterSubscription}
               onToggleGmailArchive={() =>
                 setGmailArchiveSettingActive(!gmailArchiveSettingActive)
               }

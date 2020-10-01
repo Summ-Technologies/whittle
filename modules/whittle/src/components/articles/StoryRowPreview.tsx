@@ -68,22 +68,6 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
               onMouseOut={() => setDone(false)}>
               {simpleOverlay('Move to library')(<FaRegCheckCircle size={20} />)}
             </div>
-            {/* <div
-              style={{
-                ...styles.triageButton,
-                ...(bookmarked ? styles.triageButtonSelected : {}),
-              }}
-              className="joyride-bookmark"
-              onClick={(event) => {
-                event.stopPropagation()
-                props.onToggleBookmark(!props.bookmarked)
-              }}
-              onMouseOver={() => setBookmarked(!props.bookmarked)}
-              onMouseOut={() => setBookmarked(props.bookmarked)}>
-              {props.bookmarked
-                ? simpleOverlay('Remove Bookmark')(<FaBookmark size={20} />)
-                : simpleOverlay('Bookmark')(<FaRegBookmark size={20} />)}
-            </div> */}
             <div
               style={{
                 ...styles.triageButton,
