@@ -134,16 +134,22 @@ export default function Sidebar(props: SidebarProps) {
           </div>
         </Row>
         <hr />
-        <div style={styles.header2}>Settings</div>
-        <Row style={styles.settingsToggleRow}>
-          <div style={{...styles.settingsToggleRowText, ...styles.bodyText}}>
-            Archive in Gmail after action
-          </div>
-          <Toggle
-            onClick={props.onToggleGmailArchive}
-            active={props.gmailArchiveSettingActive}
-          />
-        </Row>
+        {/* TODO the archive in gmail section is not active for now */}
+        {true ? undefined : (
+          <>
+            <div style={styles.header2}>Settings</div>
+            <Row style={styles.settingsToggleRow}>
+              <div
+                style={{...styles.settingsToggleRowText, ...styles.bodyText}}>
+                Archive in Gmail after action
+              </div>
+              <Toggle
+                onClick={props.onToggleGmailArchive}
+                active={props.gmailArchiveSettingActive}
+              />
+            </Row>
+          </>
+        )}
         <div style={styles.logoutButton}>
           <Button text="Logout" onClick={props.onLogout} />
         </div>
