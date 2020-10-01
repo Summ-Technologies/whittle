@@ -211,6 +211,7 @@ function ReadingPage(props: ReadingPageProps) {
               <StoryRowPreview
                 title={article.title}
                 source={article.source}
+                author={article.author ? article.author : ''}
                 tags={article.tags}
                 readingTime={
                   article && article.html_content

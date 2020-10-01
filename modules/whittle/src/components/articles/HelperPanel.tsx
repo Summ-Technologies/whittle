@@ -46,17 +46,17 @@ export default function HelperPanel(props: HelperPanelProps) {
       paddingBottom: 5,
     },
   }
+  let source = props.article && props.article.author ? props.article.author : ''
+  if (!source.length) {
+    source = props.article && props.article.source ? props.article.source : ''
+  }
   return (
     <Col style={styles.container}>
       {props.article ? (
         <>
           <Row>
             <StoryHighLevel
-              source={
-                props.article && props.article.source
-                  ? props.article.source
-                  : ''
-              }
+              source={source}
               title={
                 props.article && props.article.title ? props.article.title : ''
               }

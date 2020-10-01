@@ -9,7 +9,8 @@ import StoryHighLevel from './StoryHighLevel'
 
 type StoryRowPreviewProps = {
   title: string
-  source: string
+  source: string // from address
+  author: string // from name
   tags: string[]
   readingTime: number
   showTriage: boolean
@@ -47,7 +48,7 @@ export default function StoryRowPreview(props: StoryRowPreviewProps) {
       }}>
       <StoryHighLevel
         title={props.title}
-        source={props.source}
+        source={props.author.length ? props.author : props.source}
         topics={props.tags}
         readingTime={props.readingTime}
       />
