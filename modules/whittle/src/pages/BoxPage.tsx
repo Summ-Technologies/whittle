@@ -333,7 +333,10 @@ function BoxPage(props: BoxPageProps) {
           onScrollEnd={() => getNextPageOfArticles()}
         />
       )}
-      {!showEmptyBox && isLibrary && !storiesList.length ? (
+      {!showEmptyBox &&
+      isLibrary &&
+      searchQuery.length &&
+      !storiesList.length ? (
         <EmptyBox
           text={'No results match your search'}
           imageSrc={ImageUtils.getImageUrl(
