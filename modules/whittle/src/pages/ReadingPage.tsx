@@ -50,14 +50,6 @@ function ReadingPage(props: ReadingPageProps) {
   useHome(dispatch)
 
   useEffect(() => {
-    let boxesIds = Object.keys(boxes)
-    for (let i = 0; i < boxesIds.length; i++) {
-      let boxId = boxesIds[i]
-      dispatch(getBoxArticles(parseInt(boxId)))
-    }
-  }, [boxes, dispatch])
-
-  useEffect(() => {
     if (article === undefined) {
       let id = parseInt(props.match.params.id)
       if (id) {
@@ -74,7 +66,6 @@ function ReadingPage(props: ReadingPageProps) {
     if (article && article.id !== undefined) {
       Object.keys(boxes).forEach((key) => {
         let box = boxes[parseInt(key)]
-        console.log(box)
         if (box.articles && box.articles.includes(article.id)) {
           switch (box.name.toLowerCase()) {
             case 'inbox':
@@ -102,6 +93,8 @@ function ReadingPage(props: ReadingPageProps) {
           } else {
             setNextArticle(undefined)
           }
+        } else if (box.articles === undefined) {
+          dispatch(getBoxArticles(box.id))
         }
       })
     }
@@ -112,6 +105,7 @@ function ReadingPage(props: ReadingPageProps) {
     previousArticle,
     setPreviousArticle,
     boxes,
+    dispatch,
     setCurrentBoxTab,
   ])
 
@@ -133,14 +127,14 @@ function ReadingPage(props: ReadingPageProps) {
   /** Dispatch article to library box */
   function archiveArticle(article: WhittleArticle) {
     if (library && article) {
-      dispatch(triage(article.id, library.id))
+      triage(article.id, library.id)
     }
   }
 
   /** Dispatch article to library box */
   function queueArticle(article: WhittleArticle) {
     if (queue && article) {
-      dispatch(triage(article.id, queue.id))
+      triage(article.id, queue.id)
     }
   }
 
