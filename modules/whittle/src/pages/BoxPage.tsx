@@ -248,6 +248,43 @@ function BoxPage(props: BoxPageProps) {
     activeBox && activeBoxFullyLoaded && activeBox.numArticles === 0
   let isLibrary = activeBox && activeBox.name.toLowerCase() === 'library'
 
+  let emptyBox = (
+    <EmptyBox
+      text={'Nothing to see here'}
+      imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
+    />
+  )
+  if (activeBox) {
+    switch (activeBox.name.toLowerCase()) {
+      case 'inbox':
+        emptyBox = (
+          <EmptyBox
+            text={'🎉 You’ve hit inbox 0!'}
+            imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
+          />
+        )
+        break
+      case 'queue':
+        emptyBox = (
+          <EmptyBox
+            text={'✅ You’ve finished your queue!'}
+            imageSrc={ImageUtils.getImageUrl(imageNames.personWithArmsOpen)}
+          />
+        )
+        break
+      case 'library':
+        emptyBox = (
+          <EmptyBox
+            text={
+              '📚️ Add newsletters to your library and easily find them later.!'
+            }
+            imageSrc={ImageUtils.getImageUrl(imageNames.personReadingNewspaper)}
+          />
+        )
+        break
+    }
+  }
+
   return (
     <OutlineHeaderBody
       inboxCount={
@@ -276,10 +313,7 @@ function BoxPage(props: BoxPageProps) {
         <SearchRow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       ) : undefined}
       {showEmptyBox ? (
-        <EmptyBox
-          text={'🎉 You’ve hit inbox 0!'}
-          imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
-        />
+        emptyBox
       ) : (
         <StoriesList
           onHoverArticle={(article: WhittleArticle) =>
@@ -298,8 +332,10 @@ function BoxPage(props: BoxPageProps) {
       )}
       {!showEmptyBox && isLibrary && !storiesList.length ? (
         <EmptyBox
-          text={'No results match your search!'}
-          imageSrc={ImageUtils.getImageUrl(imageNames.personInZenPose)}
+          text={'No results match your search'}
+          imageSrc={ImageUtils.getImageUrl(
+            imageNames.confusedPersonWithGlasses
+          )}
         />
       ) : undefined}
     </OutlineHeaderBody>

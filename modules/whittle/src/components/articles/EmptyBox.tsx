@@ -37,11 +37,7 @@ export default function EmptyBox(props: EmptyBoxProps) {
   return (
     <div style={styles.container}>
       <div style={styles.imgContainer}>
-        <img
-          style={styles.img}
-          src={props.imageSrc}
-          alt={'Person in zen pose'}
-        />
+        <img style={styles.img} src={props.imageSrc} alt={'Person'} />
       </div>
       <div style={styles.text}>{props.text}</div>
     </div>

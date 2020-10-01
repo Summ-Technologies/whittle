@@ -4,6 +4,9 @@ export const imageNames = {
   personWithArticlePreview: 'person-with-article-preview.png',
   personWorkingOnComputer: 'person-working-on-computer.png',
   personInZenPose: 'person-in-zen-pose.png',
+  confusedPersonWithGlasses: 'confused-person-with-glasses.png',
+  personReadingNewspaper: 'person-reading-newspaper.png',
+  personWithArmsOpen: 'person-with-arms-open.png',
 }
 export class ImageUtils {
   static getImageUrl(imageName: string): string {
