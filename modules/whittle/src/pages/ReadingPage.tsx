@@ -10,8 +10,8 @@ import OutlineHeaderBody from '../components/common/OutlineHeaderBody'
 import Row from '../components/common/Row'
 import {WhittleArticle, WhittleBox} from '../models/whittle'
 import {AppRoutes} from '../stacks'
-import {getArticles, toggleBookmark} from '../store/actions/articles'
-import {triageArticle} from '../store/actions/boxes'
+import {getArticles} from '../store/actions/articles'
+import {getBoxArticles, triageArticle} from '../store/actions/boxes'
 import {deleteUserLogin} from '../store/actions/user'
 import {getArticle} from '../store/getters/articles'
 import {getBoxes, getInbox, getLibrary, getQueue} from '../store/getters/boxes'
@@ -50,6 +50,14 @@ function ReadingPage(props: ReadingPageProps) {
   useHome(dispatch)
 
   useEffect(() => {
+    let boxesIds = Object.keys(boxes)
+    for (let i = 0; i < boxesIds.length; i++) {
+      let boxId = boxesIds[i]
+      dispatch(getBoxArticles(parseInt(boxId)))
+    }
+  }, [boxes, dispatch])
+
+  useEffect(() => {
     if (article === undefined) {
       let id = parseInt(props.match.params.id)
       if (id) {
@@ -66,6 +74,7 @@ function ReadingPage(props: ReadingPageProps) {
     if (article && article.id !== undefined) {
       Object.keys(boxes).forEach((key) => {
         let box = boxes[parseInt(key)]
+        console.log(box)
         if (box.articles && box.articles.includes(article.id)) {
           switch (box.name.toLowerCase()) {
             case 'inbox':
@@ -121,24 +130,17 @@ function ReadingPage(props: ReadingPageProps) {
     }
   }
 
-  /** Dispatch article to archive box */
+  /** Dispatch article to library box */
   function archiveArticle(article: WhittleArticle) {
     if (library && article) {
-      triage(article.id, library.id)
-    }
-  }
-
-  /** Dispatch action bookmarking article */
-  function doToggleBookmark(article: WhittleArticle, doBookmark: boolean) {
-    if (article) {
-      dispatch(toggleBookmark(article.id, doBookmark))
+      dispatch(triage(article.id, library.id))
     }
   }
 
   /** Dispatch article to library box */
   function queueArticle(article: WhittleArticle) {
     if (queue && article) {
-      triage(article.id, queue.id)
+      dispatch(triage(article.id, queue.id))
     }
   }
 
@@ -221,9 +223,7 @@ function ReadingPage(props: ReadingPageProps) {
                 bookmarked={article.bookmarked}
                 showTriage={true}
                 onQueue={() => queueArticle(article)}
-                onToggleBookmark={(doBookmark: boolean) =>
-                  doToggleBookmark(article, doBookmark)
-                }
+                onToggleBookmark={() => undefined}
                 onArchive={() => archiveArticle(article)}
               />
             </Col>

@@ -13,13 +13,12 @@ export default function SearchRow(props: SearchRowProps) {
       height: 40,
       fontSize: 20,
       width: '100%',
-      paddingLeft: 20,
+      paddingLeft: 10,
       marginBottom: 20,
     },
     inputContainer: {
       fontFamily: 'Arial, FontAwesome',
       width: '40%',
-      maxWidth: 300,
     },
   }
   return (

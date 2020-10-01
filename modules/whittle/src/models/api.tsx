@@ -6,6 +6,7 @@ export type ArticleResource = {
   html_content: string
   source: string
   author?: string
+  message_received_at?: number // UTC Timestamp
   tags: string[] // TODO remove this attribute (should be relation aka list of tag id's)
   bookmarked: boolean // TODO remove this attribute ?? maybe
 }

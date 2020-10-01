@@ -276,7 +276,7 @@ function BoxPage(props: BoxPageProps) {
         emptyBox = (
           <EmptyBox
             text={
-              '📚️ Add newsletters to your library and easily find them later.!'
+              '📚️ Add newsletters to your library and easily find them later!'
             }
             imageSrc={ImageUtils.getImageUrl(imageNames.personReadingNewspaper)}
           />
