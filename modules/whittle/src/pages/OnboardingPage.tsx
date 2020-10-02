@@ -70,14 +70,14 @@ function OnboardingPage() {
       placement: 'bottom',
       disableBeacon: true,
       title: 'Your newsletter inbox',
-      content: 'Quickly triage your newsletters into your queue and library',
+      content: 'Each newsletter will be automatically imported here.',
     },
     {
       target: '.joyride-queue',
       placement: 'bottom',
       disableBeacon: true,
       title: 'Queue newsletters you want to read soon',
-      content: 'Add newsletters to the queue by pressing the queue button',
+      content: 'Add newsletters to the queue by pressing the queue button.',
     },
     {
       target: '.joyride-library',
@@ -93,7 +93,7 @@ function OnboardingPage() {
       disableBeacon: true,
       title: "Skip to what's important",
       content:
-        'Click the outline to skip to relevant sections in each newsletter',
+        'Click the outline to skip to relevant sections in each newsletter.',
     },
     {
       target: '.joyride-settings',
