@@ -9,6 +9,7 @@ import SecurityGIFPage from '../components/google/SecurityGIFPage'
 import JoyrideModal from '../components/onboarding/JoyrideModal'
 import OnboardingImportCTA from '../components/onboarding/OnboardingImportCTA'
 import {WhittleArticle, WhittleUser} from '../models/whittle'
+import {analyticsOnboardingStep} from '../store/actions/analytics'
 import {connectGoogleAccountStep1} from '../store/actions/user'
 
 function OnboardingPage() {
@@ -109,6 +110,16 @@ function OnboardingPage() {
   function transitionToCTA(data: CallBackProps) {
     if (data.type === EVENTS.TOUR_END) {
       setJoyrideTour(2)
+    }
+    if (data.type === EVENTS.STEP_BEFORE) {
+      // Dispatch tracking event
+      dispatch(
+        analyticsOnboardingStep(
+          data.step.title ? data.step.title.toString() : '',
+          data.index,
+          data.size === data.index + 1
+        )
+      )
     }
   }
 

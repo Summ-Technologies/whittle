@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
-import {Redirect} from 'react-router'
+import {useMixPanel} from 'react-mixpanel-provider-component'
+import {useDispatch, useSelector} from 'react-redux'
+import {Redirect, useHistory} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
+import {MixpanelUtils} from './analytics/mixpanel'
+import config, {MIXPANEL_PROJECT_TOKEN_KEY} from './config'
 import BoxPage from './pages/BoxPage'
 import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'
 import AuthPage from './pages/LoginPage'
 import OnboardingPage from './pages/OnboardingPage'
 import ReadingPage from './pages/ReadingPage'
+import {analyticsPageView} from './store/actions/analytics'
 import {getLoginStatus} from './store/getters/user'
 
 export type SummnRoute = {
@@ -121,8 +125,12 @@ function LoggedOutStack() {
 }
 
 export default function Stack() {
+  let dispatch = useDispatch()
+  let history = useHistory()
   let loginStatus = useSelector(getLoginStatus)
   let [stack, setStack] = useState(<LoggedInStack />)
+
+  let {mixpanel} = useMixPanel()
 
   useEffect(() => {
     if (loginStatus === 'LOGGED_OUT') {
@@ -131,6 +139,26 @@ export default function Stack() {
       setStack(<LoggedInStack />)
     }
   }, [loginStatus, setStack])
+
+  useEffect(() => {
+    let trackPageView = () =>
+      dispatch(
+        analyticsPageView(
+          window.location.pathname,
+          window.location.search,
+          window.location.hash
+        )
+      )
+    trackPageView()
+    history.listen(trackPageView)
+  }, [history, dispatch])
+
+  useEffect(() => {
+    if (config.get(MIXPANEL_PROJECT_TOKEN_KEY) !== undefined) {
+      mixpanel.init(config.get(MIXPANEL_PROJECT_TOKEN_KEY) as string)
+      MixpanelUtils.mixpanelInitialized = true
+    }
+  }, [mixpanel])
 
   return stack
 }

@@ -1,5 +1,6 @@
 import {ConnectedRouter} from 'connected-react-router'
 import React, {useEffect, useState} from 'react'
+import {MixPanelProvider} from 'react-mixpanel-provider-component'
 import {Provider} from 'react-redux'
 import NoMobilePage from './pages/NoMobilePage'
 import Stack from './stacks'
@@ -33,13 +34,15 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        {windowDimensions.width !== null && windowDimensions.width >= 768 ? (
-          <Stack />
-        ) : (
-          <NoMobilePage />
-        )}
-      </ConnectedRouter>
+      <MixPanelProvider>
+        <ConnectedRouter history={history}>
+          {windowDimensions.width !== null && windowDimensions.width >= 768 ? (
+            <Stack />
+          ) : (
+            <NoMobilePage />
+          )}
+        </ConnectedRouter>
+      </MixPanelProvider>
     </Provider>
   )
 }
