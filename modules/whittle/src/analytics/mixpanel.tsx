@@ -16,11 +16,7 @@ import {
 } from '../store/actions/boxes'
 import {
   DELETE_LOGOUT_SUCCESS,
-  GMAIL_CONNECT_CALLBACK_SUCCESS,
-  GMAIL_CONNECT_REDIRECT_SUCCESS,
-  GOOGLE_LOGIN_CALLBACK_SUCCESS,
   GOOGLE_SIGNUP_CALLBACK_SUCCESS,
-  POST_USER_SUBSCRIPTION_SUCCESS,
   SET_LOGGED_OUT,
 } from '../store/actions/user'
 import {getInbox, getLibrary, getQueue} from '../store/getters/boxes'
@@ -61,6 +57,8 @@ export class MixpanelUtils {
           Mixpanel.track(eventName, properties)
         }
       })
+    } else {
+      Mixpanel.track(action.type)
     }
   }
 
@@ -141,22 +139,13 @@ export class MixpanelUtils {
 
   // Config
   static mixpanelConfig: MixpanelConfig = {
-    GOOGLE_LOGIN_CALLBACK_SUCCESS: [
-      MixpanelUtils.genericMixpanelConfigOption(GOOGLE_LOGIN_CALLBACK_SUCCESS),
-    ],
     GOOGLE_SIGNUP_CALLBACK_SUCCESS: [
       MixpanelUtils.googleSignupMixpanelConfigOption,
     ],
-    GMAIL_CONNECT_REDIRECT_SUCCESS: [
-      MixpanelUtils.genericMixpanelConfigOption(GMAIL_CONNECT_REDIRECT_SUCCESS),
+    GET_USER_HOME_SUCCESS: [
+      MixpanelUtils.genericMixpanelConfigOption(GET_USER_HOME_SUCCESS),
+      MixpanelUtils.boxSizesMixpanelConfigOption,
     ],
-    GMAIL_CONNECT_CALLBACK_SUCCESS: [
-      MixpanelUtils.genericMixpanelConfigOption(GMAIL_CONNECT_CALLBACK_SUCCESS),
-    ],
-    POST_USER_SUBSCRIPTION_SUCCESS: [
-      MixpanelUtils.genericMixpanelConfigOption(POST_USER_SUBSCRIPTION_SUCCESS),
-    ],
-    GET_USER_HOME_SUCCESS: [MixpanelUtils.boxSizesMixpanelConfigOption],
     POST_USER_TRIAGE_SUCCESS: [
       MixpanelUtils.triageMixPanelConfigOption,
       MixpanelUtils.boxSizesMixpanelConfigOption,
