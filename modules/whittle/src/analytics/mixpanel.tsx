@@ -180,15 +180,13 @@ function mixpanelReducerMiddleware(
       if (userState.user && Mixpanel.get_distinct_id() !== userState.user.id) {
         Mixpanel.identify(userState.user.id.toString())
       }
+      break
     case DELETE_LOGOUT_SUCCESS:
     case SET_LOGGED_OUT:
       if (Mixpanel.get_distinct_id()) {
         Mixpanel.identify(undefined)
       }
-    // End Custom lifecycle related Mixpanel actions
-    default:
-      // Default handling of actions for Mixpanel
-      MixpanelUtils.trackEvent(MixpanelUtils.mixpanelConfig, action, store)
       break
   }
+  MixpanelUtils.trackEvent(MixpanelUtils.mixpanelConfig, action, store)
 }
