@@ -1,5 +1,5 @@
-# Last released = 0.2.2
-version=latest
+# Last released = 0.2.3
+version=0.2.3
 docker-user=jaredhanson11
 name=${docker-user}/whittle
 
