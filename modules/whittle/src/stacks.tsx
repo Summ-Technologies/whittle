@@ -141,6 +141,13 @@ export default function Stack() {
   }, [loginStatus, setStack])
 
   useEffect(() => {
+    if (config.get(MIXPANEL_PROJECT_TOKEN_KEY) !== undefined) {
+      mixpanel.init(config.get(MIXPANEL_PROJECT_TOKEN_KEY) as string)
+      MixpanelUtils.mixpanelInitialized = true
+    }
+  }, [mixpanel])
+
+  useEffect(() => {
     let trackPageView = () =>
       dispatch(
         analyticsPageView(
@@ -152,13 +159,6 @@ export default function Stack() {
     trackPageView()
     history.listen(trackPageView)
   }, [history, dispatch])
-
-  useEffect(() => {
-    if (config.get(MIXPANEL_PROJECT_TOKEN_KEY) !== undefined) {
-      mixpanel.init(config.get(MIXPANEL_PROJECT_TOKEN_KEY) as string)
-      MixpanelUtils.mixpanelInitialized = true
-    }
-  }, [mixpanel])
 
   return stack
 }
