@@ -92,9 +92,9 @@ function OnboardingPage() {
       target: '.joyride-preview-outline',
       placement: 'left',
       disableBeacon: true,
-      title: "Skip to what's important",
+      title: 'Skip to relevant sections',
       content:
-        'Click the outline to skip to relevant sections in each newsletter.',
+        "Click the outline to skip to what you want to read (after we've imported your newsletters).",
     },
     {
       target: '.joyride-settings',
