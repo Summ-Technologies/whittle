@@ -73,7 +73,7 @@ export default function OutlineHeaderBody(
             onSelectTab={props.onSelectTab}
             onClickMenu={() => setSidebarActive(!sidebarActive)}
           />
-          <div style={{flexGrow: 1, overflow: 'scroll'}}>
+          <div style={{flexGrow: 1, overflow: 'scroll', height: '100%'}}>
             <Sidebar
               active={sidebarActive}
               onLogout={props.onLogoutUser}

@@ -18,6 +18,7 @@ export default function TextInput(props: TextInputProps) {
       paddingLeft: 10,
       ...defaultStyles.roundedCorners,
       borderWidth: 1,
+      borderStyle: 'solid',
       borderColor: defaultStyles.colors.grey,
       ...defaultStyles.ellipsisOverflow,
       outline: 'none', // so no default styling is done
