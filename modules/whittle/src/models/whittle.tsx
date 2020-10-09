@@ -1,4 +1,9 @@
-import {ArticleResource, BoxResource, UserResource} from './api'
+import {
+  ArticleResource,
+  BoxResource,
+  UserConfigResource,
+  UserResource,
+} from './api'
 
 export type WhittleBox = BoxResource & {
   // articles: list of article id's in order
@@ -8,6 +13,7 @@ export type WhittleBox = BoxResource & {
 }
 export type WhittleArticle = ArticleResource
 export type WhittleUser = UserResource
+export type WhittleUserConfig = UserConfigResource
 
 export type WhittleArticleSearch = {
   [key: number]: number[] // boxId -> articleId[]

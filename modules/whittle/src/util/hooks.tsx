@@ -4,6 +4,7 @@ import {Dispatch} from 'redux'
 import {getSearch} from '../store/actions/articles'
 import {getUserHome} from '../store/actions/boxes'
 import {getSearchResults} from '../store/getters/articles'
+import {getUserConfig} from '../store/getters/user'
 
 export function useHome(dispatch: Dispatch<any>) {
   useEffect(() => {
@@ -45,4 +46,8 @@ export function useSearch(dispatch: Dispatch<any>) {
     setSearchQuery,
     searchResults,
   ] as const
+}
+
+export function useUserConfig() {
+  return useSelector(getUserConfig)
 }

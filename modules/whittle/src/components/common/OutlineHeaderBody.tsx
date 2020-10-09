@@ -1,6 +1,9 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Col} from 'react-bootstrap'
+import {useDispatch} from 'react-redux'
 import {WhittleArticle, WhittleUser} from '../../models/whittle'
+import {putConfigArchiveEmails} from '../../store/actions/user'
+import {useUserConfig} from '../../util/hooks'
 import HelperPanel from '../articles/HelperPanel'
 import Row from '../common/Row'
 import Body from './Body'
@@ -28,10 +31,25 @@ type OutlineHeaderBodyProps = {
 export default function OutlineHeaderBody(
   props: React.PropsWithChildren<OutlineHeaderBodyProps>
 ) {
+  let dispatch = useDispatch()
+  let userConfig = useUserConfig()
+
   let [sidebarActive, setSidebarActive] = useState(false)
   let [gmailArchiveSettingActive, setGmailArchiveSettingActive] = useState(
     false
   )
+
+  function updateConfigAutoArchive(doArchive: boolean): void {
+    setGmailArchiveSettingActive(doArchive)
+    dispatch(putConfigArchiveEmails(doArchive))
+  }
+
+  useEffect(() => {
+    if (userConfig) {
+      setGmailArchiveSettingActive(userConfig.gmail_auto_archive)
+    }
+  }, [userConfig])
+
   return (
     <Body>
       <Row style={{height: '0', flex: '1 1 auto'}}>
@@ -65,7 +83,7 @@ export default function OutlineHeaderBody(
               gmailArchiveSettingActive={gmailArchiveSettingActive}
               onAddNewsletterSubscription={props.onAddNewsletterSubscription}
               onToggleGmailArchive={() =>
-                setGmailArchiveSettingActive(!gmailArchiveSettingActive)
+                updateConfigAutoArchive(!gmailArchiveSettingActive)
               }
             />
             {props.children}

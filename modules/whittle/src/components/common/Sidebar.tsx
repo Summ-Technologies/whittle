@@ -1,6 +1,8 @@
 import React, {CSSProperties, useEffect, useState} from 'react'
 import {Col} from 'react-bootstrap'
+import {FaQuestionCircle} from 'react-icons/fa'
 import defaultStyles from '../../styles'
+import {simpleOverlay} from '../../util'
 import Button from './Button'
 import Row from './Row'
 import TextInput from './TextInput'
@@ -84,6 +86,9 @@ export default function Sidebar(props: SidebarProps) {
       alignItems: 'center',
       paddingBottom: 15,
     },
+    infoCircle: {
+      display: 'inline',
+    },
     settingsToggleRowText: {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -148,22 +153,23 @@ export default function Sidebar(props: SidebarProps) {
         </Row>
         {submitted ? <div style={styles.bodyText}>Success!</div> : undefined}
         <hr />
-        {/* TODO the archive in gmail section is not active for now */}
-        {true ? undefined : (
-          <>
-            <div style={styles.header2}>Settings</div>
-            <Row style={styles.settingsToggleRow}>
-              <div
-                style={{...styles.settingsToggleRowText, ...styles.bodyText}}>
-                Archive in Gmail after action
-              </div>
-              <Toggle
-                onClick={props.onToggleGmailArchive}
-                active={props.gmailArchiveSettingActive}
-              />
-            </Row>
-          </>
-        )}
+        <div style={styles.header2}>Settings</div>
+        <Row style={styles.settingsToggleRow}>
+          <div style={{...styles.settingsToggleRowText, ...styles.bodyText}}>
+            Archive in Gmail after action{' '}
+            <div style={styles.infoCircle}>
+              {simpleOverlay(
+                'When enabled, we archive your newsletter in Gmail after you move it to your library.\nWhen disabled, we won’t touch your emails in Gmail.',
+                'top',
+                400
+              )(<FaQuestionCircle />)}
+            </div>
+          </div>
+          <Toggle
+            onClick={props.onToggleGmailArchive}
+            active={props.gmailArchiveSettingActive}
+          />
+        </Row>
         <div style={styles.logoutButton}>
           <Button text="Logout" onClick={props.onLogout} />
         </div>

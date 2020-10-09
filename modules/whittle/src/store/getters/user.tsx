@@ -1,5 +1,5 @@
 import {RootState} from '..'
-import {WhittleUser} from '../../models/whittle'
+import {WhittleUser, WhittleUserConfig} from '../../models/whittle'
 import {LoginStatus} from '../reducers/user'
 
 export function getLoginStatus(state: RootState): LoginStatus {
@@ -12,4 +12,8 @@ export function getLinkedGoogleAccount(state: RootState): string | undefined {
 
 export function getUser(state: RootState): WhittleUser | undefined {
   return state.user.user
+}
+
+export function getUserConfig(state: RootState): WhittleUserConfig | undefined {
+  return state.user.userConfig
 }

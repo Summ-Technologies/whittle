@@ -1,9 +1,7 @@
-import React, {CSSProperties, ReactElement, useState} from 'react'
+import React, {CSSProperties, useState} from 'react'
 import Col from 'react-bootstrap/Col'
-import {OverlayChildren} from 'react-bootstrap/esm/Overlay'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import {FaList, FaRegCheckCircle} from 'react-icons/fa'
+import {simpleOverlay} from '../../util'
 import Row from '../common/Row'
 import StoryHighLevel from './StoryHighLevel'
 
@@ -24,21 +22,6 @@ type StoryRowPreviewProps = {
 export default function StoryRowPreview(props: StoryRowPreviewProps) {
   let [done, setDone] = useState(false)
   let [queued, setQueued] = useState(false)
-
-  function simpleTooltip(val: string): OverlayChildren {
-    return <Tooltip id="button-tooltip">{val}</Tooltip>
-  }
-
-  function simpleOverlay(val: string) {
-    return (children: ReactElement) => (
-      <OverlayTrigger
-        placement="top"
-        delay={{show: 150, hide: 150}}
-        overlay={simpleTooltip(val)}>
-        {children}
-      </OverlayTrigger>
-    )
-  }
 
   return (
     <Row

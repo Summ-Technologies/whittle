@@ -34,8 +34,15 @@ export type UserResponse = {
   user: UserResource
 }
 
+export type UserConfigResource = {
+  id: number
+  user_id: number
+  gmail_auto_archive: boolean
+}
+
 export type UserHomeResponse = {
   user: UserResource
+  user_config: UserConfigResource
   boxes: BoxResource[]
   boxes_articles_count: {[key: number]: number}
 }

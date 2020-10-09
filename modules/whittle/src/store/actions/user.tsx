@@ -49,6 +49,13 @@ export const DELETE_LOGOUT_REQUEST = 'DELETE_LOGOUT_REQUEST'
 export const DELETE_LOGOUT_SUCCESS = 'DELETE_LOGOUT_SUCCESS'
 export const DELETE_LOGOUT_FAILURE = 'DELETE_LOGOUT_FAILURE'
 
+export const PUT_USER_CONFIG_AUTO_ARCHIVE_REQUEST =
+  'PUT_USER_CONFIG_AUTO_ARCHIVE_REQUEST'
+export const PUT_USER_CONFIG_AUTO_ARCHIVE_SUCCESS =
+  'PUT_USER_CONFIG_AUTO_ARCHIVE_SUCCESS'
+export const PUT_USER_CONFIG_AUTO_ARCHIVE_FAILURE =
+  'PUT_USER_CONFIG_AUTO_ARCHIVE_FAILURE'
+
 /**
  * Sends DELETE request to login resource to remove cookie and logout user.
  */
@@ -278,6 +285,23 @@ export function postUserSubscription(fromAddress: string) {
       POST_USER_SUBSCRIPTION_REQUEST,
       POST_USER_SUBSCRIPTION_SUCCESS,
       POST_USER_SUBSCRIPTION_FAILURE,
+    ],
+  })
+}
+
+/**
+ * Change config option for archiving emails automatically
+ */
+export function putConfigArchiveEmails(autoArchive: boolean) {
+  let endpoint = '/v1.0/user/config/auto-archive'
+  return createApiAction({
+    endpoint,
+    method: 'PUT',
+    body: JSON.stringify({autoArchive}),
+    types: [
+      PUT_USER_CONFIG_AUTO_ARCHIVE_REQUEST,
+      PUT_USER_CONFIG_AUTO_ARCHIVE_SUCCESS,
+      PUT_USER_CONFIG_AUTO_ARCHIVE_FAILURE,
     ],
   })
 }
