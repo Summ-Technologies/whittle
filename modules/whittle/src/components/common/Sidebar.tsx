@@ -159,7 +159,7 @@ export default function Sidebar(props: SidebarProps) {
             Archive in Gmail after action{' '}
             <div style={styles.infoCircle}>
               {simpleOverlay(
-                'When enabled, we archive your newsletter in Gmail after you move it to your library.\nWhen disabled, we won’t touch your emails in Gmail.',
+                'When enabled, we archive your newsletter in Gmail after you move it to your library.',
                 'top',
                 400
               )(<FaQuestionCircle />)}
